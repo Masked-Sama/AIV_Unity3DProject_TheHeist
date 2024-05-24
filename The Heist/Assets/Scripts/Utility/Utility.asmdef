@@ -1,8 +1,7 @@
 {
-    "name": "Player",
+    "name": "Utility",
     "rootNamespace": "",
     "references": [
-        "GUID:6f04d385d61fb6642a912f065bbfba43",
         "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],

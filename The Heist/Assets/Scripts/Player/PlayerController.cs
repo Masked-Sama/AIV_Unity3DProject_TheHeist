@@ -24,11 +24,7 @@ namespace Player
         #endregion
 
         #region PlayerMovement
-        public Vector2 ComputedDirection
-        {
-            get;
-            set;
-        }
+        public Vector2 ComputedDirection { get; set; }
         public Action OnWalkStarted;
         public Action OnWalkEnded;
         public Action<float> OnDirectionChanged;
@@ -50,11 +46,7 @@ namespace Player
         #endregion
 
         #region PlayerJump
-        public bool IsJumping
-        {
-            get;
-            set;
-        }
+        public bool IsJumping { get; set; }
         public Action<int> JumpStarted;
         #endregion
 
