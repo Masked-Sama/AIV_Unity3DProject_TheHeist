@@ -5,6 +5,7 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        #region SerializeField
         [SerializeField]
         protected Transform playerTransform;
         [SerializeField]
@@ -13,6 +14,7 @@ namespace Player
         protected Collider playerPhysicsCollider;
         [SerializeField]
         protected Transform cameraPositionTransform;
+        #endregion
 
         private PlayerAbilityBase[] abilities;
 
@@ -27,6 +29,9 @@ namespace Player
         public Vector2 ComputedDirection { get; set; }
         public Action OnWalkStarted;
         public Action OnWalkEnded;
+        public Action OnRunStarted;
+        public Action OnRunEnded;
+
         public Action<float> OnDirectionChanged;
         #endregion
 
@@ -35,10 +40,12 @@ namespace Player
         {
             get { return playerTransform; }
         }
+
         public Transform CameraPositionTransform
         {
             get { return cameraPositionTransform; }
         }
+
         public Collider PlayerPhysicsCollider
         {
             get { return playerPhysicsCollider; }
@@ -47,7 +54,7 @@ namespace Player
 
         #region PlayerJump
         public bool IsJumping { get; set; }
-        public Action<int> JumpStarted;
+        public Action JumpStarted;
         #endregion
 
         #region Mono

@@ -1,3 +1,5 @@
+using UnityEngine.InputSystem;
+
 public static class InputManager
 {
     private static Inputs input;

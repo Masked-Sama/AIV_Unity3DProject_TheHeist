@@ -1,53 +1,60 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
     public class PlayerJump : PlayerAbilityBase
     {
         [SerializeField]
-        private float jumpCooldown;
+        private float jumpForce;
 
-        private float lastJumpTime;
-
+        #region Mono
         private void OnEnable()
         {
+            playerController.OnGroundLanded += OnGroundLanded;
             InputManager.Player.Jump.performed += OnJumpPerformed;
-        }
-
-        private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-        {
-            if (!CanJump()) return;
-            // Do jump.
-            Debug.Log("Jump");
-        }
-
-        private void OnGroundLanded()
-        {
-            isPrevented = false;
-        }
-
-        private void OnGroundReleased()
-        {
-            isPrevented = true;
         }
 
         private void OnDisable()
         {
+            playerController.OnGroundLanded -= OnGroundLanded;
             InputManager.Player.Jump.performed -= OnJumpPerformed;
+        }
+        #endregion
+
+        #region PrivateMethods
+        private void OnJumpPerformed(InputAction.CallbackContext context)
+        {
+            if (!CanJump()) return;
+            playerController.SetVelocity(Vector3.up * jumpForce);
+            playerController.IsJumping = true;
+            playerController.JumpStarted?.Invoke();
+        }
+
+        private void OnGroundLanded()
+        {
+            playerController.IsJumping = false;
         }
 
         private bool CanJump()
         {
-            return !isPrevented 
-                //&& (Time.time - lastJumpTime) >= jumpCooldown
-                && playerController.IsGrounded;
+            return !isPrevented && playerController.IsGrounded;
+        }
+        #endregion
+
+        #region PublicMethods
+        public override void OnInputDisabled()
+        {
+            isPrevented = true;
         }
 
-        public override void OnInputDisabled() { }
-
-        public override void OnInputEnabled() { }
+        public override void OnInputEnabled()
+        {
+            isPrevented = false;
+        }
 
         public override void StopAbility() { }
+        #endregion
     }
 }
