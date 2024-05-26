@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class FollowTarget : StrategyAction
 {
-    private Enemy owner;
+    private IEnemyMovement owner;
+
 
     private Transform target;
+    private float speed;
 
-    public FollowTarget(Enemy owner, Transform target)
+    public FollowTarget(IEnemyMovement owner, Transform target, float speed)
     {
         this.owner = owner;
         this.target = target;
+        this.speed = speed;
     }
     public FollowTarget()
     {
@@ -21,7 +24,7 @@ public class FollowTarget : StrategyAction
 
     public override Node.Status Process()
     {
-        if (owner) owner.MoveToTarget(target);
+        if (owner != null) owner.MoveToTarget(target, speed);
 
         Debug.Log("FollowPlayer");
         return Node.Status.Success;

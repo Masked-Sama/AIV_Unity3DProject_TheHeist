@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 
 public class StayInIdle : IStrategy
 {
-    private Enemy owner;
+    private IEnemyMovement owner;
     private bool everyFrame;
 
-    public StayInIdle(bool everyFrame, Enemy owner = null) 
+    public StayInIdle(bool everyFrame, IEnemyMovement owner = null) 
     {
-        if (owner)
+        if (owner != null)
             this.owner = owner;
             this.everyFrame = everyFrame;
     }
@@ -23,14 +23,13 @@ public class StayInIdle : IStrategy
         {
             hasExecutedOnce = true;
             owner.ClearDestination();
-        }*/
-
+        }
+        */
         Debug.Log("Stay in Idle");
 
-        if (owner) owner.ClearDestination();
+        if (owner != null) owner.StopMovement();
 
         return Node.Status.Success;
     }
-
 
 }

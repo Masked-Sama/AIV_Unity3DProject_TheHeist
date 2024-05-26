@@ -27,12 +27,12 @@ using UnityEngine.AI;
     }
     
     public class Condition : IStrategy {
-        readonly Func<bool> predicate;
+        protected Func<bool> predicate;
         
         public Condition(Func<bool> predicate) {
             this.predicate = predicate;
         }
-        
+        public Condition() { }
         public Node.Status Process() => predicate() ? Node.Status.Success : Node.Status.Failure;
     }
 
