@@ -1,4 +1,3 @@
-using PlasticGui.WorkspaceWindow.QueryViews.Changesets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,19 +7,37 @@ namespace Player
     {
         private const float moveThreshold = 0.05f;
 
+        #region SerializeField
         [SerializeField]
         private float walkSpeed;
         [SerializeField]
         private float runSpeed;
+        #endregion
 
+        #region InternalMembers
         protected InputAction moveAction;
+        protected InputAction runAction;
+
         protected bool wasWalking;
+        protected bool wasRunning;
+
         protected float currentSpeed;
+        protected bool runKeyPressed;
+        #endregion
 
         #region Mono
         private void OnEnable()
         {
             moveAction = InputManager.Player.Move;
+            runAction = InputManager.Player.Run;
+            runAction.performed += OnRunActionPerformed;
+            runAction.canceled += OnRunActionCanceled;
+        }
+
+        private void OnDisable()
+        {
+            runAction.performed -= OnRunActionPerformed;
+            runAction.canceled -= OnRunActionCanceled;
         }
 
         private void Update()
@@ -73,18 +90,42 @@ namespace Player
 
         protected void Move()
         {
-            //currentSpeed = wasWalking ? walkSpeed : runSpeed;
-            currentSpeed = walkSpeed;
-            Vector2 computedSpeed = playerController.ComputedDirection * currentSpeed;
+            currentSpeed = runKeyPressed ? runSpeed : walkSpeed;
+            Vector2 computedSpeed = playerController.ComputedDirection.normalized * currentSpeed;
             SetSpeed(computedSpeed);
         }
 
         protected void HandleEvents()
         {
-            bool isWalking = currentSpeed > moveThreshold;
-            if (!wasWalking && isWalking) playerController.OnWalkStarted?.Invoke();
-            if(wasWalking && !isWalking) playerController.OnWalkEnded?.Invoke();
+            Vector3 movementVelocity = playerController.GetVelocity();
+            float lengthSquared = movementVelocity.x * movementVelocity.x + 
+                movementVelocity.z * movementVelocity.z;
+
+            bool isRunning = lengthSquared > walkSpeed * walkSpeed;
+            bool isWalking = (lengthSquared > moveThreshold * moveThreshold) && !isRunning;
+
+            if (isWalking && !wasWalking) playerController.OnWalkStarted?.Invoke();
+            if (isRunning && !wasRunning) playerController.OnRunStarted?.Invoke();
+            if (wasRunning && !isRunning) playerController.OnRunEnded?.Invoke();
+            if (wasWalking && !isWalking) playerController.OnWalkEnded?.Invoke();
+
             wasWalking = isWalking;
+            wasRunning = isRunning;
+        }
+
+        private void OnRunActionCanceled(InputAction.CallbackContext context)
+        {
+            SetRunKeyIsPressed(false);
+        }
+
+        private void OnRunActionPerformed(InputAction.CallbackContext context)
+        {
+            SetRunKeyIsPressed(true);
+        }
+
+        private void SetRunKeyIsPressed(bool value)
+        {
+            runKeyPressed = value;
         }
         #endregion
     }
