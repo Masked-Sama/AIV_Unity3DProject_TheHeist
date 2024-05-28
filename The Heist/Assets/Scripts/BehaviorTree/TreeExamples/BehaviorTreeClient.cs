@@ -28,7 +28,7 @@ public class BehaviorTreeClient : MonoBehaviour
 
         var sequenceIdle = new Sequence("IdleSequence");
         var onEnter = new Leaf("OnEnterIdle", new ActionStrategy(OnEnterIdle));
-        var idle = new Leaf("Idle", new StayInIdle(false));
+        var idle = new Leaf("Idle", new StayInIdle());
 
         sequenceIdle.AddChild(onEnter);
         sequenceIdle.AddChild(idle);
@@ -39,7 +39,7 @@ public class BehaviorTreeClient : MonoBehaviour
       
         var randomSelector = new RandomSelector("Escape||Crouch");
         randomSelector.AddChild(new Leaf("RunAway", new ActionStrategy(MoveToPosition)));
-        randomSelector.AddChild(new Leaf("Crouch", new StayInIdle(false))); //NEED ANIMATOR
+        randomSelector.AddChild(new Leaf("Crouch", new StayInIdle())); //NEED ANIMATOR
 
         sequence.AddChild(randomSelector);
 

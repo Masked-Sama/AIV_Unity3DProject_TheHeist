@@ -5,15 +5,25 @@ using UnityEngine;
 public class ShootTheTarget : IStrategy
 {
     private IEnemyMovement owner;
+    private Animator animator;
 
-    public ShootTheTarget(IEnemyMovement owner)
+    BehaviourState state = BehaviourState.ATTACKING;
+
+    public ShootTheTarget(IEnemyMovement owner, Animator animator)
     {
         this.owner = owner;
-    }
-    public Node.Status Process()
-    {
-        if (owner != null) owner.StopMovement();
+        this.animator = animator;   
 
+    }
+    public Node.Status Process(ref BehaviourState currentState)
+    {
+        if (owner != null)
+        {
+            owner.StopMovement();
+            animator.SetBool("CanShoot", true);
+        }
+        currentState = state;
+        
         Debug.Log("Shoot");
         return Node.Status.Success;
     }

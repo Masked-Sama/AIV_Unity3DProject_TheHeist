@@ -7,6 +7,14 @@ public class BehaviourTree : Node
 {
     readonly IPolicy policy;
 
+    public BehaviourState currentState = BehaviourState.END; // Initialize to a default state
+
+    public BehaviourState CurrentState
+    {
+        get { return currentState; }
+        private set { currentState = value; } // Encapsulate setter for potential future logic
+    }
+
     public BehaviourTree(string name, IPolicy policy = null) : base(name)
     {
         this.policy = policy ?? Policies.RunForever;

@@ -29,7 +29,7 @@ public class BehaviorTreeFollowPlayer : MonoBehaviour
         Follow.AddChild(new Leaf("Follow", new FollowTarget()));
 
         selector.AddChild(Follow);
-        selector.AddChild(new Leaf("Idle", new StayInIdle(false)));
+        selector.AddChild(new Leaf("Idle", new StayInIdle()));
 
         tree.AddChild(selector);
         

@@ -7,27 +7,21 @@ using UnityEngine.UIElements;
 public class StayInIdle : IStrategy
 {
     private IEnemyMovement owner;
-    private bool everyFrame;
+    BehaviourState state = BehaviourState.IDLE;
 
-    public StayInIdle(bool everyFrame, IEnemyMovement owner = null) 
+    public StayInIdle(IEnemyMovement owner = null) 
     {
         if (owner != null)
             this.owner = owner;
-            this.everyFrame = everyFrame;
     }
 
-    public Node.Status Process()
+    public Node.Status Process(ref BehaviourState currentState)
     {
-        //Da inserire il check per evitare le chiamate ad ogni frame! 
-        /*if (everyFrame || "EnemyInIdle")
-        {
-            hasExecutedOnce = true;
-            owner.ClearDestination();
-        }
-        */
-        Debug.Log("Stay in Idle");
+        if (currentState == BehaviourState.IDLE) return Node.Status.Success;
 
+        currentState = state;
         if (owner != null) owner.StopMovement();
+        Debug.Log("Stay in Idle"); 
 
         return Node.Status.Success;
     }

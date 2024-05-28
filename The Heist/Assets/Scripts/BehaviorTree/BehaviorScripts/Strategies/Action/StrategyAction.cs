@@ -10,6 +10,6 @@ public abstract class StrategyAction : IStrategy
     {
         //this.everyFrame = everyFrame;
     }
-    public abstract Node.Status Process();
+    public abstract Node.Status Process(ref BehaviourState currentState);
 
 }

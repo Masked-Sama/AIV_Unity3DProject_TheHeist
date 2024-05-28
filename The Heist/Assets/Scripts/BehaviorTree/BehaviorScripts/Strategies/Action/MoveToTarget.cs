@@ -17,7 +17,7 @@ public class MoveToTarget : StrategyAction
     }
     public MoveToTarget() { }
 
-    public override Node.Status Process()
+    public override Node.Status Process(ref BehaviourState currentState)
     {
         if (Vector3.Distance(owner.position, target.position) < 1f)
         {

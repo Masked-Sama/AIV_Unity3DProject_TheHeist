@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum BehaviourState
+{
+    IDLE,
+    MOVING,
+    ATTACKING,
+    END
+    // Add other possible states as needed
+}
 
 public class BehaviorTreePoliceOfficer : MonoBehaviour
 {
     private BehaviourTree tree;
 
     private IEnemyMovement ownerMovement;
+    private Animator animator;
 
 
     [SerializeField]
     private GameObject player;
-
-    //TODO: Animation
 
     //SerializeFields
     [SerializeField] bool canFollowThePlayer = true; 
@@ -24,9 +31,8 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
     void Start()
     {
-        //agent = GetComponent<NavMeshAgent>();
-
         ownerMovement = GetComponent<EnemyComponent>().GetEnemyMovement();
+        animator = GetComponentInChildren<Animator>();
 
         tree = new BehaviourTree("FollowPlayer");
 
@@ -34,15 +40,15 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform,player.transform, maxDistanceToShoot)));
-        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement)));
+        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, animator), behaviorTree: tree));
 
         Sequence Follow = new Sequence("FollowPlayer");
         Follow.AddChild(new Leaf("CanFollow?", new Condition(() => CanFollow())));
-        Follow.AddChild(new Leaf("Follow", new FollowTarget(ownerMovement, player.transform, speed)));
+        Follow.AddChild(new Leaf("Follow", new FollowTarget(ownerMovement, player.transform, speed, animator), behaviorTree: tree));
 
         selector.AddChild(Shoot);
         selector.AddChild(Follow);
-        selector.AddChild(new Leaf("Idle", new StayInIdle(false, ownerMovement)));
+        selector.AddChild(new Leaf("Idle", new StayInIdle(ownerMovement), behaviorTree: tree));
 
 
 
@@ -53,6 +59,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     private void Update()
     {
         tree.Process();
+        Debug.Log(tree.CurrentState.ToString());
     }
 
     bool CanFollow()

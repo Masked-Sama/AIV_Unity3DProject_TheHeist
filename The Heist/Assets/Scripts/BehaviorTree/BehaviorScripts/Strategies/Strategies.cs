@@ -6,9 +6,12 @@ using UnityEngine.AI;
 
 
     public interface IStrategy {
-        Node.Status Process();
-        
-        void Reset() {
+    Node.Status Process(ref BehaviourState currentState);
+    //Node.Status Process();
+
+    //Node.Status Process();
+
+    void Reset() {
             // Noop
         }
     }
@@ -20,11 +23,12 @@ using UnityEngine.AI;
             this.doSomething = doSomething;
         }
         
-        public Node.Status Process() {
-            doSomething();
-            return Node.Status.Success;
-        }
+    public Node.Status Process(ref BehaviourState currentState)
+    {
+        doSomething();
+        return Node.Status.Success;
     }
+}
     
     public class Condition : IStrategy {
         protected Func<bool> predicate;
@@ -33,7 +37,7 @@ using UnityEngine.AI;
             this.predicate = predicate;
         }
         public Condition() { }
-        public Node.Status Process() => predicate() ? Node.Status.Success : Node.Status.Failure;
+        public Node.Status Process(ref BehaviourState currentState) => predicate() ? Node.Status.Success : Node.Status.Failure;
     }
 
    
