@@ -2,8 +2,9 @@ using PlasticPipe.PlasticProtocol.Messages;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
-public class FollowTarget : StrategyAction
+public class FollowTarget : IStrategy
 {
     private IEnemyMovement owner;
 
@@ -15,21 +16,25 @@ public class FollowTarget : StrategyAction
 
     BehaviourState state = BehaviourState.MOVING;
 
-    public FollowTarget(IEnemyMovement owner, Transform target, float speed, Animator animator)
+    private bool everyframe = true;
+
+    public FollowTarget(IEnemyMovement owner, Transform target, float speed, Animator animator, bool everyFrame)
     {
         this.owner = owner;
         this.target = target;
         this.speed = speed;
         this.animator = animator;
-    }   
-    public FollowTarget()
-    {
-        
+        this.everyframe = everyFrame;
     }
 
 
-    public override Node.Status Process(ref BehaviourState currentState)
+    public Node.Status Process(ref BehaviourState currentState)
     {
+        if(!everyframe)
+        {
+        if (currentState == BehaviourState.MOVING) return Node.Status.Success;
+        }
+
         if (owner != null)
         {
             owner.MoveToTarget(target, speed);

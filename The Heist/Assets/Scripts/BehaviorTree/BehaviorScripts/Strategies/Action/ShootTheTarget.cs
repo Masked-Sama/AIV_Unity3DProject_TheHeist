@@ -15,12 +15,18 @@ public class ShootTheTarget : IStrategy
         this.animator = animator;   
 
     }
+    public ShootTheTarget(IEnemyMovement owner)
+    {
+        this.owner = owner;
+
+
+    }
     public Node.Status Process(ref BehaviourState currentState)
     {
         if (owner != null)
         {
             owner.StopMovement();
-            animator.SetBool("CanShoot", true);
+            if (animator) animator.SetBool("CanShoot", true);
         }
         currentState = state;
         
