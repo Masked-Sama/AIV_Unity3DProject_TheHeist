@@ -9,6 +9,9 @@ public class PoolData : ScriptableObject
     private GameObject prefab;
     [SerializeField] 
     private int poolNumber;
+    [Tooltip("Qui ci mettete tutto quello che volete")]
+    [SerializeField] 
+    private bool resizablePool;
 
     public string PoolKey {
         get { return poolKey; }
@@ -18,5 +21,8 @@ public class PoolData : ScriptableObject
     }    
     public int PoolNumber {
         get { return poolNumber; }
+    }    
+    public bool ResizablePool {
+        get { return resizablePool; }
     }
 }

@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2353e42d7cf8114ca9170611aebbfbc, type: 3}
-  m_Name: Pool_B
+  m_Name: Pool_A
   m_EditorClassIdentifier: 
-  poolKey: Enemy_1
-  prefab: {fileID: 0}
+  poolKey: Enemy_0
+  prefab: {fileID: 963696276025436030, guid: 9cc49e4d103b69349af33469fe6ee901, type: 3}
   poolNumber: 20
+  resizablePool: 0
