@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Button text="Buy" parse-escape-sequences="true" display-tooltip-when-elided="true" picking-mode="Ignore" style="height: 62px; width: 380px; position: absolute; top: 868px; left: 348px;" />
+    <ui:Label tabindex="-1" text="50 Coin" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; top: 190px; left: 73px;" />
+</ui:UXML>
