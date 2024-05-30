@@ -40,7 +40,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform,player.transform, maxDistanceToShoot)));
-        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, animator), behaviorTree: tree));
+        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, animator), behaviorTree: tree));
 
         Sequence Follow = new Sequence("FollowPlayer");
         Follow.AddChild(new Leaf("CanFollow?", new Condition(() => CanFollow())));

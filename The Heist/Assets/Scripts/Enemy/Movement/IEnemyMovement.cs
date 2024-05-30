@@ -15,7 +15,7 @@ public interface IEnemyMovement
     void Jump(); 
     void StopMovement();
     void SetJumpForce(float jumpForce);
-    void SetFaceDirection(bool value);
+    void SetFaceDirection(Transform targetTransform);
     void Hitted(Vector2 hitForce, Vector3 sourcePosition);
     void Hitted();
     void Die(Vector2 dieForce, Vector3 sourcePosition);

@@ -7,13 +7,15 @@ public class ShootTheTarget : IStrategy
     private IEnemyMovement owner;
     private Animator animator;
 
+    private Transform target;
+
     BehaviourState state = BehaviourState.ATTACKING;
 
-    public ShootTheTarget(IEnemyMovement owner, Animator animator)
+    public ShootTheTarget(IEnemyMovement owner, Transform target, Animator animator)
     {
         this.owner = owner;
         this.animator = animator;   
-
+        this.target = target;
     }
     public ShootTheTarget(IEnemyMovement owner)
     {
@@ -26,6 +28,8 @@ public class ShootTheTarget : IStrategy
         if (owner != null)
         {
             owner.StopMovement();
+
+            owner.SetFaceDirection(target);
             if (animator) animator.SetBool("CanShoot", true);
         }
         currentState = state;

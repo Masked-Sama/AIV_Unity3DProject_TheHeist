@@ -22,7 +22,7 @@ public class BehaviorTreeSniper : MonoBehaviour
     private void Start()
     {
         ownerMovement = GetComponent<EnemyComponent>().GetEnemyMovement();
-        //animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
 
         spot = GetSpot();
 
@@ -35,10 +35,10 @@ public class BehaviorTreeSniper : MonoBehaviour
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot)));
-        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement), behaviorTree: tree));
+        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform,animator), behaviorTree: tree));
 
         Sequence Crouch = new Sequence("Crouch");
-        Crouch.AddChild(new Leaf("Idle", new StayInIdle(ownerMovement), behaviorTree: tree));
+        Crouch.AddChild(new Leaf("Crouch", new Crouch(ownerMovement, animator), behaviorTree: tree));
 
         Selector selector = new Selector("Selector");
 
@@ -66,7 +66,7 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private bool CanMoveToSpot()
     {        
-        if(Vector3.Distance(transform.position, spot.transform.position) <= 1) return false;
+        if(Vector3.Distance(transform.position, spot.transform.position) <= 3) return false;
 
         return true;
     }

@@ -118,9 +118,18 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
         throw new System.NotImplementedException();
     }
 
-    public void SetFaceDirection(bool value)
+    public void SetFaceDirection(Transform targetTransform)
     {
-        throw new System.NotImplementedException();
+        Vector3 targetDirection = targetTransform.position - transform.position;
+
+        if (targetDirection.magnitude < Mathf.Epsilon) return;
+
+        targetDirection.Normalize();
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+
+        float damping = 5.0f; 
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * damping);
+
     }
 
     public void SetInputDirection(Vector3 inputDirection)
