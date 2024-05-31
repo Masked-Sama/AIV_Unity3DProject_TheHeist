@@ -20,8 +20,7 @@ namespace Player
 
         protected bool wasWalking;
         protected bool wasRunning;
-
-        protected float currentSpeed;
+        
         protected bool runKeyPressed;
         #endregion
 
@@ -45,7 +44,6 @@ namespace Player
             if (!CanMove()) return;
             FillDirectionFromInput();
             Move();
-            //Turn();
             HandleEvents();
         }
         #endregion
@@ -90,7 +88,7 @@ namespace Player
 
         protected void Move()
         {
-            currentSpeed = runKeyPressed ? runSpeed : walkSpeed;
+            float currentSpeed = runKeyPressed ? runSpeed : walkSpeed;
             Vector2 computedSpeed = playerController.ComputedDirection.normalized * currentSpeed;
             SetSpeed(computedSpeed);
         }
@@ -98,13 +96,12 @@ namespace Player
         protected void HandleEvents()
         {
             Vector3 movementVelocity = playerController.GetVelocity();
-            float lengthSquared = movementVelocity.x * movementVelocity.x + 
-                movementVelocity.z * movementVelocity.z;
+            float lengthSquared = playerController.GetDistanceSquared(velocityX: movementVelocity.x, velocityZ: movementVelocity.z);
 
             bool isRunning = lengthSquared > walkSpeed * walkSpeed;
             bool isWalking = (lengthSquared > moveThreshold * moveThreshold) && !isRunning;
 
-            if (isWalking && !wasWalking) playerController.OnWalkStarted?.Invoke();
+            if (isWalking && !wasWalking) playerController.OnWalkStarted?.Invoke(); 
             if (isRunning && !wasRunning) playerController.OnRunStarted?.Invoke();
             if (wasRunning && !isRunning) playerController.OnRunEnded?.Invoke();
             if (wasWalking && !isWalking) playerController.OnWalkEnded?.Invoke();

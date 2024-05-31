@@ -4,6 +4,8 @@ namespace Player
 {
     public class PlayerCollision : PlayerAbilityBase
     {
+        private const string groundedParameter = "Grounded";
+
         [SerializeField]
         protected LayerMask groundLayer;
         [SerializeField]
@@ -24,10 +26,12 @@ namespace Player
             if (wasGrounded)
             {
                 playerController.OnGroundReleased?.Invoke();
+                playerVisual.SetAnimatorParameter(groundedParameter, false);
             }
             else
             {
                 playerController.OnGroundLanded?.Invoke();
+                playerVisual.SetAnimatorParameter(groundedParameter, true);
             }
         }
 
