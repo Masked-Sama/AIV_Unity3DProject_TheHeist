@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneTemplate;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class ToggleInventoryHUD : MonoBehaviour
@@ -11,25 +11,35 @@ public class ToggleInventoryHUD : MonoBehaviour
     [SerializeField]
     InventoryObject inventoryObject;
 
+    
+    private UnityAction<GlobalEventArgs> OnAddToInventory;
+
     private void Awake()
     {
         inventoryGUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI"); 
+        
+    }
+    private void OnEnable()
+    {
+        GlobalEventManager.AddListener(GlobalEventIndex.AddItemToInventory, OnAddToInventory);
+        OnAddToInventory += CreateInventory;
     }
 
-    private void Update()   //DA CAMBIARE APPENA C'è IL GLOBAL EVENT MANAGER
-    {
-        CreateInventory(); 
-    }
 
-    private void CreateInventory()
+
+    //private void Update()   //DA CAMBIARE APPENA C'è IL GLOBAL EVENT MANAGER
+    //{
+    //    CreateInventory(); 
+    //}
+
+
+
+    private void CreateInventory(GlobalEventArgs message)
     {
-        int slotsNumber = inventoryObject.ItemsNumber;
-        inventoryGUI.MaxSlotsSize = slotsNumber;
-        for (int i = 0; i < slotsNumber; i++)
-        {
-            Texture2D texture = inventoryObject.InventorySlot[i].Item.Texture;
-            VisualElement itemIcon = inventoryGUI.Q<VisualElement>("Slot_" + i).Q<VisualElement>("ItemIcon");
-            itemIcon.style.backgroundImage = texture;
-        }
+
+        GlobalEventArgsFactory.AddItemToInventoryParser(message, out GameObject itemToAdd);
+        Item component = itemToAdd.GetComponent<Item>();
+        if (component == null) return;
+        Debug.Log("INVENTARIO: " + itemToAdd.gameObject.name);
     }
 }

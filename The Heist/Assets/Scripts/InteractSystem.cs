@@ -19,9 +19,22 @@ public class InteractSystem : MonoBehaviour
 
     private InputAction interact;
     private SimpleMovementComponent movementComponent;
+    private bool canPickUp = false;
+    private GameObject lastObjCollided;
+
+
     private void Awake()
     {
         movementComponent = GetComponent<SimpleMovementComponent>();
+    }
+
+    private void OnEnable()
+    {
+        InputManager.Player.Interact.performed += OnInteract;
+    }
+    private void OnDisable()
+    {
+        InputManager.Player.Interact.performed -= OnInteract;
     }
 
     private void Update()
@@ -34,19 +47,24 @@ public class InteractSystem : MonoBehaviour
         textUI.SetActive(false);        
         if (Physics.CapsuleCast(p1, p2, radius, transform.forward, out hit, distance))
         {
-            GameObject other = hit.collider.gameObject;
+            lastObjCollided = hit.collider.gameObject;
             textUI.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                var item = other.GetComponent<Item>();
-                if (item != null)
-                {
-                    inventory.AddItem(item.ItemObject, 1);
-                }
-
-                other.SetActive(false);
-            }
+            canPickUp = true;
         }
+    }
+
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+
+        if (!canPickUp) return;
+        Debug.Log("lastObjCollided: " + lastObjCollided.name);
+        
+        GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(lastObjCollided));
+        //var item = lastObjCollided.GetComponent<Item>();
+        //if (item != null)
+        //{
+        //    inventory.AddItem(item.ItemObject, 1);
+        //}
     }
 
     private void OnDrawGizmos()
