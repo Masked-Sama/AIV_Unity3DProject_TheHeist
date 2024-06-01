@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
       propertyPath: m_Name
-      value: Soldier
+      value: SoldierPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
       propertyPath: m_IsActive
@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
     - target: {fileID: 5866666021909216657, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
       propertyPath: m_Controller
       value: 
