@@ -1,4 +1,6 @@
+using Player;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractSystem : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class InteractSystem : MonoBehaviour
     [SerializeField]
     private InventoryObject inventory;
 
-
+    private InputAction interact;
     private SimpleMovementComponent movementComponent;
     private void Awake()
     {

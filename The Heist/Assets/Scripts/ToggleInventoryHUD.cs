@@ -14,17 +14,11 @@ public class ToggleInventoryHUD : MonoBehaviour
     private void Awake()
     {
         inventoryGUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI"); 
-        inventoryGUI.visible = false;
     }
 
-    private void Update()
+    private void Update()   //DA CAMBIARE APPENA C'è IL GLOBAL EVENT MANAGER
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (!inventoryGUI.visible) { CreateInventory(); }
-            inventoryGUI.visible = !inventoryGUI.visible;
-
-        }
+        CreateInventory(); 
     }
 
     private void CreateInventory()
