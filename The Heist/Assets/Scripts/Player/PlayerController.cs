@@ -31,6 +31,7 @@ namespace Player
 
         #region PlayerMovement
         public Vector2 ComputedDirection { get; set; }
+
         public Action OnWalkStarted;
         public Action OnWalkEnded;
         public Action OnRunStarted;

@@ -11,6 +11,10 @@ namespace Player
         [SerializeField]
         private float walkSpeed;
         [SerializeField]
+        private Transform playerMesh;
+        [SerializeField]
+        private Transform cameraPivot; // Switch camera with this.
+        [SerializeField]
         private float runSpeed;
         #endregion
 
@@ -18,9 +22,11 @@ namespace Player
         protected InputAction moveAction;
         protected InputAction runAction;
 
+        protected Vector2 computedSpeed;
+
         protected bool wasWalking;
         protected bool wasRunning;
-        
+
         protected bool runKeyPressed;
         #endregion
 
@@ -89,8 +95,22 @@ namespace Player
         protected void Move()
         {
             float currentSpeed = runKeyPressed ? runSpeed : walkSpeed;
-            Vector2 computedSpeed = playerController.ComputedDirection.normalized * currentSpeed;
+            Vector3 forwardDirection = playerController.PlayerTransform.forward * playerController.ComputedDirection.y;
+            Vector3 rightDirection = playerController.PlayerTransform.right * playerController.ComputedDirection.x;
+            Vector3 finalDirection = (forwardDirection + rightDirection).normalized;
+            computedSpeed.x = finalDirection.x;
+            computedSpeed.y = finalDirection.z;
+            computedSpeed *= currentSpeed;
             SetSpeed(computedSpeed);
+
+            if (computedSpeed.sqrMagnitude <= moveThreshold * moveThreshold) return;
+
+            // Rotation depending by movement.
+            Vector3 directionToLook = (playerController.PlayerTransform.position - playerController.CameraPositionTransform.position).normalized;
+            directionToLook.y = 0;
+            playerController.PlayerTransform.forward = Vector3.Slerp(playerController.PlayerTransform.forward, directionToLook, Time.deltaTime * 10);
+
+            playerMesh.forward = Vector3.Slerp(playerMesh.forward, finalDirection.normalized, Time.deltaTime * 10);
         }
 
         protected void HandleEvents()
@@ -101,7 +121,7 @@ namespace Player
             bool isRunning = lengthSquared > walkSpeed * walkSpeed;
             bool isWalking = (lengthSquared > moveThreshold * moveThreshold) && !isRunning;
 
-            if (isWalking && !wasWalking) playerController.OnWalkStarted?.Invoke(); 
+            if (isWalking && !wasWalking) playerController.OnWalkStarted?.Invoke();
             if (isRunning && !wasRunning) playerController.OnRunStarted?.Invoke();
             if (wasRunning && !isRunning) playerController.OnRunEnded?.Invoke();
             if (wasWalking && !isWalking) playerController.OnWalkEnded?.Invoke();
@@ -127,4 +147,3 @@ namespace Player
         #endregion
     }
 }
-
