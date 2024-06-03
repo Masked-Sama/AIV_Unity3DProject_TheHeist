@@ -24,7 +24,7 @@ public interface IEnemyMovement
     void SetVerticalMovement(float speed);
     void ResetMe();
     void MoveToTarget(Transform target, float speed);
-
+    Vector3 GetLocation();
 
     
 

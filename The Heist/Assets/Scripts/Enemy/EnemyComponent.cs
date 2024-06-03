@@ -9,8 +9,12 @@ public class EnemyComponent : MonoBehaviour
 
     [SerializeField]
     private EnemyMovementType movementType;
+
+    [SerializeField]
+    private EnemyShooter shooterComponent;
     
     public IEnemyMovement GetEnemyMovement() { return movementComponent; }
+    public EnemyShooter GetEnemyShooter() {  return shooterComponent; }
 
     public void Awake()
     {
@@ -27,4 +31,6 @@ public class EnemyComponent : MonoBehaviour
 
         }
     }
+
+
 }

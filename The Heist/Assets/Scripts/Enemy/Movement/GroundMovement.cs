@@ -17,7 +17,7 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
 {
     #region PrivateAttributes
     protected Rigidbody myRigidbody;
-    private BoxCollider myCollider;
+    private CapsuleCollider myCollider;
     private NavMeshAgent navMesh;
     private float movementSpeed;
     private float jumpForce;
@@ -69,7 +69,7 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
     private void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
-        myCollider = GetComponentInChildren<BoxCollider>();
+        myCollider = GetComponent<CapsuleCollider>();
         navMesh = GetComponent<NavMeshAgent>();
         ResetMe();
     }
@@ -174,6 +174,11 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
             navMesh.SetDestination(target.position);
             navMesh.speed = speed;
         }
+    }
+
+    public Vector3 GetLocation()
+    {
+        return myCollider.transform.position;
     }
 
     #endregion

@@ -1,10 +1,8 @@
 {
-    "name": "BehaviourTrees",
+    "name": "ShootSystem",
     "rootNamespace": "",
     "references": [
-        "GUID:b5c9d882f67700745a2d78257c51e247",
-        "GUID:299b25d5114bf56488a76b249e74bcd2",
-        "GUID:b42fbe98b387d7b40bd7299dcf6c3cd2"
+        "GUID:14f2777f1cb15c8459c3488ad70acfd5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
