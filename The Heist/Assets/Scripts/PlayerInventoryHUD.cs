@@ -1,43 +1,42 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class PlayerInventoryHUD : MonoBehaviour
 {
+    private const int maxSlotsNumber = 3;
+
     private InventoryUI inventoryGUI;
-    [SerializeField]
-    private InventoryObject inventoryObject;
 
     private void Awake()
     {
         inventoryGUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI");
-        inventoryGUI.MaxSlotsNumber = 3;
+        inventoryGUI.MaxSlotsNumber = maxSlotsNumber;
     }
     private void OnEnable()
     {
         GlobalEventManager.AddListener(GlobalEventIndex.AddItemToInventory, UpdateInventory);
     }
+
     private void UpdateInventory(GlobalEventArgs message)
     {
         GlobalEventArgsFactory.AddItemToInventoryParser(message, out GameObject itemToAdd);
         Item item = itemToAdd.GetComponent<Item>();
 
-        switch(item.ItemObj.Type)
+        switch(item.ItemObj.ItemType)
         {
-            case ItemType.Ammunition:
-                inventoryObject.ChangeItem(item.ItemObj, 1, 1);
-                inventoryGUI.SwitchSlotItem(1, item);
+            case ItemType.SecondWeapon:
+                inventoryGUI.SwitchSlotItem((int)SlotType.SecondWeapon, item);
                     break;
 
-            case ItemType.Weapon:
-                inventoryObject.ChangeItem(item.ItemObj, 1, 0);
-                inventoryGUI.SwitchSlotItem(0, item);
+            case ItemType.FirstWeapon:
+                inventoryGUI.SwitchSlotItem((int)SlotType.FirstWeapon, item);
                 break;
 
-            case ItemType.Consumable:
-                inventoryObject.ChangeItem(item.ItemObj, 1, 2);
-                inventoryGUI.SwitchSlotItem(2, item);
+            case ItemType.ThrowableWeapon:
+                inventoryGUI.SwitchSlotItem((int)SlotType.ThrowableWeapon, item);
                 break;
+            default:
+                return;
         }
     }
 }

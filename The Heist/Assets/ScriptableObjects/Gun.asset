@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gun
   m_EditorClassIdentifier: 
   prefab: {fileID: 6315479668469211241, guid: 56264153e42788d4299c9f98274a0598, type: 3}
-  description: little gun
+  description: A small Gun
   type: 0
   texture: {fileID: 2800000, guid: edc273488cca18249b3f1e94159d9201, type: 3}

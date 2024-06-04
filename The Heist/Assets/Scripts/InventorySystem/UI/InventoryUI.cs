@@ -57,7 +57,6 @@ public class InventoryUI : VisualElement
             var slot = slotTemplate.Instantiate();
             slot.name = "Slot_" + i;
             slot.style.flexDirection = FlexDirection.Row;
-            //SetBackgroundTexture(slot, new Texture2D((int)slot.layout.width, (int)slot.layout.height));
             slotContainer.Add(slot);
         }
     }

@@ -12,6 +12,8 @@ namespace Player
         private LayerMask layerMask;
         [SerializeField]
         private Collider myCollider;
+        [SerializeField]
+        private InventoryObject playerInventory;
 
 
         private List<Collider> otherObjs = new List<Collider>();
@@ -61,7 +63,12 @@ namespace Player
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
             if (IsEmptyItemList()) return;
+            Item item = otherObjs[0].GetComponent<Item>();
+            if (item == null) return;   
             GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(otherObjs[0].gameObject));
+            playerInventory.AddItem(item.ItemObj, item.Quantity, true);
+            otherObjs[0].gameObject.SetActive(false);
+            OnTriggerExit(otherObjs[0]);    
         }        
     }
 }

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7196851132166853697}
   - component: {fileID: 5132578243078874425}
   - component: {fileID: 1248558409269974389}
-  - component: {fileID: 6232945288337167233}
-  m_Layer: 0
-  m_Name: BoxAmmo
+  - component: {fileID: 1185559268247897722}
+  m_Layer: 7
+  m_Name: StunGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6232945288337167233
+--- !u!114 &1185559268247897722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,4 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 11400000, guid: a55a388f46d40854ca3a1e732a72ccd0, type: 2}
+  itemObj: {fileID: 11400000, guid: 85dc5a232022fad4c9c32b3486d3e85c, type: 2}
+  quantity: 4

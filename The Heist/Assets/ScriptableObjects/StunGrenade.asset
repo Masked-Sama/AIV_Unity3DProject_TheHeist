@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da8f3fad875fffa429ea8f9325fdad71, type: 3}
-  m_Name: DefaulConsumable
+  m_Script: {fileID: 11500000, guid: c0311f3380839b74ab9ad34858460c96, type: 3}
+  m_Name: StunGrenade
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  description: 
+  prefab: {fileID: 4567087386418846872, guid: f9226210c21949343a953b973ec56900, type: 3}
+  description: Grenade stun
   type: 2
-  texture: {fileID: 0}
+  texture: {fileID: 2800000, guid: aa5bfd06596e5fa4d8f4d9d02ebfbaf3, type: 3}

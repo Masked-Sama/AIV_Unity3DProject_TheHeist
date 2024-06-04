@@ -2,6 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 
+public enum SlotType
+{
+    FirstWeapon = 0, 
+    SecondWeapon = 1,
+    ThrowableWeapon = 2
+}
+
 [System.Serializable]
 public class InventorySlot
 {
