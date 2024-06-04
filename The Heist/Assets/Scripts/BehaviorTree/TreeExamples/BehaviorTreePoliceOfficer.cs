@@ -17,6 +17,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     private BehaviourTree tree;
 
     private IEnemyMovement ownerMovement;
+    private EnemyShooter ownerShooter;
     private Animator animator;
 
 
@@ -33,6 +34,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     {
         ownerMovement = GetComponent<EnemyComponent>().GetEnemyMovement();
         animator = GetComponentInChildren<Animator>();
+        ownerShooter = GetComponent<EnemyShooter>();
 
         tree = new BehaviourTree("PoliceOfficer");
 
@@ -40,7 +42,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform,player.transform, maxDistanceToShoot)));
-        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, animator), behaviorTree: tree));
+        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, animator, ownerShooter), behaviorTree: tree));
 
         Sequence Follow = new Sequence("FollowPlayer");
         Follow.AddChild(new Leaf("CanFollow?", new Condition(() => CanFollow())));

@@ -290,6 +290,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 1ac27fc08b1da25419400bde32ffcd09, type: 2}
     - target: {fileID: 3714629061835580281, guid: bb27a31460b0fe341a34047e5932213a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3714629061835580281, guid: bb27a31460b0fe341a34047e5932213a, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 4ddb9a1ef7bf94f44ae93cef3f1a1f33, type: 2}
@@ -336,6 +340,10 @@ PrefabInstance:
     - target: {fileID: 7937311818022708153, guid: bb27a31460b0fe341a34047e5932213a, type: 3}
       propertyPath: m_Name
       value: SniperPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937311818022708153, guid: bb27a31460b0fe341a34047e5932213a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -900,6 +908,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierPrefab (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7937311818022708153, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1078,6 +1090,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2012943767352227811, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
+      propertyPath: randomRange
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 2739961717422416723, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
       propertyPath: player
       value: 
@@ -1129,6 +1145,10 @@ PrefabInstance:
     - target: {fileID: 7937311818022708153, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
       propertyPath: m_Name
       value: SoldierPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937311818022708153, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1482,6 +1502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: 0
+  shooterComponent: {fileID: 0}
 --- !u!135 &1103406033
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1594,6 +1615,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2012943767352227811, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
+      propertyPath: randomRange
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 2739961717422416723, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
       propertyPath: player
       value: 
@@ -1829,6 +1854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierPrefab (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7937311818022708153, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1910,6 +1939,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SniperPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7937311818022708153, guid: bb27a31460b0fe341a34047e5932213a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1966,6 +1999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: 0
+  shooterComponent: {fileID: 0}
 --- !u!135 &1360745633
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2439,6 +2473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: 0
+  shooterComponent: {fileID: 0}
 --- !u!135 &1530876064
 SphereCollider:
   m_ObjectHideFlags: 0

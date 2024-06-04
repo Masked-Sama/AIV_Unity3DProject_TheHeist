@@ -120,6 +120,9 @@ PrefabInstance:
       addedObject: {fileID: 1495899450834357740}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2012943767352227811}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2739961717422416723}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
       insertIndex: -1
@@ -166,6 +169,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: 0
+  shooterComponent: {fileID: 2012943767352227811}
+--- !u!114 &2012943767352227811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7937311818022708153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62730087caa2ff54cb56a0a55658216b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: cba670aba7c51fb419c6431a884ea29b, type: 2}
+  randomRange: 0.07
 --- !u!114 &2739961717422416723
 MonoBehaviour:
   m_ObjectHideFlags: 0

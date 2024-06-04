@@ -119,6 +119,9 @@ PrefabInstance:
       addedObject: {fileID: -6652802273721760495}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 5719052876631307086}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4748858412331561005}
   m_SourcePrefab: {fileID: 100100000, guid: 06bb41f2c4c409542b030e3f9a185d61, type: 3}
 --- !u!1 &7937311818022708153 stripped
@@ -162,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: 0
+  shooterComponent: {fileID: 0}
 --- !u!114 &-6652802273721760495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +182,20 @@ MonoBehaviour:
   spots: []
   maxDistanceToShoot: 20
   speed: 5
+--- !u!114 &5719052876631307086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7937311818022708153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62730087caa2ff54cb56a0a55658216b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: cba670aba7c51fb419c6431a884ea29b, type: 2}
+  randomRange: 0
 --- !u!195 &4748858412331561005
 NavMeshAgent:
   m_ObjectHideFlags: 0

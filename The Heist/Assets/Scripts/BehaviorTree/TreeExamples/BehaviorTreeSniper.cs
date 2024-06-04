@@ -8,6 +8,7 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private IEnemyMovement ownerMovement;
     private Animator animator;
+    private EnemyShooter ownerShooter;
 
 
     [SerializeField] private GameObject player;
@@ -23,6 +24,7 @@ public class BehaviorTreeSniper : MonoBehaviour
     {
         ownerMovement = GetComponent<EnemyComponent>().GetEnemyMovement();
         animator = GetComponent<Animator>();
+        ownerShooter = GetComponent<EnemyShooter>();
 
         spot = GetSpot();
 
@@ -35,7 +37,7 @@ public class BehaviorTreeSniper : MonoBehaviour
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot)));
-        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform,animator), behaviorTree: tree));
+        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform,animator,ownerShooter), behaviorTree: tree));
 
         Sequence Crouch = new Sequence("Crouch");
         Crouch.AddChild(new Leaf("Crouch", new Crouch(ownerMovement, animator), behaviorTree: tree));
