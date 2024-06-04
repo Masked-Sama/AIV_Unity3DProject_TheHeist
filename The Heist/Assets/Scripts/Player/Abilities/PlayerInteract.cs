@@ -1,22 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System;
 namespace Player
 {
     public class PlayerInteract : PlayerAbilityBase
     {
         
         [SerializeField]
+        private float radius;
+        [SerializeField]
+        private float distance;
+
+
+        [SerializeField]
         private GameObject textUI;
         [SerializeField]
         private LayerMask layerMask;
         [SerializeField]
-        private Collider myCollider;
-        [SerializeField]
         private InventoryObject playerInventory;
 
+        private GameObject itemDetected;
+        private Action onItemDetected;
+        private Action onItemUndetected;
+        private RaycastHit hit;
+        private bool canInteract = false;
 
-        private List<Collider> otherObjs = new List<Collider>();
+        #region Override
         public override void OnInputDisabled()
         {
             isPrevented = true;
@@ -30,45 +40,92 @@ namespace Player
         {
         
         }
+        #endregion
 
+        #region Mono
         private void OnEnable()
         {
             InputManager.Player.Interact.performed += OnInteractPerform;
+            onItemUndetected += ItemUndetected;
+            onItemDetected += ItemDetected;
         }
         private void OnDisable()
         {
             InputManager.Player.Interact.performed -= OnInteractPerform;
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void Update()
         {
-            if (myCollider == null) return;
-            if ((1<< other.gameObject.layer) != layerMask.value) return;
-            otherObjs.Add(other);
+            DetectItem();
+        }
+        #endregion
+
+
+        private void DetectItem() 
+        {
+            bool wasInteract = canInteract;
+            canInteract = Physics.SphereCast(transform.position, radius, transform.forward, out hit, distance) 
+                    && (1 << hit.collider.gameObject.layer) == layerMask.value;
+            if (wasInteract == canInteract) return;
+            if (canInteract)
+            {
+                 itemDetected = hit.collider.gameObject;
+                 onItemDetected?.Invoke();
+            }
+            else
+            {
+                onItemUndetected?.Invoke();
+            }
+            
+        }
+
+        private void ItemDetected()
+        {
             textUI.SetActive(true);
+            canInteract = true;
         }
-
-        private void OnTriggerExit(Collider other)
+        private void ItemUndetected()
         {
-            otherObjs.Remove(other);
-            if (!IsEmptyItemList()) return;
             textUI.SetActive(false);
+            canInteract = false;
         }
 
-        private bool IsEmptyItemList()
-        {
-            return otherObjs.Count <= 0;
-        }
 
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
-            if (IsEmptyItemList()) return;
-            Item item = otherObjs[0].GetComponent<Item>();
-            if (item == null) return;   
-            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(otherObjs[0].gameObject));
+            if (!canInteract) return;
+            Item item = itemDetected.GetComponent<Item>();           
+            if (item == null) return;
+            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
             playerInventory.AddItem(item.ItemObj, item.Quantity, true);
-            otherObjs[0].gameObject.SetActive(false);
-            OnTriggerExit(otherObjs[0]);    
-        }        
+            itemDetected.SetActive(false);
+        }
+
+
+        private void OnDrawGizmos()
+        {
+            Vector3 pos = transform.position;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(pos, radius);
+            Gizmos.DrawRay(pos, transform.forward * distance);
+        }
     }
 }
+
+
+/*
+private void OnTriggerEnter(Collider other)
+{
+    if (myCollider == null) return;
+    if ((1<< other.gameObject.layer) != layerMask.value) return;
+    otherObjs.Add(other);
+    textUI.SetActive(true);
+}
+
+private void OnTriggerExit(Collider other)
+{
+    otherObjs.Remove(other);
+    if (!IsEmptyItemList()) return;
+    textUI.SetActive(false);
+}
+*/
