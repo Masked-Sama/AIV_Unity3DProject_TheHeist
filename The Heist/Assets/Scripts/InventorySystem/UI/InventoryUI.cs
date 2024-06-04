@@ -11,26 +11,24 @@ public class InventoryUI : VisualElement
     //aggiungiamo un nuovo elemento nell'inspector dell UI toolkit che andranno a settare i valori  degli inventories
     public new class UxmlTraits : VisualElement.UxmlTraits
     {
-        UxmlIntAttributeDescription maxSlotsSize = new UxmlIntAttributeDescription()  //nuova variabile intera Max_Slots_Size
+        UxmlIntAttributeDescription maxSlotsNumber = new UxmlIntAttributeDescription()  //nuova variabile intera Max_Slots_Size
         {
-            name = "Max_Slots_Size"
+            name = "Max_Slots_Number"
         };
        
         public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)    //linko i valori che andrò a inserire con i valori della classe PointBar
         {
             base.Init(ve, bag, cc);
 
-            (ve as InventoryUI).MaxSlotsSize = maxSlotsSize.GetValueFromBag(bag, cc); 
+            (ve as InventoryUI).MaxSlotsNumber = maxSlotsNumber.GetValueFromBag(bag, cc); 
         }
     }
 
 
-    private int maxSlotsSize;
-    public int MaxSlotsSize { get { return maxSlotsSize; } set { maxSlotsSize = value; CreateSlots(); } }
-
     private VisualTreeAsset slotTemplate;
     private VisualElement slotContainer;
-    private VisualElement[] slots;
+    private int maxSlotsNumber;
+    public int MaxSlotsNumber { get { return maxSlotsNumber; } set { maxSlotsNumber = value; CreateSlots(); } }
 
     public InventoryUI()
     {
@@ -43,18 +41,31 @@ public class InventoryUI : VisualElement
         hierarchy.Add(slotContainer);
     }
 
+
+    public void SwitchSlotItem(int index, Item itemToSwitch)
+    {
+        if (slotContainer[index] == null) return;
+        SetBackgroundTexture(slotContainer[index], itemToSwitch.ItemObj.Texture);
+    }
+
+    #region Private Methods
     private void CreateSlots()
     {
         slotContainer.Clear();
-        slots = new VisualElement[maxSlotsSize];
-        for (int i = 0; i < maxSlotsSize; i++)
+        for (int i = 0; i < maxSlotsNumber; i++)
         {
             var slot = slotTemplate.Instantiate();
             slot.name = "Slot_" + i;
             slot.style.flexDirection = FlexDirection.Row;
+            //SetBackgroundTexture(slot, new Texture2D((int)slot.layout.width, (int)slot.layout.height));
             slotContainer.Add(slot);
-            slots[i] = slot;
         }
     }
+
+    private void SetBackgroundTexture(VisualElement slot, Texture2D texture)
+    {   
+        slot.Q<VisualElement>("ItemIcon").style.backgroundImage = texture;
+    }
+    #endregion
 
 }

@@ -29,7 +29,7 @@ public static class GlobalEventManager {
     }
 
     public static void CastEvent(GlobalEventIndex eventToCast, GlobalEventArgs message) {
-        Debug.Log("Message: " + message.ToString());
+
 #if DEBUG
         Debug.Log(eventToCast + GlobalEventArgsFactory.GetDebugString(eventToCast, message));
 #endif

@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4560c5c20fd2fec4d9f87834fdb6663f, type: 3}
-  m_Name: GunObj
+  m_Script: {fileID: 11500000, guid: 3403dd2b587a2e94bbf43a6b0b2c65a1, type: 3}
+  m_Name: DefaultAmmunition
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6315479668469211241, guid: 56264153e42788d4299c9f98274a0598, type: 3}
-  description: A big gun
+  prefab: {fileID: 0}
+  description: 
   type: 0
-  texture: {fileID: 2800000, guid: edc273488cca18249b3f1e94159d9201, type: 3}
+  texture: {fileID: 0}
+  quantity: 0

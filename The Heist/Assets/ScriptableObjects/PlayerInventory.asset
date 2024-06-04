@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed756ac892aa8b74da5fa87c2307b4b6, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  inventoryObjects: []
+  inventoryObjects:
+  - item: {fileID: 11400000, guid: 0c687257da3c88c4aaa7357b9e57c927, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: a55a388f46d40854ca3a1e732a72ccd0, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 8cf274f3e9f6f5f4690828ee974d46a1, type: 2}
+    amount: 0

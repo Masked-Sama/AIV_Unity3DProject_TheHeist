@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,14 +8,15 @@ public class InventoryObject: ScriptableObject
     [SerializeField]
     private List<InventorySlot> inventoryObjects;
 
-    public int ItemsNumber { get {  return inventoryObjects.Count; } }
-    public List<InventorySlot> InventorySlot { get {  return inventoryObjects; } }
+    public int SlotsNumber { get {  return inventoryObjects.Count; } }
+    public List<InventorySlot> InventorySlots { get {  return inventoryObjects; } }
 
     private void Awake()
     {
         inventoryObjects = new List<InventorySlot>();
     }
-    public void AddItem(ItemObject item, int amount)
+    
+    private void AddItem(ItemObject item, int amount) 
     {
         for (int i = 0; i < inventoryObjects.Count; i++)
         {
@@ -28,4 +28,11 @@ public class InventoryObject: ScriptableObject
         }
         inventoryObjects.Add(new InventorySlot(item,amount));
     }
+
+    public void ChangeItem(ItemObject item, int amount, int index)
+    {
+        if (SlotsNumber <= index || amount <= 0) return;
+        inventoryObjects[index] = new InventorySlot(item,amount);
+    }
+
 }
