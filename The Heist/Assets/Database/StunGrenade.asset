@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2353e42d7cf8114ca9170611aebbfbc, type: 3}
-  m_Name: IncendiaryGrenade
+  m_Name: StunGrenade
   m_EditorClassIdentifier: 
-  poolKey: FireGrenade
-  prefab: {fileID: 197256, guid: 7cbb9ead96f471c4cb51d84f92bb1ab1, type: 3}
+  poolKey: StunGranade
+  prefab: {fileID: 5025385077116291451, guid: e2297e9d1ee3dd649ab699523faf672e, type: 3}
   poolNumber: 5
   resizablePool: 0

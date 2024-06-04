@@ -1,7 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum GrenadeType {
+    Incendiary,
+    Stun
+}
 
 public class GrenadeBase : MonoBehaviour, IGrenade
 {
@@ -9,28 +11,29 @@ public class GrenadeBase : MonoBehaviour, IGrenade
     private LayerMask destroyLayer;
     [SerializeField] 
     private Rigidbody rb;
+
+    [SerializeField] 
+    private float radius;
+
+    private GrenadeType grenadeType;
     
-    public void Throw(Transform cameraView, Transform spawnTransform, float force, float throwUpwardForce)
+    public virtual void Throw(Transform cameraView, Transform spawnTransform, float force, float throwUpwardForce)
     {
         gameObject.SetActive(true);
         transform.position = spawnTransform.position;
         Vector3 forceToAdd = cameraView.transform.forward * force + transform.up * throwUpwardForce;
         rb.AddForce(forceToAdd, ForceMode.Impulse);
     }
-
     public void OnCollisionEnter(Collision collision)
     {
         if(((1 << collision.collider.gameObject.layer) & destroyLayer.value) == 0) return;
-        Explode();
+        Explode(radius, grenadeType);
     }
-
-    public virtual void Explode()
+    
+    public virtual void Explode(float radius, GrenadeType grenadeType)
     {
-        //Exploding
-        
-        Destroy();    
+        Destroy();
     }
-
     private void Destroy()
     {
         gameObject.SetActive(false);
