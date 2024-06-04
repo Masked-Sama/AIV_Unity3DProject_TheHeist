@@ -9,6 +9,8 @@ public class Weapon : MonoBehaviour
     public GameObject weaponPrefab;
 
     private Transform weaponSlot;
+    [SerializeField]
+    private WeaponData weaponData;
 
     public void Start()
     {
