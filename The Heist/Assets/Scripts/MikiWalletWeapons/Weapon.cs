@@ -15,18 +15,7 @@ public class Weapon : MonoBehaviour
         weaponSlot = GameObject.FindWithTag("WeaponSlot").transform;
     }
 
-    public void BuyWeapon(PlayerCurrency playerCurrency)
-    {
-        if (playerCurrency.CanAfford(cost))
-        {
-            playerCurrency.CanAfford(cost);
-            EquipWeapon();
-        }
-        else
-        {
-            Debug.Log("Non hai i cash");
-        }
-    }
+    
 
     public void EquipWeapon()
     {
@@ -37,8 +26,8 @@ public class Weapon : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        GameObject equippedWeapon = Instantiate(weaponPrefab, weaponSlot);
-        equippedWeapon.transform.localPosition = Vector3.zero;
-        equippedWeapon.transform.localRotation = Quaternion.identity;
+        GameObject equippedweapon = Instantiate(weaponPrefab, weaponSlot);
+        equippedweapon.transform.localPosition = Vector3.zero;
+        equippedweapon.transform.localRotation = Quaternion.identity;
     }
 }

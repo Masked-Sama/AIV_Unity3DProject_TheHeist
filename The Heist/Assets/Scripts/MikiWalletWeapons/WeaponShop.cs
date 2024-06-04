@@ -1,54 +1,116 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class WeaponShop : MonoBehaviour
 {
+    public Transform playerCamera;
     public float interactionDistance = 3f;
-    public Text infoText;
+    public LayerMask weaponLayer;
+    public GameObject infoText;
+    [SerializeField]
     public PlayerCurrency playerCurrency;
-    private Camera playerCamera;
 
-    void Start()
+    private PlayerInputActions inputActions;
+    private bool isInteracting;
+
+    private void Awake()
     {
-        playerCamera = Camera.main;
-        if (playerCamera == null)
-        {
-            Debug.LogError("Main Camera not found! Please ensure your player camera is tagged as MainCamera.");
-        }
-        infoText.text = "";
+        inputActions = new PlayerInputActions();
     }
 
-    void Update()
+    private void OnEnable()
     {
-        if (playerCamera == null) return;
+        inputActions.Enable();
+        inputActions.Player.Interact.performed += OnInteractPerformed;
+        inputActions.Player.Interact.canceled += OnInteractCanceled;
+    }
 
-        // Genera un Ray dal centro della telecamera (che corrisponde alla posizione del crosshair)
-        Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+    private void OnDisable()
+    {
+        inputActions.Player.Interact.performed -= OnInteractPerformed;
+        inputActions.Player.Interact.canceled -= OnInteractCanceled;
+        inputActions.Disable();
+    }
+
+    private void OnInteractPerformed(InputAction.CallbackContext context)
+    {
+        isInteracting = true;
+        Debug.Log("Interact performed");
+    }
+
+    private void OnInteractCanceled(InputAction.CallbackContext context)
+    {
+        isInteracting = false;
+    }
+
+    private void Update()
+    {
+        Ray ray = new Ray(playerCamera.position, playerCamera.forward);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, interactionDistance))
+
+        if (Physics.Raycast(ray, out hit, interactionDistance, weaponLayer))
         {
-            Debug.Log("Raycast hit: " + hit.transform.name);
-            Weapon weapon = hit.transform.GetComponent<Weapon>();
+            Weapon weapon = hit.collider.GetComponent<Weapon>();
             if (weapon != null)
             {
-                infoText.text = weapon.weaponName + " - Costo: " + weapon.cost;
-                Debug.Log("Puntamento su: " + weapon.weaponName);
-                if (Input.GetKeyDown(KeyCode.E))
+                infoText.SetActive(true);
+                infoText.GetComponent<UnityEngine.UI.Text>().text = $"{weapon.weaponName} - Cost: {weapon.cost}";
+
+                if (isInteracting)
                 {
-                    Debug.Log("Tentativo di acquisto: " + weapon.weaponName);
-                    weapon.BuyWeapon(playerCurrency);
+                    PurchaseWeapon(weapon);
+                    isInteracting = false; // Reset interaction flag to prevent multiple purchases
                 }
-            }
-            else
-            {
-                infoText.text = "";
-                Debug.Log("Raycast hit non-weapon object: " + hit.transform.name);
             }
         }
         else
         {
-            infoText.text = "";
-            Debug.Log("Raycast did not hit any object");
+            infoText.SetActive(false);
         }
+    }
+
+    private void PurchaseWeapon(Weapon weapon)
+    {
+         //playerCurrency = GetComponent<PlayerCurrency>();
+         PlayerCurrency soldi = playerCurrency.GetComponent<PlayerCurrency>();
+
+        if (soldi != null)
+        {
+            Debug.Log("Player current money: " + soldi.money);
+            Debug.Log("Weapon cost: " + weapon.cost);
+
+            if (soldi.SpendMoney(weapon.cost))
+            {
+                weapon.EquipWeapon();
+            }
+            else
+            {
+                Debug.Log("Insufficient funds.");
+            }
+        }
+        else
+        {
+            Debug.Log("PlayerCurrency component not found on player.");
+        }
+    }
+
+
+    private void EquipWeapon(Weapon weapon)
+    {
+        // Disattiva tutte le altre armi (se presenti)
+        foreach (Transform child in transform)
+        {
+            Weapon childWeapon = child.GetComponent<Weapon>();
+            if (childWeapon != null)
+            {
+                childWeapon.gameObject.SetActive(false);
+            }
+        }
+
+        // Attiva l'arma acquistata
+        weapon.gameObject.SetActive(true);
+
+        // Logica di equipaggiamento aggiuntiva
+        Debug.Log($"Equipped {weapon.weaponName}");
     }
 }
