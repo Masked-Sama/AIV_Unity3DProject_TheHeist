@@ -71,6 +71,12 @@ namespace Player
             }
         }
 
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         private void FixedUpdate()
         {
             playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));

@@ -35,6 +35,7 @@ namespace Player
             }
         }
 
+        #region PublicMethods
         public override void OnInputDisabled()
         {
             isPrevented = true;
@@ -46,5 +47,6 @@ namespace Player
         }
 
         public override void StopAbility() { }
+        #endregion
     }
 }

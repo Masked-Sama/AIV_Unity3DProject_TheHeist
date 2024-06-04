@@ -11,11 +11,14 @@ namespace Player
         [SerializeField]
         private float walkSpeed;
         [SerializeField]
+        private float runSpeed;
+        [SerializeField]
+        private float rotationSpeed;
+        [SerializeField]
         private Transform playerMesh;
         [SerializeField]
-        private Transform cameraPivot; // Switch camera with this.
-        [SerializeField]
-        private float runSpeed;
+        private Transform cameraPivot;
+
         #endregion
 
         #region InternalMembers
@@ -105,12 +108,16 @@ namespace Player
 
             if (computedSpeed.sqrMagnitude <= moveThreshold * moveThreshold) return;
 
-            // Rotation depending by movement.
-            Vector3 directionToLook = (playerController.PlayerTransform.position - playerController.CameraPositionTransform.position).normalized;
-            directionToLook.y = 0;
-            playerController.PlayerTransform.forward = Vector3.Slerp(playerController.PlayerTransform.forward, directionToLook, Time.deltaTime * 10);
+            PlayerLookTowardsInput(finalDirection);
+        }
 
-            playerMesh.forward = Vector3.Slerp(playerMesh.forward, finalDirection.normalized, Time.deltaTime * 10);
+        private void PlayerLookTowardsInput(Vector3 finalDirection)
+        {
+            // Rotation depending by movement.
+            Vector3 directionToLook = (cameraPivot.position - playerController.CameraPositionTransform.position).normalized;
+            directionToLook.y = 0;
+            playerController.PlayerTransform.forward = Vector3.Slerp(playerController.PlayerTransform.forward, directionToLook, Time.deltaTime * rotationSpeed);
+            playerMesh.forward = Vector3.Slerp(playerMesh.forward, finalDirection.normalized, Time.deltaTime * rotationSpeed);
         }
 
         protected void HandleEvents()
