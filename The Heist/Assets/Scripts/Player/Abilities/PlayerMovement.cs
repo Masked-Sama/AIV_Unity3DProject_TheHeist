@@ -12,16 +12,24 @@ namespace Player
         private float walkSpeed;
         [SerializeField]
         private float runSpeed;
+        [SerializeField]
+        private float rotationSpeed;
+        [SerializeField]
+        private Transform playerMesh;
+        [SerializeField]
+        private Transform cameraPivot;
+
         #endregion
 
         #region InternalMembers
         protected InputAction moveAction;
         protected InputAction runAction;
 
+        protected Vector2 computedSpeed;
+
         protected bool wasWalking;
         protected bool wasRunning;
 
-        protected float currentSpeed;
         protected bool runKeyPressed;
         #endregion
 
@@ -45,7 +53,6 @@ namespace Player
             if (!CanMove()) return;
             FillDirectionFromInput();
             Move();
-            //Turn();
             HandleEvents();
         }
         #endregion
@@ -90,16 +97,33 @@ namespace Player
 
         protected void Move()
         {
-            currentSpeed = runKeyPressed ? runSpeed : walkSpeed;
-            Vector2 computedSpeed = playerController.ComputedDirection.normalized * currentSpeed;
+            float currentSpeed = runKeyPressed ? runSpeed : walkSpeed;
+            Vector3 forwardDirection = playerController.PlayerTransform.forward * playerController.ComputedDirection.y;
+            Vector3 rightDirection = playerController.PlayerTransform.right * playerController.ComputedDirection.x;
+            Vector3 finalDirection = (forwardDirection + rightDirection).normalized;
+            computedSpeed.x = finalDirection.x;
+            computedSpeed.y = finalDirection.z;
+            computedSpeed *= currentSpeed;
             SetSpeed(computedSpeed);
+
+            if (computedSpeed.sqrMagnitude <= moveThreshold * moveThreshold) return;
+
+            PlayerLookTowardsInput(finalDirection);
+        }
+
+        private void PlayerLookTowardsInput(Vector3 finalDirection)
+        {
+            // Rotation depending by movement.
+            Vector3 directionToLook = (cameraPivot.position - playerController.CameraPositionTransform.position).normalized;
+            directionToLook.y = 0;
+            playerController.PlayerTransform.forward = Vector3.Slerp(playerController.PlayerTransform.forward, directionToLook, Time.deltaTime * rotationSpeed);
+            playerMesh.forward = Vector3.Slerp(playerMesh.forward, finalDirection.normalized, Time.deltaTime * rotationSpeed);
         }
 
         protected void HandleEvents()
         {
             Vector3 movementVelocity = playerController.GetVelocity();
-            float lengthSquared = movementVelocity.x * movementVelocity.x + 
-                movementVelocity.z * movementVelocity.z;
+            float lengthSquared = playerController.GetDistanceSquared(velocityX: movementVelocity.x, velocityZ: movementVelocity.z);
 
             bool isRunning = lengthSquared > walkSpeed * walkSpeed;
             bool isWalking = (lengthSquared > moveThreshold * moveThreshold) && !isRunning;
@@ -130,4 +154,3 @@ namespace Player
         #endregion
     }
 }
-

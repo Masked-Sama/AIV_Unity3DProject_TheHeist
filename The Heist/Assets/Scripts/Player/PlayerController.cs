@@ -5,6 +5,8 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        private const string currentSpeedParameter = "CurrentSpeed";
+
         #region SerializeField
         [SerializeField]
         protected Transform playerTransform;
@@ -12,6 +14,8 @@ namespace Player
         protected Rigidbody playerRigidbody;
         [SerializeField]
         protected Collider playerPhysicsCollider;
+        [SerializeField]
+        protected PlayerVisual playerVisual;
         [SerializeField]
         protected Transform cameraPositionTransform;
         #endregion
@@ -27,12 +31,11 @@ namespace Player
 
         #region PlayerMovement
         public Vector2 ComputedDirection { get; set; }
+
         public Action OnWalkStarted;
         public Action OnWalkEnded;
         public Action OnRunStarted;
         public Action OnRunEnded;
-
-        public Action<float> OnDirectionChanged; // ?
         #endregion
 
         #region PublicProperties
@@ -63,9 +66,20 @@ namespace Player
             abilities = GetComponentsInChildren<PlayerAbilityBase>();
             foreach (var ability in abilities)
             {
-                ability.Init(this);
+                ability.Init(this, playerVisual);
                 ability.enabled = true;
             }
+        }
+
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        private void FixedUpdate()
+        {
+            playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));
         }
         #endregion
 
@@ -84,6 +98,13 @@ namespace Player
         {
             SetVelocity(Vector3.zero);
             playerRigidbody.AddForce(impulse, ForceMode.Impulse);
+        }
+        #endregion
+
+        #region PublicMethods
+        public float GetDistanceSquared(float velocityX = 0f, float velocityY = 0f, float velocityZ = 0f)
+        {
+            return Math.Abs((velocityX * velocityX) + (velocityY + velocityY) + (velocityZ * velocityZ));
         }
         #endregion
 

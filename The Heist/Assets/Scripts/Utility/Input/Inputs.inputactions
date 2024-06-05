@@ -33,13 +33,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ThrowGrenade",
-                    "type": "Button",
-                    "id": "f68b2384-2628-4e3c-a84d-119734bebb3e",
-                    "expectedControlType": "Button",
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "0292804a-c7ba-468e-9906-ea07a108d28e",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -122,12 +122,12 @@
                 },
                 {
                     "name": "",
-                    "id": "c55a9900-df58-4a76-977a-c97e3106bb12",
-                    "path": "<Keyboard>/g",
+                    "id": "f37df782-37b7-4679-8649-4d479dd0e82a",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ThrowGrenade",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
