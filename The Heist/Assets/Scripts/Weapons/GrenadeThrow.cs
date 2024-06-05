@@ -22,11 +22,14 @@ public class GrenadeThrow : MonoBehaviour, IPoolRequester
     [SerializeField] private float throwUpwardForce;
 
     private GrenadeType currentGrenadeType;
+    private bool canThrow = true;
+    private float currentThrowCD = 0;
+    
+    
     public PoolData[] Datas {
         get { return grenadeType; }
     }
 
-    private float currentBulletCD;
 
     public void OnEnable()
     {
@@ -40,24 +43,45 @@ public class GrenadeThrow : MonoBehaviour, IPoolRequester
         
         //scelgo la pool in base al valore
         IGrenade grenadeComponent;
-        switch (currentGrenadeType)
-        {
+        switch (currentGrenadeType) {
             case GrenadeType.Incendiary:
                 grenadeComponent = Pooler.Istance.GetPooledObject(grenadeType[0]).GetComponent<IGrenade>();
-                Debug.Log("Lancio la granata incendiaria");
                 break;
             case GrenadeType.Stun:
                 grenadeComponent = Pooler.Istance.GetPooledObject(grenadeType[1]).GetComponent<IGrenade>();
-                Debug.Log("Lancio la granata stordente");
                 break;
             default: return;
         }
         //Get From Pool
-        if (grenadeComponent == null)
-        {
-            Debug.Log("Non c'è niente");
+        if (grenadeComponent == null) {
+            Debug.Log("Nothing here");
             return;
         }
-        grenadeComponent.Throw(camera, attackPoint, throwForce, throwUpwardForce);
+
+        if (canThrow) {
+            grenadeComponent.Throw(camera, attackPoint, throwForce, throwUpwardForce);
+            canThrow = false;
+            currentThrowCD = throwCooldown;
+        }
+    }
+
+    private void Update() {
+        
+        if (currentThrowCD > 0) {
+            currentThrowCD -= Time.deltaTime;
+            if (currentThrowCD <= 0) {
+                canThrow = true;
+            }
+        }
+    }
+
+    private void CanThrow(float deltaTime) {
+        currentThrowCD -= Time.deltaTime;
+        if (currentThrowCD > 0)
+        {
+            canThrow = false;
+            return;
+        }
+        canThrow = true;
     }
 }

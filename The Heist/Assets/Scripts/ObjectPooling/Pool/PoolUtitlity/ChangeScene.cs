@@ -10,10 +10,10 @@ public class ChangeScene : MonoBehaviour
     private Coroutine changeSceneCoroutine;
     void Update()
     {
-        if(changeSceneCoroutine != null) return;
-        if (Input.GetKey(KeyCode.Space)) {
-            changeSceneCoroutine = StartCoroutine(ChangeSceneCoroutine());
-        }
+        //if(changeSceneCoroutine != null) return;
+        // if (Input.GetKey(KeyCode.Space)) {
+        //     changeSceneCoroutine = StartCoroutine(ChangeSceneCoroutine());
+        // }
     }
 
     private IEnumerator ChangeSceneCoroutine()

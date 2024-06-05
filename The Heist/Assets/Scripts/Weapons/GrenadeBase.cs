@@ -13,10 +13,7 @@ public class GrenadeBase : MonoBehaviour, IGrenade
     private Rigidbody rb;
 
     [SerializeField] 
-    private float radius;
-
-    private GrenadeType grenadeType;
-    
+    protected float radius;
     public virtual void Throw(Transform cameraView, Transform spawnTransform, float force, float throwUpwardForce)
     {
         gameObject.SetActive(true);
@@ -24,10 +21,9 @@ public class GrenadeBase : MonoBehaviour, IGrenade
         Vector3 forceToAdd = cameraView.transform.forward * force + transform.up * throwUpwardForce;
         rb.AddForce(forceToAdd, ForceMode.Impulse);
     }
-    public void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter(Collision collision)
     {
         if(((1 << collision.collider.gameObject.layer) & destroyLayer.value) == 0) return;
-        Explode(radius, grenadeType);
     }
     
     public virtual void Explode(float radius, GrenadeType grenadeType)
