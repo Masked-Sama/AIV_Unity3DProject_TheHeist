@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using UnityEngine;
 
 
@@ -20,6 +21,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     private Vector3[] directions = new Vector3[10];
 
+    private Animator animator;
 
     public void Start()
     {
@@ -34,6 +36,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
             float randomZ = UnityEngine.Random.Range(-randomRange, randomRange);
             directions[i] = new Vector3(randomX, randomY, randomZ);
         }
+        animator = GetComponent<Animator>();
     }
 
     public void Reload()
@@ -42,7 +45,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
         {
             return; 
         }
-
+        animator.SetTrigger("Reload");
         canShoot = false;
         reloadTimer = weaponData.ReloadTime;
     }
@@ -65,23 +68,23 @@ public class EnemyShooter : MonoBehaviour, IShooter
                 if (hit.collider.gameObject.GetComponent<IDamageble>() == null && hit.collider.gameObject == gameObject)
                 {
                     Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
-                    Debug.DrawLine(initialPosition, endPosition, Color.red, 0.2f);
+                    Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
                     return;
                 }
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     Debug.Log("Hit Player!!!");
-                    Debug.DrawLine(initialPosition, hit.point, Color.green, 0.2f);
+                    Debug.DrawLine(initialPosition, hit.point, Color.green, 0.1f);
                 }
             }
             else
             {
                 Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
-                Debug.DrawLine(initialPosition, endPosition, Color.red, 0.2f);
+                Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
             }
 
         }
-        else Reload();
+        else if (fireTime <= 0f) Reload();
     }
 
 
