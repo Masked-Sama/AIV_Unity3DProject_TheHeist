@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8625c8255e826c44a1062e531dd275f, type: 3}
+  m_Name: AssaultRifle
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6136728534588193971, guid: 59fedd8b3205e0540b1e61ea796dd453, type: 3}
+  description: Assault Rifle
+  type: 1
+  texture: {fileID: 2800000, guid: 00a98b3cbb4c24e4882ab60443bef5d1, type: 3}

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da8f3fad875fffa429ea8f9325fdad71, type: 3}
-  m_Name: Apple
+  m_Script: {fileID: 11500000, guid: 96f410fb4b0b6b744b672e9c2a3af7d0, type: 3}
+  m_Name: Gun2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4530732409369642235, guid: fa2036cdf416d7e4794876411341f807, type: 3}
-  description: An Apple
+  prefab: {fileID: 8369626558175630070, guid: dea4b8005ed698c409fdd5a18ecadc3b, type: 3}
+  description: Another gun
   type: 0
-  texture: {fileID: 2800000, guid: 820cb0df5fdfbd84ea09501c16efb3cc, type: 3}
+  texture: {fileID: 2800000, guid: 8f3f7d2aaccf3b845922c46f0b7c03d5, type: 3}

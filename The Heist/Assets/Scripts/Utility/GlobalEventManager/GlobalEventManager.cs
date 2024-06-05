@@ -29,6 +29,7 @@ public static class GlobalEventManager {
     }
 
     public static void CastEvent(GlobalEventIndex eventToCast, GlobalEventArgs message) {
+
 #if DEBUG
         Debug.Log(eventToCast + GlobalEventArgsFactory.GetDebugString(eventToCast, message));
 #endif
@@ -96,6 +97,7 @@ public enum GlobalEventIndex {
     StartDialogue,
     DialoguePerformed,
     ShakeCamera,
-    PlayerEnergyUpdated
+    PlayerEnergyUpdated,
+    AddItemToInventory
 }
 

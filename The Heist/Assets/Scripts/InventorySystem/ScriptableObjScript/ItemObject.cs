@@ -2,8 +2,9 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Weapon,
-    Ammunition,
+    FirstWeapon,
+    SecondWeapon,
+    ThrowableWeapon,
     Consumable
 }
 
@@ -20,7 +21,7 @@ public abstract class ItemObject : ScriptableObject
 
     public GameObject Prefab {  get { return prefab; } }
     public string Description { get { return description; } }
-    public ItemType Type { get { return type; } }
+    public ItemType ItemType { get { return type; } }
     public Texture2D Texture { get { return texture; } }
 
 }

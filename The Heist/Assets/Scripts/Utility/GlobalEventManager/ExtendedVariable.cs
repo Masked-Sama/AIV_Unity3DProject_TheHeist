@@ -26,7 +26,6 @@ public class ExtendedVariable
     }
     [SerializeField]
     private ExtendedVariableType type;
-    [SerializeField]
     public ExtendedVariableType Type {
         get { return type; }
     }

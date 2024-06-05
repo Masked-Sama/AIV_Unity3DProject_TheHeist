@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da8f3fad875fffa429ea8f9325fdad71, type: 3}
-  m_Name: Apple
+  m_Script: {fileID: 11500000, guid: cf338471d8a64404488fdf7275081e4f, type: 3}
+  m_Name: AddItemToInventory
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4530732409369642235, guid: fa2036cdf416d7e4794876411341f807, type: 3}
-  description: An Apple
-  type: 0
-  texture: {fileID: 2800000, guid: 820cb0df5fdfbd84ea09501c16efb3cc, type: 3}
+  eventTemplate: 0
+  variablesName:
+  - AddItemToInventoryValue
+  variablesType: 02000000
