@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DevScene.unity
     guid: 0048c32ddb96a5444951d434ab2e786f
   - enabled: 1
-    path: Assets/Scenes/AndreaTestScene.unity
+    path: Assets/Scenes/GrenadeTestScene.unity
     guid: ac35bef7c856695499850b556fbaf59e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 02f76f7cb8e2c204fa8812567c5e948a, type: 2}
