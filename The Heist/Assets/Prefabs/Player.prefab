@@ -727,6 +727,57 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 866371641167254270}
+--- !u!1 &3785810406258017953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5553213417904513281}
+  - component: {fileID: 821902992653003305}
+  m_Layer: 6
+  m_Name: PlayerInteract
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5553213417904513281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785810406258017953}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5814257, y: 1.1500001, z: 382.54}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2540485205249350924}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &821902992653003305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785810406258017953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5fe83fcbc4df84492566a40504888f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0.5
+  distance: 10
+  textUI: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  playerInventory: {fileID: 11400000, guid: cf38df465301b9e46bea4e94da5c95ce, type: 2}
 --- !u!1 &4085165426646409706
 GameObject:
   m_ObjectHideFlags: 3
@@ -839,6 +890,7 @@ Transform:
   - {fileID: 5328988622933042228}
   - {fileID: 3861913461838180988}
   - {fileID: 4917275200368299643}
+  - {fileID: 5553213417904513281}
   m_Father: {fileID: 8802209782701764689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4186752546459685517
@@ -4765,13 +4817,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c64b08154255a548be5aeeca13c2d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 2794238546782038575}
+  thirdPersonCamera: {fileID: 0}
   attackPoint: {fileID: 4204401462039891615}
   grenadeType:
   - {fileID: 11400000, guid: 701e49c4fc1fa4d4eb034f90ee59e9bb, type: 2}
   - {fileID: 11400000, guid: f3b41928b2b22ab44935f1645e3787d0, type: 2}
   throwCooldown: 2
-  throwKey: 103
   throwForce: 10
   throwUpwardForce: 2
 --- !u!1 &7530874161050733005

@@ -1,22 +1,27 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 using System;
+
 namespace Player
 {
     public class PlayerInteract : PlayerAbilityBase
     {
-        
         [SerializeField]
         private float radius;
         [SerializeField]
         private float distance;
+        [SerializeField]
+        private Transform cameraTransform;
 
+        [SerializeField]
+        private Transform origin;
 
         [SerializeField]
         private GameObject textUI;
         [SerializeField]
         private LayerMask layerMask;
+        [SerializeField]
+        private LayerMask wallMask;
         [SerializeField]
         private InventoryObject playerInventory;
 
@@ -60,12 +65,17 @@ namespace Player
         }
         #endregion
 
-
         private void DetectItem() 
         {
             bool wasInteract = canInteract;
-            canInteract = Physics.SphereCast(transform.position, radius, transform.forward, out hit, distance) 
-                    && (1 << hit.collider.gameObject.layer) == layerMask.value;
+            //canInteract = Physics.SphereCast(transform.position, radius, cameraTransform.forward, out hit, distance)
+            //        && (1 << hit.collider.gameObject.layer) == layerMask.value
+            //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
+
+            canInteract = Physics.Raycast(origin.position, cameraTransform.forward, out hit, distance)
+                        && (1 << hit.collider.gameObject.layer) == layerMask.value
+                        && (1 << hit.collider.gameObject.layer) != wallMask.value;
+
             if (wasInteract == canInteract) return;
             if (canInteract)
             {
@@ -90,7 +100,6 @@ namespace Player
             canInteract = false;
         }
 
-
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
             if (!canInteract) return;
@@ -104,10 +113,11 @@ namespace Player
 
         private void OnDrawGizmos()
         {
-            Vector3 pos = transform.position;
+            Vector3 pos = origin.position;
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pos, radius);
-            Gizmos.DrawRay(pos, transform.forward * distance);
+            //Gizmos.DrawWireSphere(pos, radius);
+            //Gizmos.DrawWireSphere(pos + cameraTransform.forward * distance, radius);
+            Gizmos.DrawRay(pos, cameraTransform.forward * distance);
         }
     }
 }
