@@ -8,8 +8,6 @@ namespace Player
 
         [Header("Variables References")]
         [SerializeField]
-        private Transform thirdPersonCamera;
-        [SerializeField]
         private Transform attackPoint;
         [SerializeField]
         private PoolData[] grenadeType;
@@ -63,7 +61,7 @@ namespace Player
             if (!CanThrow()) return;
             //Player mi passa un valore per determinare la granata
 
-            //scelgo la pool in base al valore
+            //Scelgo la pool in base al valore
             IGrenade grenadeComponent;
             switch (currentGrenadeType)
             {
@@ -81,7 +79,7 @@ namespace Player
                 return;
             }
 
-            grenadeComponent.Throw(thirdPersonCamera, attackPoint, throwForce, throwUpwardForce);
+            grenadeComponent.Throw(playerController.CameraPositionTransform, attackPoint, throwForce, throwUpwardForce);
             playerController.OnThrowGrenade?.Invoke(grenadeComponent);
             canThrow = false;
             currentThrowCD = throwCooldown;

@@ -6,15 +6,10 @@ namespace Player
 {
     public class PlayerInteract : PlayerAbilityBase
     {
-        [SerializeField]
-        private float radius;
+        //[SerializeField]
+        //private float radius;
         [SerializeField]
         private float distance;
-        [SerializeField]
-        private Transform cameraTransform;
-
-        [SerializeField]
-        private Transform origin;
 
         [SerializeField]
         private GameObject textUI;
@@ -68,11 +63,12 @@ namespace Player
         private void DetectItem() 
         {
             bool wasInteract = canInteract;
-            //canInteract = Physics.SphereCast(transform.position, radius, cameraTransform.forward, out hit, distance)
+
+            //canInteract = Physics.SphereCast(transform.position, radius, playerController.CameraPositionTransform.forward, out hit, distance)
             //        && (1 << hit.collider.gameObject.layer) == layerMask.value
             //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
 
-            canInteract = Physics.Raycast(origin.position, cameraTransform.forward, out hit, distance)
+            canInteract = Physics.Raycast(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward, out hit, distance)
                         && (1 << hit.collider.gameObject.layer) == layerMask.value
                         && (1 << hit.collider.gameObject.layer) != wallMask.value;
 
@@ -113,11 +109,12 @@ namespace Player
 
         private void OnDrawGizmos()
         {
-            Vector3 pos = origin.position;
             Gizmos.color = Color.red;
+
             //Gizmos.DrawWireSphere(pos, radius);
-            //Gizmos.DrawWireSphere(pos + cameraTransform.forward * distance, radius);
-            Gizmos.DrawRay(pos, cameraTransform.forward * distance);
+            //Gizmos.DrawWireSphere(pos + playerController.CameraPositionTransform.forward * distance, radius);
+
+            //Gizmos.DrawRay(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward * distance);
         }
     }
 }
