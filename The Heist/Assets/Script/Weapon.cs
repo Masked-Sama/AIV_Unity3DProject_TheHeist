@@ -7,7 +7,6 @@ public class Weapon : MonoBehaviour
     public string weaponName;
     public int cost;
     public GameObject weaponPrefab;
-    public bool isSold = false;
 
     private Transform weaponSlot;
 
