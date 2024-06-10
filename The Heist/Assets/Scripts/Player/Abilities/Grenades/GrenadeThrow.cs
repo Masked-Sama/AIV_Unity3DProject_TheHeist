@@ -1,13 +1,13 @@
-using System;
+using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GrenadeThrow : MonoBehaviour, IPoolRequester
+public class GrenadeThrow : PlayerAbilityBase, IPoolRequester
 {
 
     [Header("Variables References")] 
     [SerializeField]
-    private Transform camera;
+    private Transform thirdPersonCamera;
     [SerializeField] 
     private Transform attackPoint;
     [SerializeField] 
@@ -17,7 +17,6 @@ public class GrenadeThrow : MonoBehaviour, IPoolRequester
     [SerializeField] private float throwCooldown;
 
     [Header("Throwing")] 
-    [SerializeField] private KeyCode throwKey = KeyCode.G;
     [SerializeField] private float throwForce;
     [SerializeField] private float throwUpwardForce;
 
@@ -34,13 +33,34 @@ public class GrenadeThrow : MonoBehaviour, IPoolRequester
     public void OnEnable()
     {
         InputManager.Player.ThrowGrenade.performed += Throw;
-        currentGrenadeType = GrenadeType.Stun;
+        currentGrenadeType = GrenadeType.Incendiary;
+    }
+
+    public void OnDisable()
+    {
+        InputManager.Player.ThrowGrenade.performed -= Throw;
+    }
+
+    public override void OnInputDisabled()
+    {
+        isPrevented = true;
+    }
+
+    public override void OnInputEnabled()
+    {
+        isPrevented = false;
+    }
+
+    public override void StopAbility()
+    {
+
     }
 
     private void Throw(InputAction.CallbackContext e)
     {
+        if (!CanThrow()) return;
         //Player mi passa un valore per determinare la granata
-        
+
         //scelgo la pool in base al valore
         IGrenade grenadeComponent;
         switch (currentGrenadeType) {
@@ -54,15 +74,13 @@ public class GrenadeThrow : MonoBehaviour, IPoolRequester
         }
         //Get From Pool
         if (grenadeComponent == null) {
-            Debug.Log("Nothing here");
             return;
         }
 
-        if (canThrow) {
-            grenadeComponent.Throw(camera, attackPoint, throwForce, throwUpwardForce);
-            canThrow = false;
-            currentThrowCD = throwCooldown;
-        }
+        grenadeComponent.Throw(thirdPersonCamera, attackPoint, throwForce, throwUpwardForce);
+        playerController.OnThrowGrenade?.Invoke(grenadeComponent);
+        canThrow = false;
+        currentThrowCD = throwCooldown;
     }
 
     private void Update() {
@@ -75,13 +93,8 @@ public class GrenadeThrow : MonoBehaviour, IPoolRequester
         }
     }
 
-    private void CanThrow(float deltaTime) {
-        currentThrowCD -= Time.deltaTime;
-        if (currentThrowCD > 0)
-        {
-            canThrow = false;
-            return;
-        }
-        canThrow = true;
+    private bool CanThrow()
+    {
+        return !isPrevented && canThrow;
     }
 }

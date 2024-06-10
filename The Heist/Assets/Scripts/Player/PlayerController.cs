@@ -60,6 +60,10 @@ namespace Player
         public Action JumpStarted;
         #endregion
 
+        #region PlayerThrowGrenade
+        public Action<IGrenade> OnThrowGrenade;
+        #endregion
+
         #region Mono
         private void Awake()
         {

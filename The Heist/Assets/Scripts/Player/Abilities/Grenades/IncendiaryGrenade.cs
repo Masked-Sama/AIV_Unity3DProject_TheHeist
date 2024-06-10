@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class IncendiaryGrenade : GrenadeBase
 {
     [SerializeField]
@@ -10,6 +11,7 @@ public class IncendiaryGrenade : GrenadeBase
         base.OnCollisionEnter(collision);
         Explode(radius, GrenadeType.Incendiary);
     }
+
     public override void Explode(float radius, GrenadeType grenadeType)
     {
         GameObject zone = Pooler.Istance.GetPooledObject(fireZones);

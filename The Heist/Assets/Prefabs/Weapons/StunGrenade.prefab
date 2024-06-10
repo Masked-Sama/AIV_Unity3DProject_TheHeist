@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 412832}
   - component: {fileID: 3323084}
   - component: {fileID: 2395220}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SM_Wep_Flashbang_Clip_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 447562}
   - component: {fileID: 3398396}
   - component: {fileID: 2343822}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SM_Wep_Flashbang_Pin_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 64242218214834610}
   - component: {fileID: 3716974645159752385}
   - component: {fileID: -4527684245831894634}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: StunGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}

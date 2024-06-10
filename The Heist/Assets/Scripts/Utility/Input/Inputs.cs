@@ -175,7 +175,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""bf355ee8-6639-46e6-911d-a4d8feddeed8"",
                     ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ThrowGrenade"",
