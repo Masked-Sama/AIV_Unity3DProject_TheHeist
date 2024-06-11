@@ -11,5 +11,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GrenadeTestScene.unity
     guid: ac35bef7c856695499850b556fbaf59e
+  - enabled: 1
+    path: Assets/Scenes/PlayerScene.unity
+    guid: b87ee8ede9c46d74ca00ae99e3daa480
+  - enabled: 1
+    path: Assets/Scenes/EnemiesSceneTest.unity
+    guid: 0e499da7a469ba84f83888258f786de9
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 02f76f7cb8e2c204fa8812567c5e948a, type: 2}
