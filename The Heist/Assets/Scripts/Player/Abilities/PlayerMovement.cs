@@ -51,7 +51,8 @@ namespace Player
             Quaternion startRotation = Quaternion.Euler(new Vector3(
                 playerController.CameraPositionTransform.forward.x,
                 0,
-                playerController.CameraPositionTransform.forward.z));
+                playerController.CameraPositionTransform.forward.z)
+            );
             playerMesh.rotation = startRotation;
         }
 

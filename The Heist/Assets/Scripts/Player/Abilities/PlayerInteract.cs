@@ -75,8 +75,14 @@ namespace Player
             if (wasInteract == canInteract) return;
             if (canInteract)
             {
-                 itemDetected = hit.collider.gameObject;
-                 onItemDetected?.Invoke();
+                itemDetected = hit.collider.gameObject;
+                onItemDetected?.Invoke();
+
+                WeaponDataTem newWeapon = hit.collider.gameObject.GetComponent<WeaponDataTem>();
+                if (newWeapon == null) return;
+                WeaponData weapon = ScriptableObject.CreateInstance<WeaponData>();
+                weapon = newWeapon.Data;
+                playerController.OnChangeWeapon?.Invoke(weapon);
             }
             else
             {

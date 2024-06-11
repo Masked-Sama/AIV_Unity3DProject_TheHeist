@@ -174,7 +174,7 @@ public static class GlobalEventArgsFactory {
 
     public static string AddItemToInventoryDebug(GlobalEventArgs message)
     {
-        return " ItemToInventoryDebg: " + (GameObject)message.args[0].GetValue();
+        return " ItemToInventoryDebug: " + (GameObject)message.args[0].GetValue();
     }
     #endregion
 }

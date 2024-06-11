@@ -64,6 +64,10 @@ namespace Player
         public Action<IGrenade> OnThrowGrenade;
         #endregion
 
+        #region PlayerInteract
+        public Action<WeaponData> OnChangeWeapon;
+        #endregion
+
         #region Mono
         private void Awake()
         {
