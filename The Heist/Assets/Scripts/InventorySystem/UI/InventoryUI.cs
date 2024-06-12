@@ -42,10 +42,11 @@ public class InventoryUI : VisualElement
     }
 
 
-    public void SwitchSlotItem(int index, Item itemToSwitch)
+    public void SwitchSlotItem(int index, ItemObject itemObjToSwitch, int amount)
     {
         if (slotContainer[index] == null) return;
-        SetBackgroundTexture(slotContainer[index], itemToSwitch.ItemObj.Texture);
+        SetBackgroundTexture(slotContainer[index], itemObjToSwitch.Texture);
+        SetBulletsNumber(slotContainer[index], amount); 
     }
 
     #region Private Methods
@@ -64,6 +65,10 @@ public class InventoryUI : VisualElement
     private void SetBackgroundTexture(VisualElement slot, Texture2D texture)
     {   
         slot.Q<VisualElement>("ItemIcon").style.backgroundImage = texture;
+    }
+    private void SetBulletsNumber(VisualElement slot, int number)
+    {
+        slot.Q<Label>("BulletsNumber").text = number.ToString();
     }
     #endregion
 
