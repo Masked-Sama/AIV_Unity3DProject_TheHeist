@@ -60,6 +60,18 @@ namespace Player
         public Action JumpStarted;
         #endregion
 
+        #region PlayerThrowGrenade
+        public Action<IGrenade> OnThrowGrenade;
+        #endregion
+
+        #region PlayerInteract
+        public Action<WeaponData> OnChangeWeapon;
+        #endregion
+
+        #region PlayerShoot + Aim
+        public bool IsAiming { get; set; }
+        #endregion
+
         #region Mono
         private void Awake()
         {

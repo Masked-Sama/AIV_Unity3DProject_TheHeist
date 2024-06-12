@@ -9,7 +9,8 @@ public enum ExtendedVariableType {
     String,
     Vector2,
     Vector3,
-    UInt
+    UInt,
+    WeaponData
 }
 
 

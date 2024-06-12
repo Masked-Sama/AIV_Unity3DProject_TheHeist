@@ -39,7 +39,7 @@ public class ShootTheTarget : IStrategy
             if (animator) animator.SetBool("CanShoot", true);
             Vector3 direction = target.position - (owner.GetLocation() + offSet);
             direction.Normalize();
-            ownerShooter.Shoot(owner.GetLocation() + offSet, direction);
+            ownerShooter.Shoot(owner.GetLocation() + offSet, direction, ownerShooter.WeaponData.TypeOfShoot);
 
         }
         currentState = state;

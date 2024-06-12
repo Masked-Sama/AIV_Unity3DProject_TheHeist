@@ -18,7 +18,7 @@ public class GrenadeBase : MonoBehaviour, IGrenade
     {
         gameObject.SetActive(true);
         transform.position = spawnTransform.position;
-        Vector3 forceToAdd = cameraView.transform.forward * force + transform.up * throwUpwardForce;
+        Vector3 forceToAdd = cameraView.forward * force + Vector3.up * throwUpwardForce;
         rb.AddForce(forceToAdd, ForceMode.Impulse);
     }
     public virtual void OnCollisionEnter(Collision collision)

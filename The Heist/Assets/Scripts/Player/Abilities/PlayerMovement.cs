@@ -16,8 +16,6 @@ namespace Player
         private float rotationSpeed;
         [SerializeField]
         private Transform playerMesh;
-        [SerializeField]
-        private Transform cameraPivot;
 
         #endregion
 
@@ -46,6 +44,16 @@ namespace Player
         {
             runAction.performed -= OnRunActionPerformed;
             runAction.canceled -= OnRunActionCanceled;
+        }
+
+        private void Start()
+        {
+            Quaternion startRotation = Quaternion.Euler(new Vector3(
+                playerController.CameraPositionTransform.forward.x,
+                0,
+                playerController.CameraPositionTransform.forward.z)
+            );
+            playerMesh.rotation = startRotation;
         }
 
         private void Update()
@@ -98,26 +106,22 @@ namespace Player
         protected void Move()
         {
             float currentSpeed = runKeyPressed ? runSpeed : walkSpeed;
-            Vector3 forwardDirection = playerController.PlayerTransform.forward * playerController.ComputedDirection.y;
-            Vector3 rightDirection = playerController.PlayerTransform.right * playerController.ComputedDirection.x;
+            Vector3 forwardDirection = playerController.CameraPositionTransform.forward * playerController.ComputedDirection.y;
+            Vector3 rightDirection = playerController.CameraPositionTransform.right * playerController.ComputedDirection.x;
             Vector3 finalDirection = (forwardDirection + rightDirection).normalized;
             computedSpeed.x = finalDirection.x;
             computedSpeed.y = finalDirection.z;
             computedSpeed *= currentSpeed;
             SetSpeed(computedSpeed);
 
-            if (computedSpeed.sqrMagnitude <= moveThreshold * moveThreshold) return;
-
-            PlayerLookTowardsInput(finalDirection);
+            PlayerLookTowardsInput(finalDirection.normalized);
         }
 
         private void PlayerLookTowardsInput(Vector3 finalDirection)
         {
             // Rotation depending by movement.
-            Vector3 directionToLook = (cameraPivot.position - playerController.CameraPositionTransform.position).normalized;
-            directionToLook.y = 0;
-            playerController.PlayerTransform.forward = Vector3.Slerp(playerController.PlayerTransform.forward, directionToLook, Time.deltaTime * rotationSpeed);
-            playerMesh.forward = Vector3.Slerp(playerMesh.forward, finalDirection.normalized, Time.deltaTime * rotationSpeed);
+            Quaternion targetRotation = Quaternion.Euler(0, playerController.CameraPositionTransform.eulerAngles.y, 0);
+            playerMesh.rotation = Quaternion.Slerp(playerMesh.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         protected void HandleEvents()

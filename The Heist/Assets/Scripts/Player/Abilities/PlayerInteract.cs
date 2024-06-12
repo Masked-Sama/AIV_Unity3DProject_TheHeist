@@ -1,22 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 using System;
+
 namespace Player
 {
     public class PlayerInteract : PlayerAbilityBase
     {
-        
-        [SerializeField]
-        private float radius;
+        //[SerializeField]
+        //private float radius;
         [SerializeField]
         private float distance;
-
 
         [SerializeField]
         private GameObject textUI;
         [SerializeField]
         private LayerMask layerMask;
+        [SerializeField]
+        private LayerMask wallMask;
         [SerializeField]
         private InventoryObject playerInventory;
 
@@ -60,17 +60,29 @@ namespace Player
         }
         #endregion
 
-
         private void DetectItem() 
         {
             bool wasInteract = canInteract;
-            canInteract = Physics.SphereCast(transform.position, radius, transform.forward, out hit, distance) 
-                    && (1 << hit.collider.gameObject.layer) == layerMask.value;
+
+            //canInteract = Physics.SphereCast(transform.position, radius, playerController.CameraPositionTransform.forward, out hit, distance)
+            //        && (1 << hit.collider.gameObject.layer) == layerMask.value
+            //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
+
+            canInteract = Physics.Raycast(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward, out hit, distance)
+                        && (1 << hit.collider.gameObject.layer) == layerMask.value
+                        && (1 << hit.collider.gameObject.layer) != wallMask.value;
+
             if (wasInteract == canInteract) return;
             if (canInteract)
             {
-                 itemDetected = hit.collider.gameObject;
-                 onItemDetected?.Invoke();
+                itemDetected = hit.collider.gameObject;
+                onItemDetected?.Invoke();
+
+                WeaponDataTem newWeapon = hit.collider.gameObject.GetComponent<WeaponDataTem>();
+                if (newWeapon == null) return;
+                WeaponData weapon = ScriptableObject.CreateInstance<WeaponData>();
+                weapon = newWeapon.Data;
+                playerController.OnChangeWeapon?.Invoke(weapon);
             }
             else
             {
@@ -90,7 +102,6 @@ namespace Player
             canInteract = false;
         }
 
-
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
             if (!canInteract) return;
@@ -104,10 +115,12 @@ namespace Player
 
         private void OnDrawGizmos()
         {
-            Vector3 pos = transform.position;
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pos, radius);
-            Gizmos.DrawRay(pos, transform.forward * distance);
+
+            //Gizmos.DrawWireSphere(pos, radius);
+            //Gizmos.DrawWireSphere(pos + playerController.CameraPositionTransform.forward * distance, radius);
+
+            //Gizmos.DrawRay(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward * distance);
         }
     }
 }
