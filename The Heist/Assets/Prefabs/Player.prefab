@@ -618,6 +618,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4186752546460029731}
+  - {fileID: 6562945156204742645}
   m_Father: {fileID: 4186752546460133535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4186752546459685895
@@ -4341,6 +4342,37 @@ Transform:
   - {fileID: 4186752546460013591}
   m_Father: {fileID: 4186752546460121577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5468627187532018637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6562945156204742645}
+  m_Layer: 0
+  m_Name: SocketShoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6562945156204742645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5468627187532018637}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4186752546460057861}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5522439641287062119
 GameObject:
   m_ObjectHideFlags: 0
@@ -4711,6 +4743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb9123401e92f441954ede412f8fe70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  socketShoot: {fileID: 0}
 --- !u!1 &9200354204818825809
 GameObject:
   m_ObjectHideFlags: 0

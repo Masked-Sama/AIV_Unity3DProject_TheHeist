@@ -68,6 +68,10 @@ namespace Player
         public Action<WeaponData> OnChangeWeapon;
         #endregion
 
+        #region PlayerShoot + Aim
+        public bool IsAiming { get; set; }
+        #endregion
+
         #region Mono
         private void Awake()
         {

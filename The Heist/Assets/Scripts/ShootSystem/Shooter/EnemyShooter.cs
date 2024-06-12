@@ -10,6 +10,11 @@ public class EnemyShooter : MonoBehaviour, IShooter
     [SerializeField]
     private WeaponData weaponData;
 
+    public WeaponData WeaponData
+    {
+        get { return weaponData; }
+    }
+
     private int currentAmmo;
 
     [SerializeField]
@@ -50,7 +55,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
         reloadTimer = weaponData.ReloadTime;
     }
 
-    public void Shoot(Vector3 initialPosition, Vector3 direction)
+    public void Shoot(Vector3 initialPosition, Vector3 direction, ShootType WeaponData)
     {
         if (canShoot && currentAmmo > 0)
         {

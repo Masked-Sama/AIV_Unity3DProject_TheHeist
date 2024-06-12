@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: m_CollideAgainst.m_Bits
       value: 520
       objectReference: {fileID: 0}
+    - target: {fileID: 2452765483281307963, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
+      propertyPath: socketShoot
+      value: 
+      objectReference: {fileID: 1028076972}
     - target: {fileID: 2727790949314562017, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: cameraPivot
       value: 
@@ -425,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.2974954
+      value: 1.1180604
       objectReference: {fileID: 0}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.y
@@ -861,7 +865,7 @@ Transform:
   m_GameObject: {fileID: 251843719}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4226183, y: 0, z: 0, w: 0.9063078}
-  m_LocalPosition: {x: 1.2974954, y: 6.1854777, z: -2.5457659}
+  m_LocalPosition: {x: 1.1180604, y: 6.1854777, z: -2.5457659}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1391,6 +1395,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014544552}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1028076972 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6562945156204742645, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
+  m_PrefabInstance: {fileID: 2868166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1166294735
 GameObject:
   m_ObjectHideFlags: 0
