@@ -7,9 +7,7 @@
     <list default="true" id="77f597e3-daa8-474f-a1d0-2dabecd9d19b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SpawnerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SpawnerScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Spawner.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Spawner/Spawner.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Spawner/Spawner.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawner/Spawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawner/Spawner.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +124,7 @@
       <workItem from="1718178510565" duration="1108000" />
       <workItem from="1718179648811" duration="106000" />
       <workItem from="1718179770943" duration="37000" />
+      <workItem from="1718286451215" duration="339000" />
     </task>
     <servers />
   </component>

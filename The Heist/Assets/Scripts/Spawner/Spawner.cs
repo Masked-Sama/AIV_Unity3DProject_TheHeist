@@ -1,24 +1,31 @@
+using System;
 using UnityEngine;
 
 public class Spanwer : MonoBehaviour
 {
-    [SerializeField] private float spawnRate = 1f;
+    [SerializeField] private float spawnRate = 2f;
     [SerializeField] private PoolData enemies;
     [SerializeField] private bool canSpawn = true;
 
-    private bool spawn = true;
-    private float CD = 1f;
-    private  IGrenade currentEnemy;
-    
+    private bool spawn;
+    private float CD;
+    private  GameObject currentEnemy;
+
+    private void Start()
+    {
+        spawn = true;
+        CD = spawnRate;
+    }
+
     private void SpawnerMethod()
     {
         if (canSpawn) {
             if (spawn) {
-                currentEnemy = Pooler.Istance.GetPooledObject(enemies).GetComponent<IGrenade>();
+                currentEnemy = Pooler.Istance.GetPooledObject(enemies);
                 if (currentEnemy != null) {
-                    Debug.Log("Found and istantiated");
-                    // currentEnemy.SetActive(true);
-                    // currentEnemy.transform.position = transform.position;
+                    //Debug.Log("Found and istantiated");
+                    currentEnemy.SetActive(true);
+                    currentEnemy.transform.position = transform.position;
                 }
                 CD = spawnRate;
             }
