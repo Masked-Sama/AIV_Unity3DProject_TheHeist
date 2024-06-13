@@ -7,7 +7,7 @@ public class GenericDamager : MonoBehaviour, IDamager {
     [SerializeField]
     private string damagebleTag;
 
-    private void OnTriggerStay2D (Collider2D other) {
+    private void OnTriggerStay (Collider other) {
         if (!other.CompareTag(damagebleTag)) return;
         IDamageble damageble = other.GetComponent<IDamageble>();
         if (damageble == null) return;
