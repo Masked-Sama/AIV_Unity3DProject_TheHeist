@@ -12,10 +12,10 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private WeaponData weaponData;
 
-    public void Start()
-    {
-        weaponSlot = GameObject.FindWithTag("WeaponSlot").transform;
-    }
+    //public void Start()
+    //{
+    //    weaponSlot = GameObject.FindWithTag("WeaponSlot").transform;
+    //}
 
     
 
