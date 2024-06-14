@@ -21,8 +21,8 @@ namespace Player
         private InventoryObject playerInventory;
 
         private GameObject itemDetected;
-        private Action onItemDetected;
-        private Action onItemUndetected;
+        //private Action onItemDetected;
+        //private Action onItemUndetected;
         private RaycastHit hit;
         private bool canInteract = false;
 
@@ -46,8 +46,8 @@ namespace Player
         private void OnEnable()
         {
             InputManager.Player.Interact.performed += OnInteractPerform;
-            onItemUndetected += ItemUndetected;
-            onItemDetected += ItemDetected;
+            playerController.OnItemUndetected += ItemUndetected;
+            playerController.OnItemDetected += ItemDetected;
         }
         private void OnDisable()
         {
@@ -76,12 +76,11 @@ namespace Player
             if (canInteract)
             {
                 itemDetected = hit.collider.gameObject;
-                onItemDetected?.Invoke();
-                                
+                playerController.OnItemDetected?.Invoke();
             }
             else
             {
-                onItemUndetected?.Invoke();
+                playerController.OnItemUndetected?.Invoke();
             }
             
         }
