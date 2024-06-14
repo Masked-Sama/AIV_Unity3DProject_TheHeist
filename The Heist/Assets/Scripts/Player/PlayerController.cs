@@ -72,26 +72,6 @@ namespace Player
         public bool IsAiming { get; set; }
         #endregion
 
-        #region HealthModule
-        private bool isDeath;
-        public Action<DamageContainer> OnDamageTaken;
-        public Action OnDeath;
-        public bool IsDeath
-        {
-            get { return isDeath; }
-            set
-            {
-                isDeath = value;
-                if (isDeath)
-                {
-                    //DisableInputs();
-                    //playerVisual.SetAnimatorParameter(isDeadAnimParam, value);
-                    Debug.Log("Player is dead");
-                }
-            }
-        }
-        #endregion
-
         #region Mono
         private void Awake()
         {

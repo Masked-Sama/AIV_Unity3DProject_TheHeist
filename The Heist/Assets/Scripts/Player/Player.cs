@@ -1,24 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Player
 {
-    public class Player : MonoBehaviour, IDamageble
+    public class Player : MonoBehaviour
     {
-        private const string hitStringParameter = "Hitted";
-
-        #region SerializeFields
-        [SerializeField]
-        private HealthModule healthModule;
-        [SerializeField]
-        private float postDamageInvulnerabilityTime;
-        [SerializeField]
-        private PlayerController playerController;
-        [SerializeField]
-        private PlayerVisual playerVisual;
-        #endregion
-        private Coroutine invulnerabilityCoroutine;
-
         private static Player player;
 
         public static Player Get()
@@ -42,61 +27,7 @@ namespace Player
 
         private void Start()
         {
-            if (player != this) return; 
-            ResetHealth();
-            healthModule.OnDamageTaken += InternalOnDamageTaken;
-            healthModule.OnDeath += InternalOnDeath;
-        }
-        #endregion
-
-        #region Interface: IDamageable
-        public void TakeDamage(DamageContainer damage)
-        {
-            healthModule.TakeDamage(damage);
-        }
-        #endregion
-
-        #region HealthModule
-        public void InternalOnDamageTaken(DamageContainer damageContainer)  //richiamata dall'health module tramite l'action OnDamageTaken
-        {
-            NotifyHealthUpdatedGlobal();
-            playerController.OnDamageTaken?.Invoke(damageContainer);
-            playerVisual.SetAnimatorParameter(hitStringParameter);
-            SetInvulnerable(postDamageInvulnerabilityTime);
-        }
-        public void InternalOnDeath()       //richiamata dall'health module tramite l'action OnDeath
-        {
-            playerController.IsDeath = true;
-            playerController.OnDeath?.Invoke();
-        }
-
-        private IEnumerator InvulnerabilityCoroutine(float invulnerabilityTime)
-        {
-            healthModule.SetInvulnerable(true);
-            yield return new WaitForSeconds(invulnerabilityTime);
-            healthModule.SetInvulnerable(false);
-        }
-        private void SetInvulnerable(float invulnerabilityTime)
-        {
-            if (invulnerabilityCoroutine != null)
-            {
-                StopCoroutine(invulnerabilityCoroutine);
-            }
-            invulnerabilityCoroutine = StartCoroutine(InvulnerabilityCoroutine(invulnerabilityTime));
-        }
-
-        private void NotifyHealthUpdatedGlobal()
-        {
-            Debug.Log("Notify Health Update: Health = " + healthModule.CurrentHP);
-            //GlobalEventSystem.CastEvent(EventName.PlayerHealthUpdated,
-            //    EventArgsFactory.PlayerHealthUpdatedFactory((int)healthModule.MaxHP, (int)healthModule.CurrentHP));
-        }
-
-        public void ResetHealth()
-        {
-            healthModule.Reset();
-            NotifyHealthUpdatedGlobal();
-            playerController.IsDeath = false;
+            if (player != this) return;
         }
         #endregion
     }
