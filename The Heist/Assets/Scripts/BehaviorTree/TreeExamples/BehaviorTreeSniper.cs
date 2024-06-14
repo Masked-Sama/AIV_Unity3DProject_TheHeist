@@ -20,6 +20,12 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private Spot spot;
 
+    public List<Spot> Spots
+    {
+        get { return spots; }
+        set { spots = value;  }
+    }
+
     private void Start()
     {
         ownerMovement = GetComponent<EnemyComponent>().GetEnemyMovement();

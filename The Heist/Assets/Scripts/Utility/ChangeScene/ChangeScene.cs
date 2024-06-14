@@ -12,7 +12,7 @@ enum Scenes
 public class ChangeScene : MonoBehaviour
 {
     [SerializeField]
-    Scenes scene = new Scenes();
+    private Scenes scene = new Scenes();
     [SerializeField]
     private bool changeSceneStarter;
     

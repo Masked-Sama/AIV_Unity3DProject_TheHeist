@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2183756744949783040}
   m_Layer: 0
   m_Name: SniperPrefab
-  m_TagString: Untagged
+  m_TagString: Snipers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,6 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementType: 0
   shooterComponent: {fileID: 5038836497127512233}
+  healthModule:
+    maxHP: 0
 --- !u!114 &5038836497127512233
 MonoBehaviour:
   m_ObjectHideFlags: 0
