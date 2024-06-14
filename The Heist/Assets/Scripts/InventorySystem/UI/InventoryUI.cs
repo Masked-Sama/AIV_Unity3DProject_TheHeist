@@ -42,10 +42,10 @@ public class InventoryUI : VisualElement
     }
 
 
-    public void SwitchSlotItem(int index, ItemObject itemObjToSwitch, int amount)
+    public void SwitchSlotItem(int index, ItemData itemObjToSwitch, int amount)
     {
         if (slotContainer[index] == null) return;
-        SetBackgroundTexture(slotContainer[index], itemObjToSwitch.Texture);
+        //SetBackgroundTexture(slotContainer[index], itemObjToSwitch.Texture);
         SetBulletsNumber(slotContainer[index], amount); 
     }
 

@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62730087caa2ff54cb56a0a55658216b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: cba670aba7c51fb419c6431a884ea29b, type: 2}
+  weaponData: {fileID: 11400000, guid: 3a17f1eef4ad8594289e4b43c587ebbd, type: 2}
   randomRange: 0.7
 --- !u!114 &3375792075224296329
 MonoBehaviour:
@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1428ac41f7f6ca43a386fa0bb8f1c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8844149896573994565, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
   canFollowThePlayer: 1
   maxDistanceToShoot: 20
   speed: 5

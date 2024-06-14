@@ -15,7 +15,7 @@ public class InventoryObject: ScriptableObject
         inventoryObjects = new List<InventorySlot>();
     }
     
-    public void AddItem(ItemObject item, int amount, bool isPlayerInventory = false) 
+    public void AddItem(ItemData item, int amount, bool isPlayerInventory = false) 
     {
         for (int i = 0; i < inventoryObjects.Count; i++)
         {
@@ -47,7 +47,7 @@ public class InventoryObject: ScriptableObject
 
     }
 
-    private void ChangeItem(ItemObject item, int amount, int index)
+    private void ChangeItem(ItemData item, int amount, int index)
     {
         if (SlotsNumber <= index || amount <= 0) return;
         inventoryObjects[index] = new InventorySlot(item,amount);

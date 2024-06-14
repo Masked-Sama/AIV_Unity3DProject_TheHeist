@@ -188,6 +188,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 821902992653003305, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
+      propertyPath: cameraPosition
+      value: 
+      objectReference: {fileID: 251843723}
+    - target: {fileID: 821902992653003305, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: groundMask.m_Bits
       value: 16
       objectReference: {fileID: 0}
@@ -429,7 +433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1180604
+      value: 1.1315277
       objectReference: {fileID: 0}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.y
@@ -865,7 +869,7 @@ Transform:
   m_GameObject: {fileID: 251843719}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4226183, y: 0, z: 0, w: 0.9063078}
-  m_LocalPosition: {x: 1.1180604, y: 6.1854777, z: -2.5457659}
+  m_LocalPosition: {x: 1.1315277, y: 6.1854777, z: -2.5457659}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -888,7 +892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 11400000, guid: ed9ac5f2145ad734bb81f18224c38ca6, type: 2}
+  itemObj: {fileID: 0}
   quantity: 3
 --- !u!4 &289667328 stripped
 Transform:
@@ -1192,6 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69956f8500ab2384b9c0cee602107624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInventory: {fileID: 0}
 --- !u!1001 &879685454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1883,7 +1888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53638bae219cfe542a45be8902ad4946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: cba670aba7c51fb419c6431a884ea29b, type: 2}
+  data: {fileID: 11400000, guid: 3a17f1eef4ad8594289e4b43c587ebbd, type: 2}
 --- !u!1 &1819763971
 GameObject:
   m_ObjectHideFlags: 0

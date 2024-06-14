@@ -9,9 +9,8 @@ public enum ShootType
     Shotgun
 }
 
-[CreateAssetMenu(fileName = "WeaponDataTemplate",
-    menuName = "WeaponsData", order = 1)]
-public class WeaponData : ScriptableObject
+
+public class WeaponData : ItemData
 {
     [SerializeField] private int maxAmmo; 
     [SerializeField] private float rateOfFire;
@@ -19,8 +18,8 @@ public class WeaponData : ScriptableObject
     [SerializeField] private float randomDirection; 
     [SerializeField] private ShootType typeOfShoot; 
     [SerializeField] private float reloadTime; 
-    [SerializeField] private float range; 
-
+    [SerializeField] private float range;
+    [SerializeField] private Texture2D texture;
     public int MaxAmmo
     {
         get { return maxAmmo; }
@@ -49,7 +48,12 @@ public class WeaponData : ScriptableObject
     { 
         get { return range; }
     }
+    public Texture2D Texture 
+    {
+        get { return texture; }
+    }
 
+    
 }
 
 
