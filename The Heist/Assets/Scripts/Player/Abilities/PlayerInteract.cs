@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using static Codice.Client.Common.Connection.AskCredentialsToUser;
+using UnityEditor.UIElements;
 
 namespace Player
 {
     public class PlayerInteract : PlayerAbilityBase
     {
+        private const string sellingWeaponTag = "SellingWeapon";
+
         [SerializeField]
         private Transform cameraPosition;
         [SerializeField]
@@ -82,11 +86,11 @@ namespace Player
             {
                 playerController.OnItemUndetected?.Invoke();
             }
-            
         }
 
         private void ItemDetected()
         {
+            textUI.GetComponent<UnityEngine.UI.Text>().text = $"{itemDetected.GetComponent<Item>().ItemData.ItemName} - Cost: {itemDetected.GetComponent<Item>().ItemData.Cost}";  //DA CAMBIARE ASSOLUTAMENTE
             textUI.SetActive(true);
             canInteract = true;
         }
@@ -99,21 +103,38 @@ namespace Player
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
             if (!canInteract) return;
-            Item item = itemDetected.GetComponent<Item>();           
-            if (item == null) return;
+            Item itemComponent = itemDetected.GetComponent<Item>();           
+            if (itemComponent == null) return;
+
+            if (itemDetected.CompareTag(sellingWeaponTag))
+            {
+                if(playerController.OnTryToBuyItem == null) return;                     
+                if (playerController.OnTryToBuyItem.Invoke(itemComponent.ItemData.Cost))
+                {
+                    Debug.Log("C'ho li sordi");
+                    GlobalEventManager.CastEvent(GlobalEventIndex.BuyItem,GlobalEventArgsFactory.BuyItemFactory(itemDetected));
+                }
+                else
+                {
+                    Debug.Log("Non c'ho li sordi");
+                    return;
+                }
+
+            }
+
             WeaponData weapon;
-            switch (item.ItemObj.ItemType)
+            switch (itemComponent.ItemData.ItemType)
             {
                 case ItemType.FirstWeapon:
-                    weapon = (FirstWeaponData)item.ItemObj;
+                    weapon = (FirstWeaponData)itemComponent.ItemData;
                     playerController.OnChangeWeapon?.Invoke(weapon);
                     break;
                 case ItemType.SecondWeapon:
-                    weapon = (SecondWeaponData)item.ItemObj;
+                    weapon = (SecondWeaponData)itemComponent.ItemData;
                     playerController.OnChangeWeapon?.Invoke(weapon);
                     break;
                 case ItemType.ThrowableWeapon:
-                    ThrowableData throwable = (ThrowableData)item.ItemObj;
+                    ThrowableData throwable = (ThrowableData)itemComponent.ItemData;
                     break;
                 case ItemType.Consumable:
                     //  TODO
@@ -123,8 +144,12 @@ namespace Player
 
             }            
             GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
-            playerInventory.AddItem(item.ItemObj, item.Quantity, true);
-            itemDetected.SetActive(false);
+            playerInventory.AddItem(itemComponent.ItemData, itemComponent.Quantity, true);
+
+
+            if (!itemDetected.CompareTag(sellingWeaponTag))
+                itemDetected.SetActive(false);
+
         }
 
 

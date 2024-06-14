@@ -78,6 +78,7 @@ namespace Player
         #endregion
 
         #region PlayerCurrency
+        public Func<int,bool> OnTryToBuyItem;
 
         #endregion
 

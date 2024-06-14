@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Player
 {
@@ -18,24 +19,20 @@ namespace Player
 
         private void OnEnable()
         {
-            playerController.OnItemDetected += OnItemDetected;
-            playerController.OnItemUndetected += OnItemUndetected;
+            playerController.OnTryToBuyItem += OnTryToBuyItem;
+            
         }
 
         private void OnDisable()
         {
-            playerController.OnItemDetected -= OnItemDetected;
-            playerController.OnItemUndetected -= OnItemUndetected;
+            playerController.OnTryToBuyItem -= OnTryToBuyItem;
         }
 
-        private void OnItemUndetected()
+        private bool OnTryToBuyItem(int cost)
         {
+            return SpendMoney(cost);
         }
 
-        private void OnItemDetected()
-        {
-            throw new NotImplementedException();
-        }
 
         private void Start()
         {
@@ -58,11 +55,8 @@ namespace Player
                 Debug.Log("Spent money: " + amount + ". New balance: " + money);
                 return true;
             }
-            else
-            {
-                Debug.Log("Not enough money. Current balance: " + money);
-                return false;
-            }
+            Debug.Log("Not enough money. Current balance: " + money);
+            return false;            
         }
 
         // Metodo per verificare se il giocatore può permettersi un certo costo

@@ -11,10 +11,16 @@ public enum ItemType
 public abstract class ItemData : ScriptableObject
 {
     [SerializeField]
+    protected string itemName;
+    [SerializeField]
     protected GameObject prefab;
+    [SerializeField]
+    protected int cost;
+
     protected ItemType itemType;
 
+    public string ItemName {  get { return itemName; } }
     public GameObject Prefab {  get { return prefab; } }
     public ItemType ItemType { get { return itemType; } }
-
+    public int Cost { get { return cost; } }
 }

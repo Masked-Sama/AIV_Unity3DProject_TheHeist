@@ -18,6 +18,7 @@ public static class GlobalEventArgsFactory {
         methodDebugString.Add(GlobalEventIndex.ShakeCamera, new EventDebug(ShakeCameraDebug));
         methodDebugString.Add(GlobalEventIndex.PlayerEnergyUpdated, new EventDebug(PlayerEnergyUpdatedDebug));
         methodDebugString.Add(GlobalEventIndex.AddItemToInventory, new EventDebug(AddItemToInventoryDebug));
+        methodDebugString.Add(GlobalEventIndex.BuyItem, new EventDebug(BuyItemDebug));
     }
 
     public static string GetDebugString(GlobalEventIndex eventType, GlobalEventArgs message) {
@@ -175,5 +176,24 @@ public static class GlobalEventArgsFactory {
     {
         return " ItemToInventoryDebug: " + (GameObject)message.args[0].GetValue();
     }
+    #endregion
+
+    #region BuyItem
+    public static GlobalEventArgs BuyItemFactory(GameObject item)
+    {
+        GlobalEventArgs message = new GlobalEventArgs();
+        message.args = new ExtendedVariable[1];
+        message.args[0] = new ExtendedVariable("BuyItemValue", ExtendedVariableType.GameObject, item);
+        return message;
+    }
+    public static void BuyItemParser(GlobalEventArgs message, out GameObject item)
+    {
+        item = (GameObject)message.args[0].GetValue();
+    }
+    public static string BuyItemDebug(GlobalEventArgs message)
+    {
+        return " BuyItemDebug: " + (GameObject)message.args[0].GetValue();
+    }
+
     #endregion
 }

@@ -9,19 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed04d980008b5b4b8ba4324dfbc129e, type: 3}
-  m_Name: Gun
+  m_Script: {fileID: 11500000, guid: d3a97194a9b219a41a15919a4781e51c, type: 3}
+  m_Name: Sniper
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6315479668469211241, guid: 56264153e42788d4299c9f98274a0598, type: 3}
-  maxAmmo: 10
-  rateOfFire: 0.1
+  itemName: Sniper
+  prefab: {fileID: 146790, guid: 2c618085f7f86ff4ca275f4d230df2c5, type: 3}
+  cost: 50
+  maxAmmo: 5
+  rateOfFire: 2.5
   damageContainer:
     damageType: 0
-    damage: 10
+    damage: 100
     damageImpulse: {x: 0, y: 0, z: 0}
     freezeTime: 0
-  randomDirection: 0.2
+  randomDirection: 0
   typeOfShoot: 0
-  reloadTime: 0.2
-  range: 100
+  reloadTime: 5
+  range: 250
   texture: {fileID: 0}

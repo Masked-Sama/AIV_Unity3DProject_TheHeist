@@ -34,18 +34,18 @@ public class PlayerInventoryHUD : MonoBehaviour
         GlobalEventArgsFactory.AddItemToInventoryParser(message, out GameObject itemToAdd);
         Item item = itemToAdd.GetComponent<Item>();
 
-        switch(item.ItemObj.ItemType)
+        switch(item.ItemData.ItemType)
         {
             case ItemType.SecondWeapon:
-                inventoryGUI.SwitchSlotItem((int)SlotType.SecondWeapon, item.ItemObj,item.Quantity);
+                inventoryGUI.SwitchSlotItem((int)SlotType.SecondWeapon, item.ItemData,item.Quantity);
                     break;
 
             case ItemType.FirstWeapon:
-                inventoryGUI.SwitchSlotItem((int)SlotType.FirstWeapon, item.ItemObj, item.Quantity);
+                inventoryGUI.SwitchSlotItem((int)SlotType.FirstWeapon, item.ItemData, item.Quantity);
                 break;
 
             case ItemType.ThrowableWeapon:
-                inventoryGUI.SwitchSlotItem((int)SlotType.ThrowableWeapon, item.ItemObj, item.Quantity);
+                inventoryGUI.SwitchSlotItem((int)SlotType.ThrowableWeapon, item.ItemData, item.Quantity);
                 break;
             default:
                 return;

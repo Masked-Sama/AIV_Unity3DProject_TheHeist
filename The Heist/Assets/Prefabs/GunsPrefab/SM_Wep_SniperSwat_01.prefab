@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 3373562}
   - component: {fileID: 2326230}
   - component: {fileID: 64628803923757886}
-  - component: {fileID: 4854018965062292973}
+  - component: {fileID: 7899326965858125209}
   m_Layer: 0
   m_Name: SM_Wep_SniperSwat_01
   m_TagString: Untagged
@@ -276,7 +276,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43284779816767098, guid: 1b91aa0e5fbda1e48a44be5ead54c7f3, type: 2}
---- !u!114 &4854018965062292973
+--- !u!114 &7899326965858125209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -285,12 +285,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 146790}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b0866078f1b5754abdf95ee10fde4ed, type: 3}
+  m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: 
-  cost: 0
-  weaponPrefab: {fileID: 0}
+  itemObj: {fileID: 11400000, guid: cf4a36e2190a97a4e89fecd79faca633, type: 2}
+  quantity: 11
 --- !u!1 &199492
 GameObject:
   m_ObjectHideFlags: 0
