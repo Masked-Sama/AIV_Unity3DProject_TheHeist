@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IShooter
 {
-    void Shoot(Vector3 initialPosition, Vector3 direction, ShootType shootType);
+    bool Shoot(Vector3 initialPosition, Vector3 direction, ShootType shootType);
     void Reload();
 }

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2353e42d7cf8114ca9170611aebbfbc, type: 3}
+  m_Name: SimpleEnemy
+  m_EditorClassIdentifier: 
+  poolKey: Soldier
+  prefab: {fileID: 7937311818022708153, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
+  poolNumber: 20
+  resizablePool: 0

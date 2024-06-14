@@ -184,7 +184,7 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
         reloadTimer = currentWeaponData.ReloadTime;
     }
 
-    public void Shoot(Vector3 initialPosition, Vector3 direction, ShootType currentShootType)
+    public bool Shoot(Vector3 initialPosition, Vector3 direction, ShootType currentShootType)
     {
         currentAmmo--;
         canShoot = false;
@@ -193,7 +193,7 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
         switch (currentShootType)
         {
             case ShootType.Single:
-                if (hasShot) return;
+                if (hasShot) return true;
                 ComputeShootRange(direction);
             break;
             case ShootType.Multiple:
@@ -203,9 +203,9 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
             case ShootType.Shotgun:
                 // To do
             break;
-            default: return;
+            default: return true;
         }
-
+        return true;
     }
     #endregion
 }

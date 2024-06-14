@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.Pipes;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using Unity.VisualScripting.YamlDotNet.Core;
 using UnityEngine;
 
 
@@ -28,6 +30,8 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     private Animator animator;
 
+    private bool isReloading = false;
+    #region Mono
     public void Start()
     {
         currentAmmo = weaponData.MaxAmmo;
@@ -44,18 +48,46 @@ public class EnemyShooter : MonoBehaviour, IShooter
         animator = GetComponent<Animator>();
     }
 
+    public void FixedUpdate()
+    {
+        if (reloadTimer > 0f)
+        {
+            reloadTimer -= Time.deltaTime;
+
+            if (reloadTimer <= 0f)
+            {
+                currentAmmo = weaponData.MaxAmmo;
+                canShoot = true;
+                isReloading = false;
+            }
+        }
+
+        if (fireTime > 0f)
+        {
+            fireTime -= Time.deltaTime;
+
+            if (fireTime <= 0f)
+            {
+                canShoot = true;
+            }
+        }
+    }
+    #endregion
+
+    #region IShooter
     public void Reload()
     {
         if (currentAmmo >= weaponData.MaxAmmo || reloadTimer > 0f)
         {
-            return; 
+            return;
         }
         animator.SetTrigger("Reload");
         canShoot = false;
+        isReloading = true;
         reloadTimer = weaponData.ReloadTime;
     }
 
-    public void Shoot(Vector3 initialPosition, Vector3 direction, ShootType WeaponData)
+    public bool Shoot(Vector3 initialPosition, Vector3 direction, ShootType WeaponData)
     {
         if (canShoot && currentAmmo > 0)
         {
@@ -74,7 +106,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
                 {
                     Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
                     Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
-                    return;
+
                 }
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
@@ -88,33 +120,19 @@ public class EnemyShooter : MonoBehaviour, IShooter
                 Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
             }
 
+            
+
         }
-        else if (fireTime <= 0f) Reload();
+        else if (fireTime <= 0f)
+        {
+            Reload();
+        }
+
+        return isReloading;
+
     }
 
+    #endregion
 
-    public void Update()
-    {
-        if (reloadTimer > 0f)
-        {
-            reloadTimer -= Time.deltaTime;
-
-            if (reloadTimer <= 0f)
-            {
-                currentAmmo = weaponData.MaxAmmo;
-                canShoot = true;
-            }
-        }
-
-        if (fireTime > 0f)
-        {
-            fireTime -= Time.deltaTime;
-
-            if ( fireTime <= 0f)
-            {
-                canShoot = true;
-            }
-        }
-    }
 
 }

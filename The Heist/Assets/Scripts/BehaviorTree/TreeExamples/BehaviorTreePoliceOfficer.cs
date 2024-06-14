@@ -7,7 +7,8 @@ public enum BehaviourState
 {
     IDLE,
     MOVING,
-    ATTACKING,
+    SHOOTING,
+    RELOADING,
     END
     // Add other possible states as needed
 }
@@ -21,14 +22,13 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     private Animator animator;
 
 
-    [SerializeField]
+    
     private GameObject player;
 
     //SerializeFields
-    [SerializeField] bool canFollowThePlayer = true; 
-    [SerializeField] float maxDistanceToShoot = 20; 
-    [SerializeField] float speed = 5; 
-
+    [SerializeField] bool canFollowThePlayer = true;
+    [SerializeField] float maxDistanceToShoot = 20;
+    [SerializeField] float speed = 5;
 
     void Start()
     {
@@ -36,12 +36,14 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         ownerShooter = GetComponent<EnemyShooter>();
 
+        player = GameObject.Find("Player");
+
         tree = new BehaviourTree("PoliceOfficer");
 
         var selector = new Selector("Idle||Follow");
 
         Sequence Shoot = new Sequence("ShootPlayer");
-        Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform,player.transform, maxDistanceToShoot)));
+        Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot)));
         Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, animator, ownerShooter), behaviorTree: tree));
 
         Sequence Follow = new Sequence("FollowPlayer");
@@ -50,15 +52,15 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         selector.AddChild(Shoot);
         selector.AddChild(Follow);
-        selector.AddChild(new Leaf("Idle", new StayInIdle(ownerMovement), behaviorTree: tree));
+       // selector.AddChild(new Leaf("Idle", new StayInIdle(ownerMovement), behaviorTree: tree));
 
 
 
         tree.AddChild(selector);
-        
+
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         tree.Process();
         Debug.Log(tree.CurrentState.ToString());
@@ -66,7 +68,13 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
     bool CanFollow()
     {
-        return canFollowThePlayer;
+        if (tree.currentState == BehaviourState.RELOADING || tree.currentState == BehaviourState.IDLE) return false;
+                
+        return true;
     }
 
+    public void Pippo(string pippo)
+    {
+        tree.currentState = BehaviourState.END;
+    }
 }

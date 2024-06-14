@@ -11,7 +11,7 @@ public class BehaviorTreeSniper : MonoBehaviour
     private EnemyShooter ownerShooter;
 
 
-    [SerializeField] private GameObject player;
+    private GameObject player;
 
     [SerializeField] private List<Spot> spots;
     [SerializeField] float maxDistanceToShoot = 20;
@@ -25,6 +25,12 @@ public class BehaviorTreeSniper : MonoBehaviour
         ownerMovement = GetComponent<EnemyComponent>().GetEnemyMovement();
         animator = GetComponent<Animator>();
         ownerShooter = GetComponent<EnemyShooter>();
+
+
+        player = GameObject.Find("Player");
+        
+
+        
 
         spot = GetSpot();
 
@@ -73,10 +79,13 @@ public class BehaviorTreeSniper : MonoBehaviour
         return true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         tree.Process();
         Debug.Log(tree.CurrentState.ToString());
     }
-
+    public void Pippo(string pippo)
+    {
+       //tree.currentState = BehaviourState.END;
+    }
 }
