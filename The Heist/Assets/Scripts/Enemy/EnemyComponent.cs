@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyComponent : MonoBehaviour
+public class EnemyComponent : MonoBehaviour, IDamageble
 {
     private IEnemyMovement movementComponent;
 
@@ -12,6 +12,9 @@ public class EnemyComponent : MonoBehaviour
 
     [SerializeField]
     private EnemyShooter shooterComponent;
+
+    [SerializeField]
+    private HealthModule healthModule;
     
     public IEnemyMovement GetEnemyMovement() { return movementComponent; }
     public EnemyShooter GetEnemyShooter() {  return shooterComponent; }
@@ -19,6 +22,7 @@ public class EnemyComponent : MonoBehaviour
     public void Awake()
     {
         CreateEnemyMovement();
+        healthModule.Reset();
     }
 
     private void CreateEnemyMovement()
@@ -31,6 +35,20 @@ public class EnemyComponent : MonoBehaviour
 
         }
     }
+    #region Interface IDamageble
+    public void TakeDamage(DamageContainer damage)
+    {
+        InternalTakeDamage(damage);
+        Debug.Log("EnemyHealth: " + healthModule.CurrentHP);
+    }
+    #endregion
+
+    #region HealthModule
+    private void InternalTakeDamage(DamageContainer damage)
+    {
+        healthModule.TakeDamage(damage);
+    }
 
 
+    #endregion
 }

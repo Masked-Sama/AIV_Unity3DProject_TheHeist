@@ -132,7 +132,7 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
         if (Physics.Linecast(socketShoot.position, direction, out RaycastHit hit))
         {
             contactPoint = hit.point;
-            Debug.Log("Colpito!" + hit.collider.gameObject.name);
+            //Debug.Log("Colpito!" + hit.collider.gameObject.name);
 
             Debug.DrawLine(socketShoot.position, contactPoint, Color.red, 0.1f);
             //Debug.DrawLine(initialPosition, contactPoint, Color.blue, 30f);
@@ -144,7 +144,7 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
         else
         {
             contactPoint = playerController.CameraPositionTransform.forward * currentWeaponData.Range;
-            Debug.Log("Non Colpito!");
+            //Debug.Log("Non Colpito!");
 
             Debug.DrawLine(socketShoot.position, direction, Color.red, 0.1f);
             //Debug.DrawLine(initialPosition, playerController.CameraPositionTransform.position + contactPoint, Color.blue, 30f);

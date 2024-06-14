@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageble
     {
         private const string currentSpeedParameter = "CurrentSpeed";
 
@@ -18,6 +18,8 @@ namespace Player
         protected PlayerVisual playerVisual;
         [SerializeField]
         protected Transform cameraPositionTransform;
+        [SerializeField]
+        protected HealthModule healthModule;
         #endregion
 
         private PlayerAbilityBase[] abilities;
@@ -135,6 +137,20 @@ namespace Player
             {
                 ability.OnInputEnabled();
             }
+        }
+
+        #endregion
+        #region Interface IDamageble
+        public void TakeDamage(DamageContainer damage)
+        {
+            InternalTakeDamage(damage);
+            if (healthModule.IsDead) { Debug.Log("PlayerIsDead"); }
+        }
+        #endregion
+        #region HealthModule
+        private void InternalTakeDamage(DamageContainer damage)
+        {
+            healthModule.TakeDamage(damage);
         }
         #endregion
     }

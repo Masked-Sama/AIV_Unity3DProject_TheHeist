@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -110,7 +111,9 @@ public class EnemyShooter : MonoBehaviour, IShooter
                 }
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
-                    Debug.Log("Hit Player!!!");
+                    //Debug.Log("Hit Player!!!");
+                    IDamageble playerDamager = hit.collider.gameObject.GetComponent<IDamageble>();
+                    playerDamager.TakeDamage(weaponData.DamageContainer);
                     Debug.DrawLine(initialPosition, hit.point, Color.green, 0.1f);
                 }
             }
@@ -131,6 +134,8 @@ public class EnemyShooter : MonoBehaviour, IShooter
         return isReloading;
 
     }
+
+    
 
     #endregion
 

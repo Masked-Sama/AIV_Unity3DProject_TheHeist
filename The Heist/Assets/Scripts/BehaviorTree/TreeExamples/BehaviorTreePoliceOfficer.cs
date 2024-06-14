@@ -63,7 +63,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     private void FixedUpdate()
     {
         tree.Process();
-        Debug.Log(tree.CurrentState.ToString());
+        //Debug.Log(tree.CurrentState.ToString());
     }
 
     bool CanFollow()
