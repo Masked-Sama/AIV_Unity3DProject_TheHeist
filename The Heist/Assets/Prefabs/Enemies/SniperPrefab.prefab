@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62730087caa2ff54cb56a0a55658216b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: e2324ce5933a1a540b946247741c4eb0, type: 2}
+  weaponData: {fileID: 11400000, guid: 3a17f1eef4ad8594289e4b43c587ebbd, type: 2}
   randomRange: 0.7
 --- !u!114 &4336058417279291981
 MonoBehaviour:
@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1bc551a1920c29499dc92ea80145cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   spots: []
   maxDistanceToShoot: 20
   speed: 5
