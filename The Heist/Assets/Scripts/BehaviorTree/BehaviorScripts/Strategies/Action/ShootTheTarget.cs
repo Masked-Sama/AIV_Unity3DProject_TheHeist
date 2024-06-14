@@ -12,7 +12,8 @@ public class ShootTheTarget : IStrategy
 
     private Vector3 offSet;
 
-    BehaviourState state = BehaviourState.ATTACKING;
+    BehaviourState shootState = BehaviourState.SHOOTING;
+    BehaviourState reloadingState = BehaviourState.RELOADING;
 
     public ShootTheTarget(IEnemyMovement owner, Transform target, Animator animator, EnemyShooter ownerShooter)
     {
@@ -39,12 +40,16 @@ public class ShootTheTarget : IStrategy
             if (animator) animator.SetBool("CanShoot", true);
             Vector3 direction = target.position - (owner.GetLocation() + offSet);
             direction.Normalize();
-            ownerShooter.Shoot(owner.GetLocation() + offSet, direction, ownerShooter.WeaponData.TypeOfShoot);
+            if (ownerShooter.Shoot(owner.GetLocation() + offSet, direction, ownerShooter.WeaponData.TypeOfShoot))
+            {
+                currentState = reloadingState;
+            }
+            else currentState = shootState;
 
         }
-        currentState = state;
-        
-        Debug.Log("Shoot");
         return Node.Status.Success;
     }
+
+
+    
 }
