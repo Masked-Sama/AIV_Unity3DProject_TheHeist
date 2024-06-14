@@ -9,8 +9,7 @@ public enum ShootType
     Shotgun
 }
 
-[CreateAssetMenu(fileName = "WeaponDataTemplate",
-    menuName = "WeaponsData", order = 1)]
+
 public class WeaponData : ItemData
 {
     [SerializeField] private int maxAmmo; 

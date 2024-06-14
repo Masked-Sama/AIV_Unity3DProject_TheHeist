@@ -77,12 +77,7 @@ namespace Player
             {
                 itemDetected = hit.collider.gameObject;
                 onItemDetected?.Invoke();
-
-                //WeaponDataTem newWeapon = hit.collider.gameObject.GetComponent<WeaponDataTem>();
-                //if (newWeapon == null) return;
-                //WeaponData weapon = ScriptableObject.CreateInstance<WeaponData>();
-                //weapon = newWeapon.Data;
-                //playerController.OnChangeWeapon?.Invoke(weapon);
+                                
             }
             else
             {
@@ -107,6 +102,27 @@ namespace Player
             if (!canInteract) return;
             Item item = itemDetected.GetComponent<Item>();           
             if (item == null) return;
+            WeaponData weapon;
+            switch (item.ItemObj.ItemType)
+            {
+                case ItemType.FirstWeapon:
+                    weapon = (FirstWeaponData)item.ItemObj;
+                    playerController.OnChangeWeapon?.Invoke(weapon);
+                    break;
+                case ItemType.SecondWeapon:
+                    weapon = (SecondWeaponData)item.ItemObj;
+                    playerController.OnChangeWeapon?.Invoke(weapon);
+                    break;
+                case ItemType.ThrowableWeapon:
+                    ThrowableData throwable = (ThrowableData)item.ItemObj;
+                    break;
+                case ItemType.Consumable:
+                    //  TODO
+                    break;
+                default:
+                    return;
+
+            }            
             GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
             playerInventory.AddItem(item.ItemObj, item.Quantity, true);
             itemDetected.SetActive(false);

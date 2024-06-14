@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[CreateAssetMenu(fileName = "ThrowableDataTemplate",  menuName = "WeaponsData", order = 1)]
 public class ThrowableData : ItemData
 {
     [SerializeField] private float explosionRange;

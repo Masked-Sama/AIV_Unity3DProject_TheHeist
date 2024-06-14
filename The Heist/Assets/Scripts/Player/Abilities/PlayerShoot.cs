@@ -13,7 +13,7 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
     private WeaponData currentWeaponData;
     private int currentAmmo;
 
-    private float reloadTimer;
+    private float reloadTimer=0.0f;
     private float fireTime;
 
     private bool canShoot = true;
@@ -77,6 +77,7 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
 
     private void InternalOnShootPerformed()
     {
+        if (currentWeaponData == null) return;
         if (CanShoot())
         {
             Vector3 initialPosition = playerController.CameraPositionTransform.position;
