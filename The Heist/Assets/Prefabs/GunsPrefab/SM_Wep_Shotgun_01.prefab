@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 3361912}
   - component: {fileID: 2395676}
   - component: {fileID: 64544405638540824}
-  - component: {fileID: -1283835147171895977}
+  - component: {fileID: 8043491585761382813}
   m_Layer: 0
   m_Name: SM_Wep_Shotgun_01
   m_TagString: Untagged
@@ -276,7 +276,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43895663473679850, guid: e87a05a902ad04244b9213e72db2b2dd, type: 2}
---- !u!114 &-1283835147171895977
+--- !u!114 &8043491585761382813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -285,12 +285,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 160320}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b0866078f1b5754abdf95ee10fde4ed, type: 3}
+  m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: 
-  cost: 0
-  weaponPrefab: {fileID: 0}
+  itemObj: {fileID: 11400000, guid: 38901819927efe74b808f2528bec2b4a, type: 2}
+  quantity: 11
 --- !u!1 &173896
 GameObject:
   m_ObjectHideFlags: 0

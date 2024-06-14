@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3379156}
   - component: {fileID: 2324126}
   - component: {fileID: 64313593194440506}
-  - component: {fileID: 5591181156870563070}
+  - component: {fileID: 3199188764565173398}
   m_Layer: 0
   m_Name: SM_Wep_SMG_01
   m_TagString: Untagged
@@ -193,7 +193,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43987134602454354, guid: 8fc20c3941c553b4a93ea6dfb4d9fb8c, type: 2}
---- !u!114 &5591181156870563070
+--- !u!114 &3199188764565173398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,12 +202,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 123254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b0866078f1b5754abdf95ee10fde4ed, type: 3}
+  m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: 
-  cost: 50
-  weaponPrefab: {fileID: 123254}
+  itemObj: {fileID: 11400000, guid: 098dfc6ff0343584ebc5724260849f72, type: 2}
+  quantity: 20
 --- !u!1 &128004
 GameObject:
   m_ObjectHideFlags: 0

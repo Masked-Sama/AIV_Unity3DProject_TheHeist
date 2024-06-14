@@ -68,10 +68,18 @@ namespace Player
 
         #region PlayerInteract
         public Action<WeaponData> OnChangeWeapon;
+
+        public Action OnItemDetected;
+        public Action OnItemUndetected;
         #endregion
 
         #region PlayerShoot + Aim
         public bool IsAiming { get; set; }
+        #endregion
+
+        #region PlayerCurrency
+        public Func<int,bool> OnTryToBuyItem;
+
         #endregion
 
         #region Mono
@@ -140,6 +148,7 @@ namespace Player
         }
 
         #endregion
+
         #region Interface IDamageble
         public void TakeDamage(DamageContainer damage)
         {
@@ -147,6 +156,7 @@ namespace Player
             if (healthModule.IsDead) { Debug.Log("PlayerIsDead"); }
         }
         #endregion
+
         #region HealthModule
         private void InternalTakeDamage(DamageContainer damage)
         {

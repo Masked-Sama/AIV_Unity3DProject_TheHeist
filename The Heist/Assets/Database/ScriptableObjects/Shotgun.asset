@@ -9,17 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c744e2f1cdb6443b88e2b984ca97ca, type: 3}
-  m_Name: GunTest
+  m_Script: {fileID: 11500000, guid: d3a97194a9b219a41a15919a4781e51c, type: 3}
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  maxAmmo: 30
-  rateOfFire: 0.1
+  itemName: Shotgun
+  prefab: {fileID: 160320, guid: b952b4ac9a84721429ec0ec1f125e52a, type: 3}
+  cost: 60
+  maxAmmo: 2
+  rateOfFire: 1
   damageContainer:
     damageType: 1
-    damage: 1
+    damage: 80
     damageImpulse: {x: 0, y: 0, z: 0}
     freezeTime: 0
-  randomDirection: 0
-  typeOfShoot: 1
-  reloadTime: 5
-  range: 10
+  randomDirection: 8
+  typeOfShoot: 2
+  reloadTime: 2
+  range: 50
+  texture: {fileID: 0}

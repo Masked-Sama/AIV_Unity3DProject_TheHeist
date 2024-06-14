@@ -9,17 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c744e2f1cdb6443b88e2b984ca97ca, type: 3}
-  m_Name: Sniper
+  m_Script: {fileID: 11500000, guid: 8ed04d980008b5b4b8ba4324dfbc129e, type: 3}
+  m_Name: MP-5
   m_EditorClassIdentifier: 
-  maxAmmo: 8
-  rateOfFire: 1
+  itemName: MP-5
+  prefab: {fileID: 123254, guid: 6ff117de65466d744b6119672cc00579, type: 3}
+  cost: 40
+  maxAmmo: 25
+  rateOfFire: 0.1
   damageContainer:
     damageType: 0
     damage: 0
     damageImpulse: {x: 0, y: 0, z: 0}
     freezeTime: 0
-  randomDirection: 0
-  typeOfShoot: 0
-  reloadTime: 1.5
-  range: 5000
+  randomDirection: 0.8
+  typeOfShoot: 1
+  reloadTime: 3
+  range: 80
+  texture: {fileID: 0}

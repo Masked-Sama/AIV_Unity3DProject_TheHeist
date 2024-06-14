@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3a97194a9b219a41a15919a4781e51c, type: 3}
-  m_Name: SecondWeaponDataTemplate
+  m_Name: M4A4_CQB
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  maxAmmo: 0
-  rateOfFire: 0
+  itemName: M4A4
+  prefab: {fileID: 199910, guid: 4101bd880c926364d88679f098bde112, type: 3}
+  cost: 80
+  maxAmmo: 30
+  rateOfFire: 0.4
   damageContainer:
     damageType: 0
-    damage: 0
+    damage: 60
     damageImpulse: {x: 0, y: 0, z: 0}
     freezeTime: 0
-  randomDirection: 0
+  randomDirection: 0.5
   typeOfShoot: 0
-  reloadTime: 0
-  range: 0
+  reloadTime: 2
+  range: 90
   texture: {fileID: 0}

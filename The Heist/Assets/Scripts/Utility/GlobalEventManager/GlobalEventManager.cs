@@ -98,6 +98,7 @@ public enum GlobalEventIndex {
     DialoguePerformed,
     ShakeCamera,
     PlayerEnergyUpdated,
-    AddItemToInventory
+    AddItemToInventory,
+    BuyItem
 }
 
