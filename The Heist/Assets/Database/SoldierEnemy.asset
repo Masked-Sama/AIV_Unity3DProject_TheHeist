@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2353e42d7cf8114ca9170611aebbfbc, type: 3}
-  m_Name: SimpleEnemy
+  m_Name: SoldierEnemy
   m_EditorClassIdentifier: 
   poolKey: Soldier
-  prefab: {fileID: 7937311818022708153, guid: 078b2c666416f354eb7ab3632cdb7412, type: 3}
+  prefab: {fileID: 153790681395809924, guid: 6e3a066c65134bd4ab029da80bc6bb06, type: 3}
   poolNumber: 20
   resizablePool: 0
