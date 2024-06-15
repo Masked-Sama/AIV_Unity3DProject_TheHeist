@@ -4,20 +4,23 @@ using UnityEngine.UIElements;
 public class PlayerInventoryHUD : MonoBehaviour
 {
     private const int maxSlotsNumber = 3;
-    private InventoryUI inventoryGUI;
+    private InventoryUI inventoryUI;
 
     [SerializeField]
-    private InventoryObject playerInventory;
+    private InventoryData playerInventory;
+
+    private Item currentWeapon;
 
     private void Awake()
     {
-        inventoryGUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI");
-        inventoryGUI.MaxSlotsNumber = maxSlotsNumber;
+        inventoryUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI");
+        inventoryUI.MaxSlotsNumber = maxSlotsNumber;
         Init();
     }
     private void OnEnable()
     {
         GlobalEventManager.AddListener(GlobalEventIndex.AddItemToInventory, UpdateInventory);
+        GlobalEventManager.AddListener(GlobalEventIndex.Shoot, ShootListener);
     }
 
     private void Init()
@@ -25,7 +28,7 @@ public class PlayerInventoryHUD : MonoBehaviour
         foreach(var item in playerInventory.InventorySlots)
         {
 
-            inventoryGUI.SwitchSlotItem((int)item.ItemObj.ItemType,item.ItemObj,item.Amount);
+            inventoryUI.AddToSlotItem((int)item.ItemData.ItemType,(IInventoried)item.ItemData,item.Amount);
         }
     }
 
@@ -37,18 +40,23 @@ public class PlayerInventoryHUD : MonoBehaviour
         switch(item.ItemData.ItemType)
         {
             case ItemType.SecondWeapon:
-                inventoryGUI.SwitchSlotItem((int)SlotType.SecondWeapon, item.ItemData,item.Quantity);
+                inventoryUI.AddToSlotItem((int)SlotType.SecondWeapon, (IInventoried)item.ItemData,item.Quantity);
                     break;
 
             case ItemType.FirstWeapon:
-                inventoryGUI.SwitchSlotItem((int)SlotType.FirstWeapon, item.ItemData, item.Quantity);
+                inventoryUI.AddToSlotItem((int)SlotType.FirstWeapon, (IInventoried)item.ItemData, item.Quantity);
                 break;
 
             case ItemType.ThrowableWeapon:
-                inventoryGUI.SwitchSlotItem((int)SlotType.ThrowableWeapon, item.ItemData, item.Quantity);
+                inventoryUI.AddToSlotItem((int)SlotType.ThrowableWeapon, (IInventoried)item.ItemData, item.Quantity);
                 break;
             default:
                 return;
         }
+    }
+    private void ShootListener(GlobalEventArgs message)
+    {
+        GlobalEventArgsFactory.ShootParser(message, out int bulletAmount);
+
     }
 }

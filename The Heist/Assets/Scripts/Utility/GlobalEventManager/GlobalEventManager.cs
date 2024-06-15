@@ -99,6 +99,8 @@ public enum GlobalEventIndex {
     ShakeCamera,
     PlayerEnergyUpdated,
     AddItemToInventory,
-    BuyItem
+    BuyItem,
+    Shoot,
+    ChangeWeapon
 }
 

@@ -26,4 +26,4 @@ MonoBehaviour:
   typeOfShoot: 0
   reloadTime: 2
   range: 90
-  texture: {fileID: 0}
+  texture: {fileID: 2800000, guid: 00a98b3cbb4c24e4882ab60443bef5d1, type: 3}

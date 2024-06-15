@@ -11,16 +11,16 @@ public enum SlotType
 public class InventorySlot
 {
     [SerializeField]
-    private ItemData itemObj;
+    private ItemData itemData;
     [SerializeField]
     private int amount;
 
-    public ItemData ItemObj { get { return itemObj; } }
+    public ItemData ItemData { get { return itemData; } }
     public int Amount {  get { return amount; } }
 
     public InventorySlot(ItemData item, int amount)
     {
-        this.itemObj = item;
+        this.itemData = item;
         this.amount = amount;
     }
 

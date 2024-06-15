@@ -189,7 +189,10 @@ public class PlayerShoot : PlayerAbilityBase, IShooter
         currentAmmo--;
         canShoot = false;
         fireTime = currentWeaponData.RateOfFire;
-
+        
+        //to change when shotgun logic is implemented
+        GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(1));
+        
         switch (currentShootType)
         {
             case ShootType.Single:

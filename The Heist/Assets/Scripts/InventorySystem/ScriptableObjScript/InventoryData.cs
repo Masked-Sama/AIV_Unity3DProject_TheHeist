@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New Inventory", menuName = "Inventory System/Inventories")]
-public class InventoryObject: ScriptableObject
+public class InventoryData: ScriptableObject
 {
     [SerializeField]
     private List<InventorySlot> inventoryObjects;
@@ -19,7 +19,7 @@ public class InventoryObject: ScriptableObject
     {
         for (int i = 0; i < inventoryObjects.Count; i++)
         {
-            if (inventoryObjects[i].ItemObj == item)
+            if (inventoryObjects[i].ItemData == item)
             {
                 inventoryObjects[i].AddAmount(amount);
                 return;

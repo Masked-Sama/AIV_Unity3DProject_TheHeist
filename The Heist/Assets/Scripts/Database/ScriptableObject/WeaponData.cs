@@ -10,7 +10,7 @@ public enum ShootType
 }
 
 
-public class WeaponData : ItemData
+public class WeaponData : ItemData, IInventoried
 {
     [SerializeField] private int maxAmmo; 
     [SerializeField] private float rateOfFire;
@@ -48,7 +48,7 @@ public class WeaponData : ItemData
     { 
         get { return range; }
     }
-    public Texture2D Texture 
+    public Texture2D Texture2D
     {
         get { return texture; }
     }

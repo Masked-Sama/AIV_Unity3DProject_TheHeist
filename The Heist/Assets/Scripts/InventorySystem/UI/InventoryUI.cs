@@ -1,5 +1,7 @@
 using UnityEngine.UIElements;
 using UnityEngine;
+using System;
+using UnityEditor.Graphs;
 
 public class InventoryUI : VisualElement
 {
@@ -42,14 +44,29 @@ public class InventoryUI : VisualElement
     }
 
 
-    public void SwitchSlotItem(int index, ItemData itemObjToSwitch, int amount)
+    public void AddToSlotItem(int index, IInventoried itemObjToSwitch, int amount)
     {
-        if (slotContainer[index] == null) return;
-        //SetBackgroundTexture(slotContainer[index], itemObjToSwitch.Texture);
-        SetBulletsNumber(slotContainer[index], amount); 
+        VisualElement slot =  slotContainer[index];
+        if (slot == null) return;
+        //condizione brutta per dire che hai già l'arma raccolta nell'inventario
+        if (slot.Q<VisualElement>("ItemIcon").style.backgroundImage == itemObjToSwitch.Texture2D)
+        {
+            int newAmount = int.Parse(slot.Q<Label>("BulletsNumber").text) + amount ;
+            SetBulletsNumber(slotContainer[index], newAmount);
+        }
+        else
+        {
+            SwitchSlotItem(index, itemObjToSwitch, amount);
+        }
     }
 
+
     #region Private Methods
+    private void SwitchSlotItem(int index, IInventoried itemObjToSwitch, int amount)
+    {
+        SetBackgroundTexture(slotContainer[index], itemObjToSwitch.Texture2D);
+        SetBulletsNumber(slotContainer[index], amount);
+    }
     private void CreateSlots()
     {
         slotContainer.Clear();

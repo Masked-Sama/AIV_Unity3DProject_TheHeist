@@ -22,7 +22,7 @@ namespace Player
         [SerializeField]
         private LayerMask wallMask;
         [SerializeField]
-        private InventoryObject playerInventory;
+        private InventoryData playerInventory;
 
         private GameObject itemDetected;
         //private Action onItemDetected;
@@ -94,6 +94,7 @@ namespace Player
             textUI.SetActive(true);
             canInteract = true;
         }
+
         private void ItemUndetected()
         {
             textUI.SetActive(false);
