@@ -67,14 +67,20 @@ namespace Player
         #endregion
 
         #region PlayerInteract
-        public Action<WeaponData> OnChangeWeapon;
-
         public Action OnItemDetected;
         public Action OnItemUndetected;
+
+        [SerializeField]
+        private InventoryData inventory;
+        public InventoryData Inventory { get { return inventory; } }
         #endregion
 
         #region PlayerShoot + Aim
         public bool IsAiming { get; set; }
+        #endregion
+
+        #region PlayerChangeWeapon
+        public Action<WeaponData> OnChangeWeapon;
         #endregion
 
         #region PlayerCurrency

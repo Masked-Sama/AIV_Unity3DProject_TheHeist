@@ -11,8 +11,6 @@ namespace Player
         private const string sellingWeaponTag = "SellingWeapon";
 
         [SerializeField]
-        private Transform cameraPosition;
-        [SerializeField]
         private float distance;
 
         [SerializeField]
@@ -21,8 +19,6 @@ namespace Player
         private LayerMask layerMask;
         [SerializeField]
         private LayerMask wallMask;
-        [SerializeField]
-        private InventoryData playerInventory;
 
         private GameObject itemDetected;
         //private Action onItemDetected;
@@ -72,7 +68,7 @@ namespace Player
             //        && (1 << hit.collider.gameObject.layer) == layerMask.value
             //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
 
-            canInteract = Physics.Raycast(cameraPosition.position, cameraPosition.forward, out hit, distance)
+            canInteract = Physics.Raycast(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward, out hit, distance)
                         && (1 << hit.collider.gameObject.layer) == layerMask.value
                         && (1 << hit.collider.gameObject.layer) != wallMask.value;
 
@@ -145,14 +141,11 @@ namespace Player
 
             }            
             GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
-            playerInventory.AddItem(itemComponent.ItemData, itemComponent.Quantity, true);
-
+            playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
 
             if (!itemDetected.CompareTag(sellingWeaponTag))
                 itemDetected.SetActive(false);
-
         }
-
 
         private void OnDrawGizmos()
         {
@@ -161,7 +154,7 @@ namespace Player
             //Gizmos.DrawWireSphere(pos, radius);
             //Gizmos.DrawWireSphere(pos + cameraPosition.forward * distance, radius);
 
-            Gizmos.DrawRay(cameraPosition.position, cameraPosition.forward * distance);
+            Gizmos.DrawRay(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward * distance);
         }
     }
 }
