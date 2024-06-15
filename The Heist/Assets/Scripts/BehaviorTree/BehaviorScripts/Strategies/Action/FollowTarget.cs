@@ -10,6 +10,7 @@ public class FollowTarget : IStrategy
 
 
     private Vector3 target;
+    private Transform targetTransform;
     private float speed;
 
     private Animator animator;
@@ -26,21 +27,34 @@ public class FollowTarget : IStrategy
         this.animator = animator;
         this.everyframe = everyFrame;
     }
+    public FollowTarget(IEnemyMovement owner, Transform target, float speed, Animator animator, bool everyFrame)
+    {
+        this.owner = owner;
+        this.targetTransform = target;
+        this.speed = speed;
+        this.animator = animator;
+        this.everyframe = everyFrame;
+    }
 
 
     public Node.Status Process(ref BehaviourState currentState)
     {
-        if(!everyframe)
+        if (!everyframe)
         {
-        if (currentState == BehaviourState.MOVING) return Node.Status.Success;
+            if (currentState == BehaviourState.MOVING) return Node.Status.Success;
         }
 
-        if (owner != null)
+        //if (owner != null)
+        // {
+        if(target != Vector3.zero)
         {
-            owner.MoveToTarget(target, speed);
-            if(animator) animator.SetBool("CanShoot", false);
-            currentState = state;
-        }
+        owner.MoveToTarget(target, speed);            
+        } else owner.MoveToTarget(targetTransform.position, speed);
+
+        //if(animator) 
+        animator.SetBool("CanShoot", false);
+        currentState = state;
+        // }
 
         Debug.Log("FollowPlayer");
         return Node.Status.Success;

@@ -13,6 +13,8 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private GameObject player;
 
+    private bool isDead;
+
     [SerializeField] private List<Spot> spots;
     [SerializeField] float maxDistanceToShoot = 20;
     [SerializeField] float speed = 5;
@@ -87,11 +89,20 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private void FixedUpdate()
     {
-        tree.Process();
-        Debug.Log(tree.CurrentState.ToString());
+        if (!isDead)
+        {
+            tree.Process();
+        }
+        //Debug.Log(tree.CurrentState.ToString());
     }
     public void Pippo(string pippo)
     {
        //tree.currentState = BehaviourState.END;
+    }
+
+    public void onDeath(string empty)
+    {
+        isDead = true;
+
     }
 }

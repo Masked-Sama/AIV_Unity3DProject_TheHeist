@@ -44,6 +44,10 @@ public class EnemyComponent : MonoBehaviour, IDamageble
     private void InternalTakeDamage(DamageContainer damage)
     {
         healthModule.TakeDamage(damage);
+        if(healthModule.IsDead)
+        {
+            movementComponent.Die();
+        }
     }
 
 

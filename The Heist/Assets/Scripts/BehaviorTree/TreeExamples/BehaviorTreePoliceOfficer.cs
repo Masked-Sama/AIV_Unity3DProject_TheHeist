@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,6 +26,8 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     
     private GameObject player;
 
+    private bool isDead;
+
     //SerializeFields
     [SerializeField] bool canFollowThePlayer = true;
     [SerializeField] float maxDistanceToShoot = 20;
@@ -48,7 +51,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         Sequence Follow = new Sequence("FollowPlayer");
         Follow.AddChild(new Leaf("CanFollow?", new Condition(() => CanFollow())));
-        Follow.AddChild(new Leaf("Follow", new FollowTarget(ownerMovement, player.transform.position, speed, animator, true), behaviorTree: tree));
+        Follow.AddChild(new Leaf("Follow", new FollowTarget(ownerMovement, player.transform, speed, animator, true), behaviorTree: tree));
 
         selector.AddChild(Shoot);
         selector.AddChild(Follow);
@@ -62,7 +65,10 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isDead)
+        {
         tree.Process();
+        }
         //Debug.Log(tree.CurrentState.ToString());
     }
 
@@ -76,5 +82,11 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     public void Pippo(string pippo)
     {
         tree.currentState = BehaviourState.END;
+    }
+
+    public void onDeath(string empty)
+    {
+        isDead = true;
+        
     }
 }
