@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.XR;
 
 public class EnemyComponent : MonoBehaviour, IDamageble
 {
@@ -15,15 +18,9 @@ public class EnemyComponent : MonoBehaviour, IDamageble
 
     [SerializeField]
     private HealthModule healthModule;
-    
+
     public IEnemyMovement GetEnemyMovement() { return movementComponent; }
     public EnemyShooter GetEnemyShooter() {  return shooterComponent; }
-
-    public void Awake()
-    {
-        CreateEnemyMovement();
-        healthModule.Reset();
-    }
 
     private void CreateEnemyMovement()
     {
@@ -50,5 +47,13 @@ public class EnemyComponent : MonoBehaviour, IDamageble
     }
 
 
+    #endregion
+
+    #region Mono
+    private void Awake()
+    {
+        CreateEnemyMovement();
+        healthModule.Reset();
+    }
     #endregion
 }

@@ -31,7 +31,11 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     private Animator animator;
 
+    private Transform boneWeapon;
+
     private bool isReloading = false;
+
+
     #region Mono
     public void Start()
     {
@@ -47,6 +51,13 @@ public class EnemyShooter : MonoBehaviour, IShooter
             directions[i] = new Vector3(randomX, randomY, randomZ);
         }
         animator = GetComponent<Animator>();
+
+        Transform[] allBones = gameObject.GetComponentsInChildren<Transform>();
+        boneWeapon = FindBone(allBones, "WeaponHand_R");
+
+        GameObject instance = Instantiate(WeaponData.Prefab, boneWeapon.position, boneWeapon.rotation);
+
+        instance.transform.SetParent(boneWeapon);
     }
 
     public void FixedUpdate()
@@ -74,6 +85,18 @@ public class EnemyShooter : MonoBehaviour, IShooter
         }
     }
     #endregion
+
+    private Transform FindBone(Transform[] allBones, string boneName)
+    {
+        foreach (Transform bone in allBones)
+        {
+            if (bone.name == boneName)
+            {
+                return bone;
+            }
+        }
+        return null; // Bone not found
+    }
 
     #region IShooter
     public void Reload()
