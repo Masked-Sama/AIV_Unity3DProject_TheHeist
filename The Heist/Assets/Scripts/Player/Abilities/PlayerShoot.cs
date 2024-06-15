@@ -49,9 +49,12 @@ namespace Player
             {
                 reloadTimer -= Time.fixedDeltaTime;
 
-                if (reloadTimer <= 0f)
+                if (reloadTimer <= 0f && playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>0)
                 {
-                    currentAmmo = currentWeaponData.MaxAmmo;
+                    if(playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>= currentWeaponData.MaxAmmo)
+                        currentAmmo = currentWeaponData.MaxAmmo;
+                    else
+                        currentAmmo = playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount;
                     canShoot = true;
                 }
             }
@@ -192,10 +195,13 @@ namespace Player
             fireTime = currentWeaponData.RateOfFire;
 
             //to change when shotgun logic is implemented
-            GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(1));
+            //GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(1));
 
-            Debug.Log(currentWeaponData.name);
-            
+            //Debug.Log(currentWeaponData.name);
+            ;
+            playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].AddAmount(-1);
+
+
             switch (currentShootType)
             {
                 case ShootType.Single:

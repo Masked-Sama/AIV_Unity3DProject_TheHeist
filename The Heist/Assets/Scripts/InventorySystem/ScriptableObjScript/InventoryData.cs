@@ -54,4 +54,14 @@ public class InventoryData : ScriptableObject
         return inventoryObjects[index].ItemData;
     }
 
+    public int FindWeaponSlot(ItemData item)
+    {
+        for (int i = 0; i < inventoryObjects.Length; i++)
+        {
+            if(inventoryObjects[i].ItemData == item)
+                return i;
+        }
+        return -1;
+    }
+
 }
