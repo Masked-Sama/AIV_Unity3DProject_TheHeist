@@ -167,11 +167,11 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
 
     }
 
-    public void MoveToTarget(Transform target, float speed)
+    public void MoveToTarget(Vector3 target, float speed)
     {
         if (navMesh)
         {
-            navMesh.SetDestination(target.position);
+            navMesh.SetDestination(target);
             navMesh.speed = speed;
         }
     }

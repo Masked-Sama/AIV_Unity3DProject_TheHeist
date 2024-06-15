@@ -45,7 +45,7 @@ public class BehaviorTreeSniper : MonoBehaviour
         Sequence MoveToSpot = new Sequence("MoveToSpot");
 
         MoveToSpot.AddChild(new Leaf("CanMoveToSpot", new Condition(CanMoveToSpot)));
-        MoveToSpot.AddChild(new Leaf("MoveToSpot", new FollowTarget(ownerMovement,spot.transform, speed, animator, false), behaviorTree: tree));
+        MoveToSpot.AddChild(new Leaf("MoveToSpot", new FollowTarget(ownerMovement,spot.SpotPosition(), speed, animator, false), behaviorTree: tree));
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot)));

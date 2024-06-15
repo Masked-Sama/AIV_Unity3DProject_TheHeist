@@ -9,7 +9,7 @@ public class FollowTarget : IStrategy
     private IEnemyMovement owner;
 
 
-    private Transform target;
+    private Vector3 target;
     private float speed;
 
     private Animator animator;
@@ -18,7 +18,7 @@ public class FollowTarget : IStrategy
 
     private bool everyframe = true;
 
-    public FollowTarget(IEnemyMovement owner, Transform target, float speed, Animator animator, bool everyFrame)
+    public FollowTarget(IEnemyMovement owner, Vector3 target, float speed, Animator animator, bool everyFrame)
     {
         this.owner = owner;
         this.target = target;
