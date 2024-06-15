@@ -19,20 +19,7 @@ public class InventoryData : ScriptableObject
 
     public void AddItem(ItemData item, int amount)
     {
-        //for (int i = 0; i < inventoryObjects.Length; i++)
-        //{
-        //    if (inventoryObjects[i].ItemData == item)
-        //    {
-        //        inventoryObjects[i].AddAmount(amount);
-        //        return;
-        //    }
-        //}
-        //if (!isPlayerInventory)
-        //{
-        //    inventoryObjects.Add(new InventorySlot(item, amount));
-        //    return;
-        //}
-
+        
         if (inventoryObjects[(int)item.ItemType].ItemData == item)
         {
             inventoryObjects[(int)item.ItemType].AddAmount(amount);

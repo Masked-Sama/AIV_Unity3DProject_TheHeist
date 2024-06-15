@@ -27,7 +27,7 @@ public class PlayerInventoryHUD : MonoBehaviour
     {
         foreach(var item in playerInventory.InventorySlots)
         {
-
+            if (item.ItemData == null) continue;
             inventoryUI.AddToSlotItem((int)item.ItemData.ItemType,(IInventoried)item.ItemData,item.Amount);
         }
     }
