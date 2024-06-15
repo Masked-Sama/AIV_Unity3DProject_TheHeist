@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []
-  maxDistanceToShoot: 20
+  maxDistanceToShoot: 5
   speed: 5
 --- !u!195 &2183756744949783040
 NavMeshAgent:
