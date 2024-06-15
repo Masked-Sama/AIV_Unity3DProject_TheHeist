@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="77f597e3-daa8-474f-a1d0-2dabecd9d19b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Database/SoldierEnemy.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Database/SoldierEnemy.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/SniperPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/SniperPrefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScenes/EasyLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScenes/EasyLevel.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScenes/EasyLevel/NavMesh-SM_Env_Floor_01.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScenes/EasyLevel/NavMesh-SM_Env_Floor_01.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SpawnerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SpawnerScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SpawnerScene/NavMesh-Cube.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SpawnerScene/NavMesh-Cube.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawner/Spawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawner/Spawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScenes/LobbyScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScenes/LobbyScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Abilities/PlayerInteract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Abilities/PlayerInteract.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/ChangeScene/ChangeScene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/ChangeScene/ChangeScene.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +24,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CombatSystem/GenericDamager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CombatSystem/HealthModule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CombatSystem/IDamageble.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f7237cf7abef49bfbb552d7eb076e422174200/34/0e274cf5/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f7237cf7abef49bfbb552d7eb076e422174200/45/45df1b0b/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f7237cf7abef49bfbb552d7eb076e422174200/93/88bede61/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -89,10 +87,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="1964">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="1964" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -131,6 +129,7 @@
       <workItem from="1718367132252" duration="1688000" />
       <workItem from="1718438206806" duration="2177000" />
       <workItem from="1718440915338" duration="2234000" />
+      <workItem from="1718445904066" duration="2224000" />
     </task>
     <servers />
   </component>

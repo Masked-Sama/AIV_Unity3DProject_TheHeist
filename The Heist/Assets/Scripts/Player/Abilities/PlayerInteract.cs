@@ -10,31 +10,28 @@ namespace Player
     {
         private const string sellingWeaponTag = "SellingWeapon";
 
-        [SerializeField]
-        private Transform cameraPosition;
-        [SerializeField]
-        private float distance;
+        [SerializeField] private Transform cameraPosition;
+        [SerializeField] private float distance;
 
-        [SerializeField]
-        private GameObject textUI;
-        [SerializeField]
-        private LayerMask layerMask;
-        [SerializeField]
-        private LayerMask wallMask;
-        [SerializeField]
-        private InventoryObject playerInventory;
+        [SerializeField] private GameObject textUI;
+        [SerializeField] private LayerMask layerMask;
+        [SerializeField] private LayerMask wallMask;
+        [SerializeField] private InventoryObject playerInventory;
 
         private GameObject itemDetected;
+
         //private Action onItemDetected;
         //private Action onItemUndetected;
         private RaycastHit hit;
         private bool canInteract = false;
 
         #region Override
+
         public override void OnInputDisabled()
         {
             isPrevented = true;
         }
+
         public override void OnInputEnabled()
         {
             isPrevented = false;
@@ -42,17 +39,19 @@ namespace Player
 
         public override void StopAbility()
         {
-        
         }
+
         #endregion
 
         #region Mono
+
         private void OnEnable()
         {
             InputManager.Player.Interact.performed += OnInteractPerform;
             playerController.OnItemUndetected += ItemUndetected;
             playerController.OnItemDetected += ItemDetected;
         }
+
         private void OnDisable()
         {
             InputManager.Player.Interact.performed -= OnInteractPerform;
@@ -62,9 +61,10 @@ namespace Player
         {
             DetectItem();
         }
+
         #endregion
 
-        private void DetectItem() 
+        private void DetectItem()
         {
             bool wasInteract = canInteract;
 
@@ -73,8 +73,8 @@ namespace Player
             //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
 
             canInteract = Physics.Raycast(cameraPosition.position, cameraPosition.forward, out hit, distance)
-                        && (1 << hit.collider.gameObject.layer) == layerMask.value
-                        && (1 << hit.collider.gameObject.layer) != wallMask.value;
+                          && (1 << hit.collider.gameObject.layer) == layerMask.value
+                          && (1 << hit.collider.gameObject.layer) != wallMask.value;
 
             if (wasInteract == canInteract) return;
             if (canInteract)
@@ -90,10 +90,17 @@ namespace Player
 
         private void ItemDetected()
         {
-            textUI.GetComponent<UnityEngine.UI.Text>().text = $"{itemDetected.GetComponent<Item>().ItemData.ItemName} - Cost: {itemDetected.GetComponent<Item>().ItemData.Cost}";  //DA CAMBIARE ASSOLUTAMENTE
+            if (itemDetected.GetComponent<Item>() != null)
+                textUI.GetComponent<UnityEngine.UI.Text>().text =
+                    $"{itemDetected.GetComponent<Item>().ItemData.ItemName} - Cost: {itemDetected.GetComponent<Item>().ItemData.Cost}"; //DA CAMBIARE ASSOLUTAMENTE
+            else {
+                textUI.GetComponent<UnityEngine.UI.Text>().text = "Press E to Interact";
+            }
+
             textUI.SetActive(true);
             canInteract = true;
         }
+
         private void ItemUndetected()
         {
             textUI.SetActive(false);
@@ -103,23 +110,29 @@ namespace Player
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
             if (!canInteract) return;
-            Item itemComponent = itemDetected.GetComponent<Item>();           
+            ChangeScene sceneRef = itemDetected.GetComponent<ChangeScene>();
+            if (sceneRef != null)
+            {
+                sceneRef.ChangeSceneStarter = true;
+                return;
+            }
+            Item itemComponent = itemDetected.GetComponent<Item>();
             if (itemComponent == null) return;
 
             if (itemDetected.CompareTag(sellingWeaponTag))
             {
-                if(playerController.OnTryToBuyItem == null) return;                     
+                if (playerController.OnTryToBuyItem == null) return;
                 if (playerController.OnTryToBuyItem.Invoke(itemComponent.ItemData.Cost))
                 {
                     Debug.Log("C'ho li sordi");
-                    GlobalEventManager.CastEvent(GlobalEventIndex.BuyItem,GlobalEventArgsFactory.BuyItemFactory(itemDetected));
+                    GlobalEventManager.CastEvent(GlobalEventIndex.BuyItem,
+                        GlobalEventArgsFactory.BuyItemFactory(itemDetected));
                 }
                 else
                 {
                     Debug.Log("Non c'ho li sordi");
                     return;
                 }
-
             }
 
             WeaponData weapon;
@@ -141,15 +154,15 @@ namespace Player
                     break;
                 default:
                     return;
+            }
 
-            }            
-            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
+            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory,
+                GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
             playerInventory.AddItem(itemComponent.ItemData, itemComponent.Quantity, true);
 
 
             if (!itemDetected.CompareTag(sellingWeaponTag))
                 itemDetected.SetActive(false);
-
         }
 
 
