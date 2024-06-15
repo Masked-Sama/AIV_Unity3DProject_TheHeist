@@ -28,6 +28,7 @@ public class Spanwer : MonoBehaviour
             if (spawn) {
                 currentEnemy = Pooler.Istance.GetPooledObject(enemies);
                 if (currentEnemy != null) {
+                    // if (currentEnemy.CompareTag("Untagged")) 
                     if (currentEnemy.CompareTag("Snipers"))
                     {
                         sniperBT = gameObject.GetComponent<BehaviorTreeSniper>();

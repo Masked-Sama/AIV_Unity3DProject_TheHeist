@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 enum Scenes
 {
     LobbyScene,
-    EasyMapScene
+    EasyLevel
 }
 
 public class ChangeScene : MonoBehaviour
@@ -31,7 +31,7 @@ public class ChangeScene : MonoBehaviour
         {
             case Scenes.LobbyScene: sceneToLoad = "LobbyScene";
                 break;            
-            case Scenes.EasyMapScene: sceneToLoad = "EasyMapScene";
+            case Scenes.EasyLevel: sceneToLoad = "EasyMapScene";
                 break;
         }
         
