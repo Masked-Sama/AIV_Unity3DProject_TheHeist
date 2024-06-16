@@ -10,6 +10,7 @@ public class BehaviorTreeSniper : MonoBehaviour
     private Animator animator;
     private EnemyShooter ownerShooter;
 
+    private WaveMenager waveMenager;
     
     private SpotMenager spotMenager;
 
@@ -36,6 +37,8 @@ public class BehaviorTreeSniper : MonoBehaviour
         animator = GetComponent<Animator>();
         ownerShooter = GetComponent<EnemyShooter>();
 
+        waveMenager = GameObject.FindObjectOfType<WaveMenager>();
+        
         spotMenager =  GameObject.Find("SpotMenager").GetComponent<SpotMenager>();
 
         Spots = spotMenager.Spots;
@@ -106,6 +109,7 @@ public class BehaviorTreeSniper : MonoBehaviour
     public void onDeath(string empty)
     {
         isDead = true;
+        waveMenager.EnemyDied();
 
     }
 }

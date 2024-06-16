@@ -22,7 +22,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     private EnemyShooter ownerShooter;
     private Animator animator;
 
-
+    private WaveMenager waveMenager;
     
     private GameObject player;
 
@@ -39,6 +39,8 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         ownerShooter = GetComponent<EnemyShooter>();
 
+        waveMenager = GameObject.FindObjectOfType<WaveMenager>();
+        
         player = GameObject.Find("Player");
 
         tree = new BehaviourTree("PoliceOfficer");
@@ -87,6 +89,6 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     public void onDeath(string empty)
     {
         isDead = true;
-        
+        waveMenager.EnemyDied();
     }
 }

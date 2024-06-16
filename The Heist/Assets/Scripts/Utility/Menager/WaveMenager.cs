@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
 
 
@@ -59,6 +60,15 @@ public class WaveMenager : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (LevelEnd())
+        {
+            //chiama change scene
+            changeScene.ChangeSceneStarter = true;
+        }
+    }
+
     #endregion
   
     public void CountSpawn()
@@ -76,6 +86,7 @@ public class WaveMenager : MonoBehaviour
     }
     public void EnemyDied()
     {
+        Debug.Log("Shono morto");
         counterEnemiesDied++;
         if (counterEnemiesDied >= 2) poolEnemiesDied = true; //waveData.Counter) poolEnemiesDied = true;
     }

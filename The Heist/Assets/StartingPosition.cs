@@ -9,12 +9,10 @@ public class StartingPosition : MonoBehaviour
 {
     private void Awake()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     void OnEnable()
     {
-
-        
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
