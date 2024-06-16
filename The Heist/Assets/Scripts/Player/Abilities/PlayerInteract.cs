@@ -10,13 +10,15 @@ namespace Player
     {
         private const string sellingWeaponTag = "SellingWeapon";
 
-        [SerializeField] private Transform cameraPosition;
-        [SerializeField] private float distance;
+        [SerializeField]
+        private float distance;
 
-        [SerializeField] private GameObject textUI;
-        [SerializeField] private LayerMask layerMask;
-        [SerializeField] private LayerMask wallMask;
-        [SerializeField] private InventoryObject playerInventory;
+        [SerializeField]
+        private GameObject textUI;
+        [SerializeField]
+        private LayerMask layerMask;
+        [SerializeField]
+        private LayerMask wallMask;
 
         private GameObject itemDetected;
 
@@ -67,14 +69,9 @@ namespace Player
         private void DetectItem()
         {
             bool wasInteract = canInteract;
-
-            //canInteract = Physics.SphereCast(transform.position, radius, cameraPosition.forward, out hit, distance)
-            //        && (1 << hit.collider.gameObject.layer) == layerMask.value
-            //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
-
-            canInteract = Physics.Raycast(cameraPosition.position, cameraPosition.forward, out hit, distance)
-                          && (1 << hit.collider.gameObject.layer) == layerMask.value
-                          && (1 << hit.collider.gameObject.layer) != wallMask.value;
+            canInteract = Physics.Raycast(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward, out hit, distance)
+                        && (1 << hit.collider.gameObject.layer) == layerMask.value
+                        && (1 << hit.collider.gameObject.layer) != wallMask.value;
 
             if (wasInteract == canInteract) return;
             if (canInteract)
@@ -156,25 +153,23 @@ namespace Player
                     return;
             }
 
-            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory,
-                GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
-            playerInventory.AddItem(itemComponent.ItemData, itemComponent.Quantity, true);
 
+            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
+            playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
 
             if (!itemDetected.CompareTag(sellingWeaponTag))
                 itemDetected.SetActive(false);
         }
 
-
-        private void OnDrawGizmos()
+        /*private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
 
             //Gizmos.DrawWireSphere(pos, radius);
             //Gizmos.DrawWireSphere(pos + cameraPosition.forward * distance, radius);
 
-            Gizmos.DrawRay(cameraPosition.position, cameraPosition.forward * distance);
-        }
+            Gizmos.DrawRay(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward * distance);
+        }*/
     }
 }
 

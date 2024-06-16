@@ -8,6 +8,11 @@ public enum ItemType
     Consumable
 }
 
+public interface IInventoried 
+{
+    Texture2D Texture2D { get;}
+}
+
 public abstract class ItemData : ScriptableObject
 {
     [SerializeField]

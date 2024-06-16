@@ -19,6 +19,8 @@ public static class GlobalEventArgsFactory {
         methodDebugString.Add(GlobalEventIndex.PlayerEnergyUpdated, new EventDebug(PlayerEnergyUpdatedDebug));
         methodDebugString.Add(GlobalEventIndex.AddItemToInventory, new EventDebug(AddItemToInventoryDebug));
         methodDebugString.Add(GlobalEventIndex.BuyItem, new EventDebug(BuyItemDebug));
+        methodDebugString.Add(GlobalEventIndex.Shoot, new EventDebug(ShootDebug));
+
     }
 
     public static string GetDebugString(GlobalEventIndex eventType, GlobalEventArgs message) {
@@ -194,6 +196,27 @@ public static class GlobalEventArgsFactory {
     {
         return " BuyItemDebug: " + (GameObject)message.args[0].GetValue();
     }
-
     #endregion
+
+    #region Shoot
+    public static GlobalEventArgs ShootFactory(GameObject weapon,int bulletAmount)
+    {
+        GlobalEventArgs message = new GlobalEventArgs();
+        message.args = new ExtendedVariable[2];
+        message.args[0] = new ExtendedVariable("WeaponValue", ExtendedVariableType.GameObject, weapon);
+        message.args[1] = new ExtendedVariable("BulletNumberValue", ExtendedVariableType.Int,bulletAmount);
+        return message;
+    }
+    public static void ShootParser(GlobalEventArgs message, out GameObject weapon ,out int bulletAmount)
+    {
+        weapon = (GameObject)message.args[0].GetValue();
+        bulletAmount = (int)message.args[1].GetValue();
+    }
+    public static string ShootDebug(GlobalEventArgs message)
+    {
+        return " ShootDebug: Weapon " + (GameObject)message.args[0].GetValue() +" - BulletsNumber " + (int)message.args[1].GetValue();
+    }
+    #endregion
+
+    
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 480064}
   - component: {fileID: 3352084}
   - component: {fileID: 2387984}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Shotgun_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 427514}
   - component: {fileID: 3304714}
   - component: {fileID: 2368168}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Shotgun_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 2395676}
   - component: {fileID: 64544405638540824}
   - component: {fileID: 8043491585761382813}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Shotgun_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 11400000, guid: 38901819927efe74b808f2528bec2b4a, type: 2}
+  itemData: {fileID: 11400000, guid: 38901819927efe74b808f2528bec2b4a, type: 2}
   quantity: 11
 --- !u!1 &173896
 GameObject:
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 474376}
   - component: {fileID: 3324082}
   - component: {fileID: 2302124}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Shotgun_Pump_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

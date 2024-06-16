@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Gun
   prefab: {fileID: 6315479668469211241, guid: 56264153e42788d4299c9f98274a0598, type: 3}
-  cost: 0
+  cost: 10
   maxAmmo: 10
   rateOfFire: 0.1
   damageContainer:
@@ -26,4 +26,4 @@ MonoBehaviour:
   typeOfShoot: 0
   reloadTime: 0.2
   range: 100
-  texture: {fileID: 0}
+  texture: {fileID: 2800000, guid: 8f3f7d2aaccf3b845922c46f0b7c03d5, type: 3}
