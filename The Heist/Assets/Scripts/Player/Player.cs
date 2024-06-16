@@ -25,6 +25,8 @@ namespace Player
             DontDestroyOnLoad(gameObject);
         }
 
+
+
         private void Start()
         {
             if (player != this) return;

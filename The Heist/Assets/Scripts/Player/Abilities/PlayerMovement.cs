@@ -38,6 +38,8 @@ namespace Player
             runAction = InputManager.Player.Run;
             runAction.performed += OnRunActionPerformed;
             runAction.canceled += OnRunActionCanceled;
+
+            
         }
 
         private void OnDisable()

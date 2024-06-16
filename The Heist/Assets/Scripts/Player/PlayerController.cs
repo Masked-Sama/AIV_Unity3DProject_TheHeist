@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ namespace Player
         #endregion
 
         private PlayerAbilityBase[] abilities;
+
+
 
         #region PlayerCollision
         public bool IsGrounded { get; set; }
@@ -84,25 +87,36 @@ namespace Player
         #endregion
 
         #region PlayerCurrency
-        public Func<int,bool> OnTryToBuyItem;
+        public Func<int, bool> OnTryToBuyItem;
 
         #endregion
 
         #region Mono
         private void Awake()
         {
+            //Debug.Log("Change Scene Player");
+            if (cameraPositionTransform == null)
+            {
+                cameraPositionTransform = GameObject.FindObjectOfType<CinemachineBrain>().transform;
+            }
             abilities = GetComponentsInChildren<PlayerAbilityBase>();
             foreach (var ability in abilities)
             {
                 ability.Init(this, playerVisual);
                 ability.enabled = true;
             }
-        }
 
+
+        }
+        private void OnEnable()
+        {
+
+        }
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            DontDestroyOnLoad(GameObject.FindObjectOfType<CinemachineBrain>());
         }
 
         private void FixedUpdate()
