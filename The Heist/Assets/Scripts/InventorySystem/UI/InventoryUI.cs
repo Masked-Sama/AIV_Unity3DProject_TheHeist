@@ -51,7 +51,7 @@ public class InventoryUI : VisualElement
         //condizione brutta per dire che hai già l'arma raccolta nell'inventario
         if (slot.Q<VisualElement>("ItemIcon").style.backgroundImage == itemObjToSwitch.Texture2D)
         {
-            int newAmount = int.Parse(slot.Q<Label>("BulletsNumber").text) + amount ;
+            int newAmount = Math.Clamp(int.Parse(slot.Q<Label>("BulletsNumber").text) + amount,0,999) ;
             SetBulletsNumber(slotContainer[index], newAmount);
         }
         else

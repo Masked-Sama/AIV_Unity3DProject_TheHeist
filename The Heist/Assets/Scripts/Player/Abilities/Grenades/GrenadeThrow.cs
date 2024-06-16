@@ -22,7 +22,7 @@ namespace Player
         private GrenadeType currentGrenadeType;
         private bool canThrow = true;
         private float currentThrowCD = 0;
-
+        private int currentAmount;
 
         public PoolData[] Datas
         {
@@ -34,6 +34,7 @@ namespace Player
         {
             InputManager.Player.ThrowGrenade.performed += Throw;
             currentGrenadeType = GrenadeType.Incendiary;
+            
         }
 
         public void OnDisable()
@@ -81,13 +82,19 @@ namespace Player
 
             grenadeComponent.Throw(playerController.CameraPositionTransform, attackPoint, throwForce, throwUpwardForce);
             playerController.OnThrowGrenade?.Invoke(grenadeComponent);
+            currentAmount--;
+            playerController.Inventory.InventorySlots[(int)ItemType.ThrowableWeapon].AddAmount(-1);
             canThrow = false;
             currentThrowCD = throwCooldown;
+            GameObject currentGrenadePrefab = playerController.Inventory.InventorySlots[(int)ItemType.ThrowableWeapon].ItemData.Prefab;
+            GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(currentGrenadePrefab, 1));
+
         }
 
         private void Update()
         {
-
+            //Da cambiare perchè non ha senso qui
+            currentAmount = playerController.Inventory.InventorySlots[(int)ItemType.ThrowableWeapon].Amount;
             if (currentThrowCD > 0)
             {
                 currentThrowCD -= Time.deltaTime;
@@ -100,7 +107,7 @@ namespace Player
 
         private bool CanThrow()
         {
-            return !isPrevented && canThrow;
+            return !isPrevented && canThrow && currentAmount>0;
         }
     }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6d08f98ba6e2440935aff3edeaf960, type: 3}
+  m_Name: FlameGrenade
+  m_EditorClassIdentifier: 
+  itemName: FlameGrenade
+  prefab: {fileID: 4424997704314567025, guid: 29b8049377e3d74488500130535a65f7, type: 3}
+  cost: 20
+  explosionRange: 10
+  damageContainer:
+    damageType: 0
+    damage: 200
+    damageImpulse: {x: 0, y: 0, z: 0}
+    freezeTime: 0
+  texture: {fileID: 2800000, guid: aa5bfd06596e5fa4d8f4d9d02ebfbaf3, type: 3}

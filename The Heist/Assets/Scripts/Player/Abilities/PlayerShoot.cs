@@ -195,10 +195,9 @@ namespace Player
             fireTime = currentWeaponData.RateOfFire;
 
             //to change when shotgun logic is implemented
-            //GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(1));
+            GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(currentWeaponData.Prefab, 1));
 
             //Debug.Log(currentWeaponData.name);
-            ;
             playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].AddAmount(-1);
 
 

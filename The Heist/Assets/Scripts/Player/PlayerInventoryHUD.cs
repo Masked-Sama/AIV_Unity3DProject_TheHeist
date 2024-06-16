@@ -9,7 +9,6 @@ public class PlayerInventoryHUD : MonoBehaviour
     [SerializeField]
     private InventoryData playerInventory;
 
-    private Item currentWeapon;
 
     private void Awake()
     {
@@ -56,7 +55,11 @@ public class PlayerInventoryHUD : MonoBehaviour
     }
     private void ShootListener(GlobalEventArgs message)
     {
-        GlobalEventArgsFactory.ShootParser(message, out int bulletAmount);
+        GlobalEventArgsFactory.ShootParser(message, out GameObject weapon,out int bulletAmount);
+        ItemData weaponItemData = weapon.GetComponent<Item>().ItemData;
+        IInventoried inventoried = (IInventoried)weaponItemData;
+        if (inventoried == null) return;
+        inventoryUI.AddToSlotItem((int)weaponItemData.ItemType, inventoried, bulletAmount*(-1));
 
     }
 }

@@ -199,39 +199,24 @@ public static class GlobalEventArgsFactory {
     #endregion
 
     #region Shoot
-    public static GlobalEventArgs ShootFactory(int bulletAmount)
+    public static GlobalEventArgs ShootFactory(GameObject weapon,int bulletAmount)
     {
         GlobalEventArgs message = new GlobalEventArgs();
-        message.args = new ExtendedVariable[1];
-        message.args[0] = new ExtendedVariable("ShootBulletValue", ExtendedVariableType.Int,bulletAmount);
+        message.args = new ExtendedVariable[2];
+        message.args[0] = new ExtendedVariable("WeaponValue", ExtendedVariableType.GameObject, weapon);
+        message.args[1] = new ExtendedVariable("BulletNumberValue", ExtendedVariableType.Int,bulletAmount);
         return message;
     }
-    public static void ShootParser(GlobalEventArgs message, out int bulletAmount)
+    public static void ShootParser(GlobalEventArgs message, out GameObject weapon ,out int bulletAmount)
     {
-        bulletAmount = (int)message.args[0].GetValue();
+        weapon = (GameObject)message.args[0].GetValue();
+        bulletAmount = (int)message.args[1].GetValue();
     }
     public static string ShootDebug(GlobalEventArgs message)
     {
-        return " ShootDebug: " + (int)message.args[0].GetValue();
+        return " ShootDebug: Weapon " + (GameObject)message.args[0].GetValue() +" - BulletsNumber " + (int)message.args[1].GetValue();
     }
     #endregion
 
-    #region ChangeWeapon
-    public static GlobalEventArgs ChangeWeaponFactory(GameObject weapon)
-    {
-        GlobalEventArgs message = new GlobalEventArgs();
-        message.args = new ExtendedVariable[1];
-        message.args[0] = new ExtendedVariable("ChangeWeaponValue", ExtendedVariableType.GameObject, weapon);
-        return message;
-    }
-    public static void ChangeWeaponParser(GlobalEventArgs message, out GameObject weapon)
-    {
-        weapon = (GameObject)message.args[0].GetValue();
-    }
-    public static string ChangeWeaponDebug(GlobalEventArgs message)
-    {
-        return " ChangeWeaponDebug: " + (GameObject)message.args[0].GetValue();
-    }
-
-    #endregion
+    
 }

@@ -26,7 +26,7 @@ public class InventorySlot
 
     public void AddAmount(int value)
     {
-        amount += value;
+        amount =Mathf.Clamp(amount+value,0,999);
     }
 
 }

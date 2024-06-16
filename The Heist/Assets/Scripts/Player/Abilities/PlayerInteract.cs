@@ -69,11 +69,6 @@ namespace Player
         private void DetectItem()
         {
             bool wasInteract = canInteract;
-
-            //canInteract = Physics.SphereCast(transform.position, radius, cameraPosition.forward, out hit, distance)
-            //        && (1 << hit.collider.gameObject.layer) == layerMask.value
-            //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
-
             canInteract = Physics.Raycast(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward, out hit, distance)
                         && (1 << hit.collider.gameObject.layer) == layerMask.value
                         && (1 << hit.collider.gameObject.layer) != wallMask.value;
@@ -158,7 +153,7 @@ namespace Player
                     return;
             }
 
-            }            
+
             GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
             playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
 
@@ -166,7 +161,7 @@ namespace Player
                 itemDetected.SetActive(false);
         }
 
-        private void OnDrawGizmos()
+        /*private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
 
@@ -174,7 +169,7 @@ namespace Player
             //Gizmos.DrawWireSphere(pos + cameraPosition.forward * distance, radius);
 
             Gizmos.DrawRay(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward * distance);
-        }
+        }*/
     }
 }
 
