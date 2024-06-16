@@ -85,9 +85,9 @@ namespace Player
             if (CanShoot())
             {
                 Vector3 initialPosition = playerController.CameraPositionTransform.position;
-                Vector3 direction = initialPosition + (playerController.CameraPositionTransform.forward * currentWeaponData.Range);
+                Vector3 finalPosition = initialPosition + (playerController.CameraPositionTransform.forward * currentWeaponData.Range);
 
-                Shoot(initialPosition, direction, currentWeaponData.TypeOfShoot);
+                Shoot(initialPosition, finalPosition, currentWeaponData.TypeOfShoot);
             }
             else if (fireTime <= 0f)
             {
@@ -128,17 +128,18 @@ namespace Player
             currentAmmo = newWeapon.MaxAmmo;
         }
 
-        private void ComputeShootRange(Vector3 direction)
+        private void ComputeShootRange(Vector3 initialPosition, Vector3 finalPosition)
         {
             Vector3 contactPoint = Vector3.zero;
 
             // Questi due vettori andranno sottratti per trovare ufficialmente la direction del bullet.
-            if (Physics.Linecast(socketShoot.position, direction, out RaycastHit hit))
+
+            if (Physics.Linecast(initialPosition, finalPosition, out RaycastHit hit))
             {
                 contactPoint = hit.point;
                 //Debug.Log("Colpito!" + hit.collider.gameObject.name);
 
-                Debug.DrawLine(socketShoot.position, contactPoint, Color.red, 0.1f);
+                Debug.DrawLine(socketShoot.position, contactPoint, Color.red, 30f); // SARA' QUESTA LA DIRECTION DEL BULLET!
                 //Debug.DrawLine(initialPosition, contactPoint, Color.blue, 30f);
 
                 IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
@@ -147,12 +148,14 @@ namespace Player
             }
             else
             {
-                contactPoint = playerController.CameraPositionTransform.forward * currentWeaponData.Range;
+                contactPoint = finalPosition;
                 //Debug.Log("Non Colpito!");
 
-                Debug.DrawLine(socketShoot.position, direction, Color.red, 0.1f);
-                //Debug.DrawLine(initialPosition, playerController.CameraPositionTransform.position + contactPoint, Color.blue, 30f);
+                Debug.DrawLine(socketShoot.position, finalPosition, Color.red, 30f);
+                //Debug.DrawLine(initialPosition, finalPosition, Color.blue, 30f);
             }
+
+            // Poi da qui usare il linecast finale per dare la direction al bullet.
         }
         #endregion
 
@@ -188,32 +191,33 @@ namespace Player
             reloadTimer = currentWeaponData.ReloadTime;
         }
 
-        public bool Shoot(Vector3 initialPosition, Vector3 direction, ShootType currentShootType)
+        public bool Shoot(Vector3 initialPosition, Vector3 finalPosition, ShootType currentShootType)
         {
             currentAmmo--;
             canShoot = false;
             fireTime = currentWeaponData.RateOfFire;
 
-            //to change when shotgun logic is implemented
+            //To change when shotgun logic is implemented
             GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(currentWeaponData.Prefab, 1));
 
             //Debug.Log(currentWeaponData.name);
             playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].AddAmount(-1);
 
+            //Debug.DrawLine(socketShoot.position, finalPosition, Color.magenta, 30);
 
             switch (currentShootType)
             {
                 case ShootType.Single:
-                if (hasShot) return true;
-                ComputeShootRange(direction);
-                break;
+                    if (hasShot) return true;
+                    ComputeShootRange(initialPosition, finalPosition);
+                    break;
                 case ShootType.Multiple:
-                hasMultiShot = true;
-                ComputeShootRange(direction);
-                break;
+                    hasMultiShot = true;
+                    ComputeShootRange(initialPosition, finalPosition);
+                    break;
                 case ShootType.Shotgun:
-                // To do
-                break;
+                    // To do
+                    break;
                 default: return true;
             }
             return true;

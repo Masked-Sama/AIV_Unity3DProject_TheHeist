@@ -11,7 +11,6 @@ namespace Player
         [SerializeField]
         private Transform startingPoint;
 
-
         public static Player Get()
         {
             if (player != null) return player;
@@ -37,19 +36,15 @@ namespace Player
         {
             if (GameObject.Find("PlayerStartingPosition") == null) return;
             Debug.Log("Scene loaded player");
+            gameObject.SetActive(false);
             transform.position = GameObject.Find("PlayerStartingPosition").transform.position;
             transform.rotation = GameObject.Find("PlayerStartingPosition").transform.rotation;
-
-        }
-
-        private void OnEnable()
-        {
+            gameObject.SetActive(true);
         }
 
         private void Start()
         {
             if (player != this) return;
-
         }
         #endregion
     }

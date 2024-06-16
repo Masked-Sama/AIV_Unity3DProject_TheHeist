@@ -15,7 +15,7 @@ public class ChangeScene : MonoBehaviour
     [SerializeField]
     private Scenes scene = new Scenes();
 
-    private bool changeSceneStarter=false;
+    private bool changeSceneStarter = false;
     
     private Coroutine changeSceneCoroutine;
     private string sceneToLoad;
@@ -47,9 +47,12 @@ public class ChangeScene : MonoBehaviour
                 break;
         }
     }
-    //private IEnumerator ChangeSceneCoroutine () {
+
+    //private IEnumerator ChangeSceneCoroutine()
+    //{
     //    var loadScene = SceneManager.LoadSceneAsync(sceneToLoad);
-    //    while (!loadScene.isDone) {
+    //    while (!loadScene.isDone)
+    //    {
     //        yield return new WaitForEndOfFrame();
     //    }
 

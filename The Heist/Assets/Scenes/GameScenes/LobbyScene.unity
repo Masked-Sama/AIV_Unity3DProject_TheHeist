@@ -285,7 +285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 1
-  changeSceneStarter: 0
 --- !u!65 &225278451
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1236,7 +1235,7 @@ PrefabInstance:
       objectReference: {fileID: 1498333407}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.6763217
+      value: 0.75301874
       objectReference: {fileID: 0}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1500,7 +1499,7 @@ Transform:
   m_GameObject: {fileID: 1498333404}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4226183, y: 0, z: 0, w: 0.9063078}
-  m_LocalPosition: {x: 21.341139, y: 7.515034, z: -1.4769943}
+  m_LocalPosition: {x: 21.409674, y: 7.515034, z: -1.476996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1525,7 +1524,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 0
+    m_Style: 6
     m_Time: 2
     m_CustomCurve:
       serializedVersion: 2

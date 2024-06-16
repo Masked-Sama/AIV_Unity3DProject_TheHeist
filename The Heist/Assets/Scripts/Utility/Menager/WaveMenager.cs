@@ -11,6 +11,9 @@ using UnityEngine.SceneManagement;
 
 public class WaveMenager : MonoBehaviour
 {
+    [SerializeField]
+    private int enemiesAmount;
+
     private static WaveMenager instance;
     public static WaveMenager Get()
     {
@@ -33,8 +36,6 @@ public class WaveMenager : MonoBehaviour
 
     private bool poolEnemySpawned;
     private bool poolEnemiesDied;
-
-
 
     #region Mono
     private void Awake()
@@ -88,7 +89,7 @@ public class WaveMenager : MonoBehaviour
     {
         Debug.Log("Shono morto");
         counterEnemiesDied++;
-        if (counterEnemiesDied >= 2) poolEnemiesDied = true; //waveData.Counter) poolEnemiesDied = true;
+        if (counterEnemiesDied >= enemiesAmount) poolEnemiesDied = true; //waveData.Counter) poolEnemiesDied = true;
     }
     public bool LevelEnd()
     {
