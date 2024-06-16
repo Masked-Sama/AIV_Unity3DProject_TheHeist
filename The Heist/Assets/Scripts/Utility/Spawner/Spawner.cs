@@ -38,7 +38,7 @@ public class Spanwer : MonoBehaviour
                     //    sniperBT = currentEnemy.GetComponent<BehaviorTreeSniper>();
                         
                     //    sniperBT.Spots = covers;
-                    //    WaveMenager.Get().CountSpawn();
+                    //    WaveMenager.Get().CountSpawn(); 
                     //}
                     currentEnemy.transform.position = transform.position;
                     currentEnemy.SetActive(true);

@@ -100,6 +100,7 @@ namespace Player
 
         private void ItemUndetected()
         {
+            if (textUI == null) return;
             textUI.SetActive(false);
             canInteract = false;
         }

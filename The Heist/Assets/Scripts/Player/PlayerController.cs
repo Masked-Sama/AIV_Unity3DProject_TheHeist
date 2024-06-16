@@ -102,6 +102,7 @@ namespace Player
             abilities = GetComponentsInChildren<PlayerAbilityBase>();
             foreach (var ability in abilities)
             {
+                if (ability.enabled) return;
                 ability.Init(this, playerVisual);
                 ability.enabled = true;
             }

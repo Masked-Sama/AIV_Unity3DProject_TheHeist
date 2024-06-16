@@ -56,5 +56,6 @@ public class ChangeScene : MonoBehaviour
         while (!loadScene.isDone) {
             yield return new WaitForEndOfFrame();
         }
+
     }
 }

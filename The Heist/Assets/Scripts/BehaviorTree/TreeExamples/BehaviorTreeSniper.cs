@@ -10,6 +10,8 @@ public class BehaviorTreeSniper : MonoBehaviour
     private Animator animator;
     private EnemyShooter ownerShooter;
 
+    
+    private SpotMenager spotMenager;
 
     private GameObject player;
 
@@ -34,13 +36,14 @@ public class BehaviorTreeSniper : MonoBehaviour
         animator = GetComponent<Animator>();
         ownerShooter = GetComponent<EnemyShooter>();
 
+        spotMenager =  GameObject.Find("SpotMenager").GetComponent<SpotMenager>();
 
-        player = GameObject.Find("Player");
-        
-
-        
-
+        Spots = spotMenager.Spots;
         spot = GetSpot();
+
+
+        player = GameObject.Find("Player");       
+
 
         tree = new BehaviourTree("Sniper");
 
@@ -82,7 +85,7 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private bool CanMoveToSpot()
     {        
-        if(Vector3.Distance(transform.position, spot.transform.position) <= 3) return false;
+        if(Vector3.Distance(transform.position, spot.transform.position) <=2) return false;
 
         return true;
     }

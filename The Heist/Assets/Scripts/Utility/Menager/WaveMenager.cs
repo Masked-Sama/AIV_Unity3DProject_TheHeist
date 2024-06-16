@@ -54,7 +54,7 @@ public class WaveMenager : MonoBehaviour
 
         foreach (var spanwer in spanwers)
         {
-            spanwer.SpawnRate = waveData.Rate;
+            spanwer.SpawnRate = 1;//waveData.Rate;
         }
 
     }
@@ -64,20 +64,20 @@ public class WaveMenager : MonoBehaviour
     public void CountSpawn()
     {
         counter++;
-        if (counter >= spanwers.Count)
+        if (counter > spanwers.Count)
         {
             foreach (var spanwer in spanwers)
             {
                 spanwer.CanSpawns = false;
             }
             poolEnemySpawned = true;
-            changeScene.ChangeSceneStarter = true;
+            //changeScene.ChangeSceneStarter = true;
         }
     }
     public void EnemyDied()
     {
         counterEnemiesDied++;
-        if (counterEnemiesDied >= waveData.Counter) poolEnemiesDied = true;
+        if (counterEnemiesDied >= 2) poolEnemiesDied = true; //waveData.Counter) poolEnemiesDied = true;
     }
     public bool LevelEnd()
     {
