@@ -56,7 +56,7 @@ public class FollowTarget : IStrategy
         currentState = state;
         // }
 
-        Debug.Log("FollowPlayer");
+        //Debug.Log("FollowPlayer");
         return Node.Status.Success;
     }
 

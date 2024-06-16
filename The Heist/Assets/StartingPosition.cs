@@ -7,11 +7,13 @@ using System;
 
 public class StartingPosition : MonoBehaviour
 {
-
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
     void OnEnable()
     {
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
         
     }
 
@@ -19,12 +21,6 @@ public class StartingPosition : MonoBehaviour
     {
         Player.Player.Get().transform.position = transform.position;
         Player.Player.Get().transform.rotation = transform.rotation;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     

@@ -182,6 +182,11 @@ namespace Player
         private void InternalTakeDamage(DamageContainer damage)
         {
             healthModule.TakeDamage(damage);
+            if (healthModule.IsDead)
+            {
+                playerVisual.SetAnimatorParameter("Death");
+                DisableInput();
+            }
         }
         #endregion
     }

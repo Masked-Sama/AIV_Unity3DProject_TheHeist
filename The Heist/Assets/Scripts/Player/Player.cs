@@ -36,7 +36,7 @@ namespace Player
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             if (GameObject.Find("PlayerStartingPosition") == null) return;
-
+            Debug.Log("Scene loaded player");
             transform.position = GameObject.Find("PlayerStartingPosition").transform.position;
             transform.rotation = GameObject.Find("PlayerStartingPosition").transform.rotation;
 
