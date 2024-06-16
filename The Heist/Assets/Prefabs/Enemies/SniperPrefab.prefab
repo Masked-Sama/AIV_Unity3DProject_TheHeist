@@ -166,7 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1bc551a1920c29499dc92ea80145cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spots: []
+  spots:
+  - {fileID: 9205725365170614348, guid: ab6467ec841edde4cb6b69309e291138, type: 3}
+  - {fileID: 9205725365170614348, guid: ab6467ec841edde4cb6b69309e291138, type: 3}
   maxDistanceToShoot: 5
   speed: 5
 --- !u!195 &2183756744949783040

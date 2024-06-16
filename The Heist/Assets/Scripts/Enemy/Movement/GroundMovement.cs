@@ -99,7 +99,8 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
     public void Die()
     {
         StopMovement();
-        myCollider.enabled = false; 
+        myCollider.enabled = false;
+        //WaveMenager.Get();
         animator.SetTrigger("Dead");
     }
 
