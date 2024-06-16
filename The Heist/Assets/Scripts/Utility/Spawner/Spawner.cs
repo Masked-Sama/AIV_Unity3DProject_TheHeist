@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spanwer : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     [SerializeField] private float spawnRate = 2f;
     [SerializeField] private PoolData enemies;
@@ -12,6 +12,7 @@ public class Spanwer : MonoBehaviour
     [SerializeField] private List<Spot> covers;
 
     public bool CanSpawns { get { return canSpawn; } set { canSpawn = value; } }
+    public PoolData Enemies { get { return enemies; } }
 
     private bool spawn;
     private float CD;

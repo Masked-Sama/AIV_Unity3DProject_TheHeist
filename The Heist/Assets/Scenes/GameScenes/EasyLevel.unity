@@ -14395,11 +14395,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a144ae0590fefb438d0ad0d7b5f6d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesAmount: 7
   waveData: {fileID: 0}
-  spanwers:
-  - {fileID: 1967226336}
-  - {fileID: 1127736450}
+  spawners: []
   changeScene: {fileID: 792090404}
 --- !u!4 &492913402
 Transform:
@@ -33351,17 +33348,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bfda2064a50a6945b6128b12970f495, type: 3}
---- !u!114 &1127736450 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 998952089204583862, guid: 9bfda2064a50a6945b6128b12970f495, type: 3}
-  m_PrefabInstance: {fileID: 1127736449}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1662757003009774486cd4b8aea36f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1127863331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61567,17 +61553,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 407504, guid: b0db04ffe8e8d054c8d535475b6e8669, type: 3}
   m_PrefabInstance: {fileID: 1964334097}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1967226336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 998952089204583862, guid: 9bfda2064a50a6945b6128b12970f495, type: 3}
-  m_PrefabInstance: {fileID: 1995443068}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1662757003009774486cd4b8aea36f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1968231790
 PrefabInstance:
   m_ObjectHideFlags: 0

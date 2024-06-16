@@ -49,15 +49,14 @@ namespace Player
             {
                 reloadTimer -= Time.fixedDeltaTime;
 
-                if (reloadTimer <= 0f && playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>0)
+                if (reloadTimer <= 0f) // && playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>0)
                 {
-                    if(playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>= currentWeaponData.MaxAmmo)
-                        currentAmmo = currentWeaponData.MaxAmmo;
-                    else
-                        currentAmmo = playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount;
+                    // if(playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>= currentWeaponData.MaxAmmo)
+                    //     currentAmmo = currentWeaponData.MaxAmmo;
                     canShoot = true;
                 }
             }
+            currentAmmo = playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount;
 
             if (fireTime > 0f)
             {
@@ -139,7 +138,7 @@ namespace Player
                 contactPoint = hit.point;
                 //Debug.Log("Colpito!" + hit.collider.gameObject.name);
 
-                Debug.DrawLine(socketShoot.position, contactPoint, Color.red, 30f); // SARA' QUESTA LA DIRECTION DEL BULLET!
+                Debug.DrawLine(socketShoot.position, contactPoint, Color.red, .1f); // SARA' QUESTA LA DIRECTION DEL BULLET!
                 //Debug.DrawLine(initialPosition, contactPoint, Color.blue, 30f);
 
                 IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
@@ -151,7 +150,7 @@ namespace Player
                 contactPoint = finalPosition;
                 //Debug.Log("Non Colpito!");
 
-                Debug.DrawLine(socketShoot.position, finalPosition, Color.red, 30f);
+                Debug.DrawLine(socketShoot.position, finalPosition, Color.red, .1f);
                 //Debug.DrawLine(initialPosition, finalPosition, Color.blue, 30f);
             }
 
@@ -193,10 +192,12 @@ namespace Player
 
         public bool Shoot(Vector3 initialPosition, Vector3 finalPosition, ShootType currentShootType)
         {
-            currentAmmo--;
+            // currentAmmo--;
             canShoot = false;
             fireTime = currentWeaponData.RateOfFire;
-
+            
+            Debug.Log(currentAmmo);
+            
             //To change when shotgun logic is implemented
             GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(currentWeaponData.Prefab, 1));
 

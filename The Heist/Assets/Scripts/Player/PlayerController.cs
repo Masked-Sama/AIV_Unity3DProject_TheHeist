@@ -1,5 +1,6 @@
 using Cinemachine;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Player
@@ -186,8 +187,19 @@ namespace Player
             {
                 playerVisual.SetAnimatorParameter("Death");
                 DisableInput();
+                StartCoroutine(RespawnCoroutine());
             }
         }
+
+        private IEnumerator RespawnCoroutine()
+        {
+            yield return new WaitForSeconds(3f);
+            ChangeScene changeScene = FindObjectOfType<ChangeScene>();
+            if (changeScene == null) yield return null;
+            healthModule.Reset();
+            changeScene.ChangeSceneStarter = true;
+        }
+        
         #endregion
     }
 }

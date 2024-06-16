@@ -11,8 +11,8 @@ using UnityEngine.SceneManagement;
 
 public class WaveMenager : MonoBehaviour
 {
-    [SerializeField]
-    private int enemiesAmount;
+    // [SerializeField]
+    // private int enemiesAmount;
 
     private static WaveMenager instance;
     public static WaveMenager Get()
@@ -26,7 +26,7 @@ public class WaveMenager : MonoBehaviour
     private WaveData waveData;
 
     [SerializeField]
-    private List<Spanwer> spanwers;
+    private List<Spawner> spawners;
 
     [SerializeField]
     private ChangeScene changeScene;
@@ -37,6 +37,7 @@ public class WaveMenager : MonoBehaviour
     private bool poolEnemySpawned;
     private bool poolEnemiesDied;
 
+    private int totalEnemies;
     #region Mono
     private void Awake()
     {
@@ -54,9 +55,9 @@ public class WaveMenager : MonoBehaviour
     {
         if (instance != this) return;
 
-        foreach (var spanwer in spanwers)
+        foreach (var spawner in spawners)
         {
-            spanwer.SpawnRate = 1;//waveData.Rate;
+            spawner.SpawnRate = 1;//waveData.Rate;
         }
 
     }
@@ -75,21 +76,27 @@ public class WaveMenager : MonoBehaviour
     public void CountSpawn()
     {
         counter++;
-        if (counter > spanwers.Count)
+        if (counter > totalEnemies)
         {
-            foreach (var spanwer in spanwers)
+            foreach (var spawner in spawners)
             {
-                spanwer.CanSpawns = false;
+                spawner.CanSpawns = false;
             }
             poolEnemySpawned = true;
             //changeScene.ChangeSceneStarter = true;
         }
+        
+        foreach (var spawner in spawners)
+        {
+            totalEnemies += spawner.GetComponent<Spawner>().Enemies.PoolNumber;
+        }
+        
     }
     public void EnemyDied()
     {
-        Debug.Log("Shono morto");
+        //Debug.Log("Shono morto");
         counterEnemiesDied++;
-        if (counterEnemiesDied >= enemiesAmount) poolEnemiesDied = true; //waveData.Counter) poolEnemiesDied = true;
+        if (counterEnemiesDied >= totalEnemies) poolEnemiesDied = true; //waveData.Counter) poolEnemiesDied = true;
     }
     public bool LevelEnd()
     {
