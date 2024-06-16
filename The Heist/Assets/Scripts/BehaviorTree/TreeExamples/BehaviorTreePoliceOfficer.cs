@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,8 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
     
     private GameObject player;
+
+    private bool isDead;
 
     //SerializeFields
     [SerializeField] bool canFollowThePlayer = true;
@@ -62,7 +65,10 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isDead)
+        {
         tree.Process();
+        }
         //Debug.Log(tree.CurrentState.ToString());
     }
 
@@ -76,5 +82,11 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     public void Pippo(string pippo)
     {
         tree.currentState = BehaviourState.END;
+    }
+
+    public void onDeath(string empty)
+    {
+        isDead = true;
+        
     }
 }

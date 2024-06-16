@@ -13,6 +13,8 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private GameObject player;
 
+    private bool isDead;
+
     [SerializeField] private List<Spot> spots;
     [SerializeField] float maxDistanceToShoot = 20;
     [SerializeField] float speed = 5;
@@ -45,7 +47,7 @@ public class BehaviorTreeSniper : MonoBehaviour
         Sequence MoveToSpot = new Sequence("MoveToSpot");
 
         MoveToSpot.AddChild(new Leaf("CanMoveToSpot", new Condition(CanMoveToSpot)));
-        MoveToSpot.AddChild(new Leaf("MoveToSpot", new FollowTarget(ownerMovement,spot.transform, speed, animator, false), behaviorTree: tree));
+        MoveToSpot.AddChild(new Leaf("MoveToSpot", new FollowTarget(ownerMovement,spot.SpotPosition(), speed, animator, false), behaviorTree: tree));
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot)));
@@ -87,11 +89,20 @@ public class BehaviorTreeSniper : MonoBehaviour
 
     private void FixedUpdate()
     {
-        tree.Process();
-        Debug.Log(tree.CurrentState.ToString());
+        if (!isDead)
+        {
+            tree.Process();
+        }
+        //Debug.Log(tree.CurrentState.ToString());
     }
     public void Pippo(string pippo)
     {
        //tree.currentState = BehaviourState.END;
+    }
+
+    public void onDeath(string empty)
+    {
+        isDead = true;
+
     }
 }

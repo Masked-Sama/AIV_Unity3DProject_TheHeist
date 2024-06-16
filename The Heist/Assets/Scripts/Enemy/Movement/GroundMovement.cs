@@ -25,6 +25,8 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
 
     private Vector3 preHitVelocity;
     private GroundEnemyControllerStatus status;
+
+    private Animator animator;
     #endregion
 
     #region Properties
@@ -71,6 +73,7 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
         myRigidbody = GetComponent<Rigidbody>();
         myCollider = GetComponent<CapsuleCollider>();
         navMesh = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         ResetMe();
     }
 
@@ -95,7 +98,9 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
 
     public void Die()
     {
-        throw new System.NotImplementedException();
+        StopMovement();
+        myCollider.enabled = false; 
+        animator.SetTrigger("Dead");
     }
 
     public void Hitted(Vector2 hitForce, Vector3 sourcePosition)
@@ -167,11 +172,11 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
 
     }
 
-    public void MoveToTarget(Transform target, float speed)
+    public void MoveToTarget(Vector3 target, float speed)
     {
         if (navMesh)
         {
-            navMesh.SetDestination(target.position);
+            navMesh.SetDestination(target);
             navMesh.speed = speed;
         }
     }

@@ -39,7 +39,7 @@ public class HealthModule
     public void SetInvulnerable (bool value) {
         invulnerable = value;
     }
-    
+
     public void TakeDamage (DamageContainer damage) {
         if (IsDead || invulnerable) return;
         currentHP -= damage.Damage;

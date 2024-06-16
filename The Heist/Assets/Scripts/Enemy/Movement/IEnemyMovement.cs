@@ -23,7 +23,7 @@ public interface IEnemyMovement
     void Teleport(Vector3 position);
     void SetVerticalMovement(float speed);
     void ResetMe();
-    void MoveToTarget(Transform target, float speed);
+    void MoveToTarget(Vector3 target, float speed);
     Vector3 GetLocation();
 
     

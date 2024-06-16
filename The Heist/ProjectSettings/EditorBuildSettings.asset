@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScenes/LobbyScene.unity
     guid: 0048c32ddb96a5444951d434ab2e786f
   - enabled: 1
-    path: Assets/Scenes/GameScenes/EasyMapScene.unity
-    guid: c113edc16da94fb4fb02d031c8dd170f
+    path: Assets/Scenes/GameScenes/EasyLevel.unity
+    guid: e427ce9b3ddc7e5428423d8304fdab0f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 02f76f7cb8e2c204fa8812567c5e948a, type: 2}
