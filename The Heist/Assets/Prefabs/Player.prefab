@@ -455,6 +455,37 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!1 &3944614147486663095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 412484998006263530}
+  m_Layer: 7
+  m_Name: WeaponHand_R
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &412484998006263530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3944614147486663095}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.46778354, y: 0.47917423, z: -0.4877011, w: 0.5601056}
+  m_LocalPosition: {x: -5.9, y: 10.1, z: 5.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4186752546460027949}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4153538658644411263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,6 +2873,7 @@ Transform:
   - {fileID: 4186752546460035107}
   - {fileID: 4186752546460133535}
   - {fileID: 4186752546460088609}
+  - {fileID: 412484998006263530}
   m_Father: {fileID: 4186752546460120369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4186752546459776485
@@ -4730,9 +4762,10 @@ MonoBehaviour:
   playerRigidbody: {fileID: 8475908330164288282}
   playerPhysicsCollider: {fileID: 8988726404371829457}
   playerVisual: {fileID: 6169535074207315861}
-  cameraPositionTransform: {fileID: 5727491077087691841}
+  cameraPositionTransform: {fileID: 9189185092706778582, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
   healthModule:
-    maxHP: 0
+    maxHP: 10
+  boneWeapon: {fileID: 412484998006263530}
   inventory: {fileID: 11400000, guid: cf38df465301b9e46bea4e94da5c95ce, type: 2}
 --- !u!54 &8475908330164288282
 Rigidbody:

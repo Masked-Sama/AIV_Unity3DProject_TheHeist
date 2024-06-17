@@ -22,12 +22,13 @@ namespace Player
         protected Transform cameraPositionTransform;
         [SerializeField]
         protected HealthModule healthModule;
+        [SerializeField]
+        private Transform boneWeapon;
         #endregion
 
         private PlayerAbilityBase[] abilities;
 
-
-
+        private GameObject weaponVisual;
         #region PlayerCollision
         public bool IsGrounded { get; set; }
 
@@ -85,6 +86,13 @@ namespace Player
 
         #region PlayerChangeWeapon
         public Action<WeaponData> OnChangeWeapon;
+        private void visualOnChangeWeapon(WeaponData data)
+        {
+            Destroy(weaponVisual);
+            weaponVisual = Instantiate(data.Prefab, boneWeapon.position, boneWeapon.rotation);
+            weaponVisual.transform.SetParent(boneWeapon);
+
+        }
         #endregion
 
         #region PlayerCurrency
@@ -108,11 +116,21 @@ namespace Player
                 ability.enabled = true;
             }
 
+            healthModule.Reset();
 
         }
+
+
+
         private void OnEnable()
         {
-
+            OnChangeWeapon += visualOnChangeWeapon;
+            healthModule.OnDeath += IsDeath;
+        }
+        private void OnDisable()
+        {
+            OnChangeWeapon -= visualOnChangeWeapon;
+            healthModule.OnDeath -= IsDeath;
         }
         private void Start()
         {
@@ -124,6 +142,7 @@ namespace Player
         private void FixedUpdate()
         {
             playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));
+            Debug.Log("CurrentHealthPlayer: " + healthModule.CurrentHP.ToString());
         }
         #endregion
 
@@ -174,8 +193,11 @@ namespace Player
         #region Interface IDamageble
         public void TakeDamage(DamageContainer damage)
         {
+            if (healthModule.IsDead) return;
             InternalTakeDamage(damage);
-            if (healthModule.IsDead) { Debug.Log("PlayerIsDead"); }
+            //if (healthModule.CurrentHP <= 0)
+            //    IsDeath();
+            //if (healthModule.IsDead) { Debug.Log("PlayerIsDead"); }
         }
         #endregion
 
@@ -183,23 +205,30 @@ namespace Player
         private void InternalTakeDamage(DamageContainer damage)
         {
             healthModule.TakeDamage(damage);
-            if (healthModule.IsDead)
-            {
-                playerVisual.SetAnimatorParameter("Death");
-                DisableInput();
-                StartCoroutine(RespawnCoroutine());
-            }
+            //if (healthModule.IsDead)
+            //{
+            //    playerVisual.SetAnimatorParameter("Death");
+            //    DisableInput();
+            //    StartCoroutine(RespawnCoroutine());
+            //}
         }
-
+        private void IsDeath()
+        {
+            playerVisual.SetAnimatorParameter("Death");
+            DisableInput();
+            StartCoroutine(RespawnCoroutine());
+        }
         private IEnumerator RespawnCoroutine()
         {
             yield return new WaitForSeconds(3f);
             ChangeScene changeScene = FindObjectOfType<ChangeScene>();
             if (changeScene == null) yield return null;
             healthModule.Reset();
+            EnableInput();
+            playerVisual.SetAnimatorParameter("Respawn");
             changeScene.ChangeSceneStarter = true;
         }
-        
+
         #endregion
     }
 }

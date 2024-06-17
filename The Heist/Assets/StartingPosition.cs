@@ -14,7 +14,10 @@ public class StartingPosition : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         Player.Player.Get().transform.position = transform.position;

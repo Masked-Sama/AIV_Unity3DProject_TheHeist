@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62730087caa2ff54cb56a0a55658216b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 38901819927efe74b808f2528bec2b4a, type: 2}
-  randomRange: 0.7
+  weaponData: {fileID: 11400000, guid: cdbe35db9b8f0a04980a8b7496608d88, type: 2}
+  randomRange: 0.3
 --- !u!114 &3375792075224296329
 MonoBehaviour:
   m_ObjectHideFlags: 0

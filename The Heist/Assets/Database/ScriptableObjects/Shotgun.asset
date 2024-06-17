@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Shotgun
   prefab: {fileID: 160320, guid: b952b4ac9a84721429ec0ec1f125e52a, type: 3}
   cost: 60
-  maxAmmo: 2
+  maxAmmo: 20
   rateOfFire: 1
   damageContainer:
     damageType: 1

@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: cf4a36e2190a97a4e89fecd79faca633, type: 2}
   randomRange: 0.7
+  red: {fileID: 2100000, guid: 1ac27fc08b1da25419400bde32ffcd09, type: 2}
 --- !u!114 &4336058417279291981
 MonoBehaviour:
   m_ObjectHideFlags: 0

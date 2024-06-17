@@ -35,7 +35,6 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     private bool isReloading = false;
 
-
     #region Mono
     public void Start()
     {
@@ -58,6 +57,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
         GameObject instance = Instantiate(WeaponData.Prefab, boneWeapon.position, boneWeapon.rotation);
 
         instance.transform.SetParent(boneWeapon);
+      
     }
 
     public void FixedUpdate()
@@ -126,28 +126,25 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
             if (Physics.Raycast(initialPosition, finalDirection, out hit, weaponData.Range))
             {
-                if (hit.collider.gameObject.GetComponent<IDamageble>() == null && hit.collider.gameObject == gameObject)
+                if (hit.collider.gameObject.GetComponent<IDamageble>() == null && hit.collider.gameObject != gameObject)
                 {
                     Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
-                    Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
-
+                    Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f); // Red line for non-damageable objects
                 }
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     //Debug.Log("Hit Player!!!");
                     IDamageble playerDamager = hit.collider.gameObject.GetComponent<IDamageble>();
                     playerDamager.TakeDamage(weaponData.DamageContainer);
-                    Debug.DrawLine(initialPosition, hit.point, Color.green, 0.1f);
+                   Debug.DrawLine(initialPosition, hit.point, Color.green, 0.1f);
+                   
                 }
             }
             else
             {
                 Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
-                Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
+                Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);                       
             }
-
-            
-
         }
         else if (fireTime <= 0f)
         {

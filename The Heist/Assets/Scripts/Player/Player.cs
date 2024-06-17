@@ -23,7 +23,7 @@ namespace Player
         {
             if (player != null && player != this)
             {
-                Destroy(player);
+                Destroy(gameObject);
                 return;
             }
             player = this;

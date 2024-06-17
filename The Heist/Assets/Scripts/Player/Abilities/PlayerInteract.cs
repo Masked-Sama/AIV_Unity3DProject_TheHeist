@@ -61,7 +61,9 @@ namespace Player
 
         private void Update()
         {
-            DetectItem();
+            if (isPrevented) return;
+                DetectItem();
+
         }
 
         #endregion
@@ -90,7 +92,8 @@ namespace Player
             if (itemDetected.GetComponent<Item>() != null)
                 textUI.GetComponent<UnityEngine.UI.Text>().text =
                     $"{itemDetected.GetComponent<Item>().ItemData.ItemName} - Cost: {itemDetected.GetComponent<Item>().ItemData.Cost}"; //DA CAMBIARE ASSOLUTAMENTE
-            else {
+            else
+            {
                 textUI.GetComponent<UnityEngine.UI.Text>().text = "Press E to Interact";
             }
 

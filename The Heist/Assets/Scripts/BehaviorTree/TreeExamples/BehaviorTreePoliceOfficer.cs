@@ -33,6 +33,10 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     [SerializeField] float maxDistanceToShoot = 20;
     [SerializeField] float speed = 5;
 
+    private void Awake()
+    {
+        maxDistanceToShoot = Random.Range(4f, 15f);
+    }
     void Start()
     {
         ownerMovement = GetComponent<EnemyComponent>().GetEnemyMovement();
@@ -81,7 +85,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
         return true;
     }
 
-    public void Pippo(string pippo)
+    public void EndAnimationReload(string empty)
     {
         tree.currentState = BehaviourState.END;
     }
