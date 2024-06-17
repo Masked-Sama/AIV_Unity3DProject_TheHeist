@@ -1,8 +1,5 @@
-using PlasticPipe.PlasticProtocol.Messages;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class FollowTarget : IStrategy
 {
