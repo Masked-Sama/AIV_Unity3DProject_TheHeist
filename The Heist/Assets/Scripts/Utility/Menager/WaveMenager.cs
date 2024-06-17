@@ -58,8 +58,9 @@ public class WaveMenager : MonoBehaviour
         foreach (var spawner in spawners)
         {
             spawner.SpawnRate = 1;//waveData.Rate;
+            totalEnemies += spawner.GetComponent<Spawner>().Enemies.PoolNumber;
         }
-
+        Debug.Log(("totalEnemies: " + totalEnemies));
     }
 
     private void FixedUpdate()
@@ -76,26 +77,21 @@ public class WaveMenager : MonoBehaviour
     public void CountSpawn()
     {
         counter++;
-        if (counter > totalEnemies)
+        if (counter >= totalEnemies)
         {
             foreach (var spawner in spawners)
             {
                 spawner.CanSpawns = false;
             }
             poolEnemySpawned = true;
-            //changeScene.ChangeSceneStarter = true;
+            
         }
-        
-        foreach (var spawner in spawners)
-        {
-            totalEnemies += spawner.GetComponent<Spawner>().Enemies.PoolNumber;
-        }
-        
     }
     public void EnemyDied()
     {
         //Debug.Log("Shono morto");
         counterEnemiesDied++;
+        Debug.Log("CounterED: " + counterEnemiesDied);
         if (counterEnemiesDied >= totalEnemies) poolEnemiesDied = true; //waveData.Counter) poolEnemiesDied = true;
     }
     public bool LevelEnd()

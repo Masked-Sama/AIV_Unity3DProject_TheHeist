@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 426120}
   - component: {fileID: 3313602}
   - component: {fileID: 2395808}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: SM_Wep_Grenade_Clip_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 458920}
   - component: {fileID: 3314534}
   - component: {fileID: 2318412}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: SM_Wep_Grenade_Pin_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 64887233880075122}
   - component: {fileID: 5364488180876415120}
   - component: {fileID: 1294411975891030570}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: FlameGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}

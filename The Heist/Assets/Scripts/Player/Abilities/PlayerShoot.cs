@@ -56,6 +56,7 @@ namespace Player
                     canShoot = true;
                 }
             }
+            if(currentWeaponData == null) return;
             currentAmmo = playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount;
 
             if (fireTime > 0f)
