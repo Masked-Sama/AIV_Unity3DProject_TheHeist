@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-using static Codice.Client.Common.Connection.AskCredentialsToUser;
-using UnityEditor.UIElements;
 
 namespace Player
 {

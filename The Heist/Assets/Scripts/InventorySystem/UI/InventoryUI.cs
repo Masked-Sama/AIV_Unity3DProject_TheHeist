@@ -1,7 +1,6 @@
 using UnityEngine.UIElements;
 using UnityEngine;
 using System;
-using UnityEditor.Graphs;
 
 public class InventoryUI : VisualElement
 {
@@ -18,7 +17,7 @@ public class InventoryUI : VisualElement
             name = "Max_Slots_Number"
         };
        
-        public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)    //linko i valori che andrò a inserire con i valori della classe PointBar
+        public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)    //linko i valori che andrï¿½ a inserire con i valori della classe PointBar
         {
             base.Init(ve, bag, cc);
 
@@ -48,7 +47,7 @@ public class InventoryUI : VisualElement
     {
         VisualElement slot =  slotContainer[index];
         if (slot == null) return;
-        //condizione brutta per dire che hai già l'arma raccolta nell'inventario
+        //condizione brutta per dire che hai giï¿½ l'arma raccolta nell'inventario
         if (slot.Q<VisualElement>("ItemIcon").style.backgroundImage == itemObjToSwitch.Texture2D)
         {
             int newAmount = Math.Clamp(int.Parse(slot.Q<Label>("BulletsNumber").text) + amount,0,999) ;
