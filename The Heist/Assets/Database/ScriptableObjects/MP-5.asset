@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: MP-5
   prefab: {fileID: 123254, guid: 6ff117de65466d744b6119672cc00579, type: 3}
   cost: 40
-  maxAmmo: 25
+  maxAmmoForMagazine: 30
   rateOfFire: 0.1
   damageContainer:
     damageType: 0

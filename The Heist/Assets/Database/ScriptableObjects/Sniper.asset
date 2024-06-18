@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Sniper
   prefab: {fileID: 146790, guid: 2c618085f7f86ff4ca275f4d230df2c5, type: 3}
   cost: 50
-  maxAmmo: 5
+  maxAmmoForMagazine: 1
   rateOfFire: 2.5
   damageContainer:
     damageType: 0

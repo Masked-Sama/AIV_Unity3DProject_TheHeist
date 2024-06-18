@@ -25,13 +25,13 @@ namespace Player
                 case 1:
                     WeaponData firstWeapon = (WeaponData)playerController.Inventory.GetItem(0);
                     if (firstWeapon == null) return;
-                    playerController.OnChangeWeapon(firstWeapon);
+                    playerController.OnChangeWeapon?.Invoke(firstWeapon);
                     Debug.Log("Hai cambiato in prima arma");
                     break;
                 case 2:
                     WeaponData secondWeapon = (WeaponData)playerController.Inventory.GetItem(1);
                     if (secondWeapon == null) return;
-                    playerController.OnChangeWeapon(secondWeapon);
+                    playerController.OnChangeWeapon?.Invoke(secondWeapon);
                     Debug.Log("Hai cambiato in seconda arma");
                     break;
                 default: return;

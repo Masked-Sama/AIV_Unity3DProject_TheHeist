@@ -10,17 +10,21 @@ namespace Player
         #region Variables
         [SerializeField]
         private Transform socketShoot;
+        [SerializeField]
+        private GameObject textReloading;
 
         private WeaponData currentWeaponData;
-        private int currentAmmo;
+        private int currentWeaponIndex;
+
+        private int currentAmmoInMagazine;
 
         private float reloadTimer = 0.0f;
         private float fireTime;
 
         private bool canShoot = true;
         private bool isAiming = false;
-        private bool hasShot = false;
 
+        private bool hasShot = false;
         private bool hasMultiShot = false;
         #endregion
 
@@ -45,31 +49,25 @@ namespace Player
 
         private void FixedUpdate()
         {
-            if (reloadTimer > 0f)
+            if (reloadTimer > 0f)   //se il tempo di ricarica non è ancora finito, decremento e ritorno
             {
                 reloadTimer -= Time.fixedDeltaTime;
-
-                if (reloadTimer <= 0f) // && playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>0)
-                {
-                    // if(playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount>= currentWeaponData.MaxAmmo)
-                    //     currentAmmo = currentWeaponData.MaxAmmo;
-                    canShoot = true;
-                }
+                textReloading.GetComponent<UnityEngine.UI.Text>().text = "Reloading " + ((short)reloadTimer);
+                return;
             }
-            if(currentWeaponData == null) return;
-            currentAmmo = playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].Amount;
-
-            if (fireTime > 0f)
+            if (fireTime > 0f)      //se il tempo tra uno sparo e l'altro non è ancora finito, decremento e ritorno
             {
                 fireTime -= Time.fixedDeltaTime;
-
-                if (fireTime <= 0f)
-                {
-                    canShoot = true;
-                    if (!hasMultiShot) return;
-                    InternalOnShootPerformed();
-                }
+                return;
             }
+            if (!canShoot)
+            {
+                canShoot = true;    //altrimenti posso sparare
+                textReloading.SetActive(false);
+            }
+
+            if (!hasMultiShot) return;
+            InternalOnShootPerformed(); //se sto sparando con un arma multishot, continuo a sparare
         }
         #endregion
 
@@ -82,6 +80,7 @@ namespace Player
         private void InternalOnShootPerformed()
         {
             if (currentWeaponData == null) return;
+            //Posso sparare quando sto mirando && ho almeno un proiettile && il cooldown tra un colpo e l'altro è 0
             if (CanShoot())
             {
                 Vector3 initialPosition = playerController.CameraPositionTransform.position;
@@ -89,7 +88,7 @@ namespace Player
 
                 Shoot(initialPosition, finalPosition, currentWeaponData.TypeOfShoot);
             }
-            else if (fireTime <= 0f)
+            else if (fireTime <= 0f)    //Se invece non posso sparare  il cooldown è 0, allora Faccio il reload
             {
                 Reload();
             }
@@ -116,7 +115,7 @@ namespace Player
         private bool CanShoot()
         {
             return !isPrevented
-                && currentAmmo > 0
+                && currentAmmoInMagazine>0
                 && canShoot
                 && isAiming;
         }
@@ -125,7 +124,14 @@ namespace Player
         {
             if (currentWeaponData == newWeapon) return;
             currentWeaponData = newWeapon;
-            currentAmmo = newWeapon.MaxAmmo;
+            currentWeaponIndex = playerController.Inventory.FindWeaponSlot(currentWeaponData);
+            ReloadCurrentAmmo();
+        }
+
+        private void ReloadCurrentAmmo()
+        {
+            currentAmmoInMagazine = playerController.Inventory.InventorySlots[currentWeaponIndex].Amount >= currentWeaponData.MaxAmmoForMagazine
+                        ? currentWeaponData.MaxAmmoForMagazine : playerController.Inventory.InventorySlots[currentWeaponIndex].Amount;
         }
 
         private void ComputeShootRange(Vector3 initialPosition, Vector3 finalPosition)
@@ -133,14 +139,10 @@ namespace Player
             Vector3 contactPoint = Vector3.zero;
 
             // Questi due vettori andranno sottratti per trovare ufficialmente la direction del bullet.
-
             if (Physics.Linecast(initialPosition, finalPosition, out RaycastHit hit))
             {
                 contactPoint = hit.point;
-                //Debug.Log("Colpito!" + hit.collider.gameObject.name);
-
                 Debug.DrawLine(socketShoot.position, contactPoint, Color.red, .1f); // SARA' QUESTA LA DIRECTION DEL BULLET!
-                //Debug.DrawLine(initialPosition, contactPoint, Color.blue, 30f);
 
                 IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
                 if (damageble == null) return;
@@ -149,13 +151,9 @@ namespace Player
             else
             {
                 contactPoint = finalPosition;
-                //Debug.Log("Non Colpito!");
-
                 Debug.DrawLine(socketShoot.position, finalPosition, Color.red, .1f);
-                //Debug.DrawLine(initialPosition, finalPosition, Color.blue, 30f);
             }
 
-            // Poi da qui usare il linecast finale per dare la direction al bullet.
         }
         #endregion
 
@@ -186,26 +184,24 @@ namespace Player
         #region IShooter
         public void Reload()
         {
-            if (currentAmmo >= currentWeaponData.MaxAmmo || reloadTimer > 0f) return;
+            //if (playerController.Inventory.InventorySlots[currentWeaponIndex].Amount >= currentWeaponData.MaxAmmoForMagazine || reloadTimer > 0f) return;
+            if (currentAmmoInMagazine > 0 || reloadTimer > 0f) return;
             canShoot = false;
+            ReloadCurrentAmmo();
+            if(currentAmmoInMagazine > 0)
+            textReloading.SetActive(true);
             reloadTimer = currentWeaponData.ReloadTime;
         }
 
         public bool Shoot(Vector3 initialPosition, Vector3 finalPosition, ShootType currentShootType)
         {
-            // currentAmmo--;
             canShoot = false;
             fireTime = currentWeaponData.RateOfFire;
-            
-            Debug.Log(currentAmmo);
+            currentAmmoInMagazine--;
             
             //To change when shotgun logic is implemented
             GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(currentWeaponData.Prefab, 1));
-
-            //Debug.Log(currentWeaponData.name);
-            playerController.Inventory.InventorySlots[playerController.Inventory.FindWeaponSlot(currentWeaponData)].AddAmount(-1);
-
-            //Debug.DrawLine(socketShoot.position, finalPosition, Color.magenta, 30);
+            playerController.Inventory.InventorySlots[currentWeaponIndex].AddAmount(-1);
 
             switch (currentShootType)
             {

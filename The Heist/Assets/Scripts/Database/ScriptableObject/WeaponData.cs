@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum ShootType
@@ -12,7 +10,7 @@ public enum ShootType
 
 public class WeaponData : ItemData, IInventoried
 {
-    [SerializeField] private int maxAmmo; 
+    [SerializeField] private int maxAmmoForMagazine; 
     [SerializeField] private float rateOfFire;
     [SerializeField] private DamageContainer damageContainer; 
     [SerializeField] private float randomDirection; 
@@ -20,9 +18,9 @@ public class WeaponData : ItemData, IInventoried
     [SerializeField] private float reloadTime; 
     [SerializeField] private float range;
     [SerializeField] private Texture2D texture;
-    public int MaxAmmo
+    public int MaxAmmoForMagazine
     {
-        get { return maxAmmo; }
+        get { return maxAmmoForMagazine; }
     }
     public float RateOfFire
     {

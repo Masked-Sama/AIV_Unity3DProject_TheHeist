@@ -138,11 +138,9 @@ namespace Player
             {
                 case ItemType.FirstWeapon:
                     weapon = (FirstWeaponData)itemComponent.ItemData;
-                    playerController.OnChangeWeapon?.Invoke(weapon);
                     break;
                 case ItemType.SecondWeapon:
                     weapon = (SecondWeaponData)itemComponent.ItemData;
-                    playerController.OnChangeWeapon?.Invoke(weapon);
                     break;
                 case ItemType.ThrowableWeapon:
                     ThrowableData throwable = (ThrowableData)itemComponent.ItemData;
@@ -173,21 +171,3 @@ namespace Player
         }*/
     }
 }
-
-
-/*
-private void OnTriggerEnter(Collider other)
-{
-    if (myCollider == null) return;
-    if ((1<< other.gameObject.layer) != layerMask.value) return;
-    otherObjs.Add(other);
-    textUI.SetActive(true);
-}
-
-private void OnTriggerExit(Collider other)
-{
-    otherObjs.Remove(other);
-    if (!IsEmptyItemList()) return;
-    textUI.SetActive(false);
-}
-*/

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventories")]
@@ -29,16 +28,16 @@ public class InventoryData : ScriptableObject
         switch (item.ItemType)
         {
             case ItemType.FirstWeapon:
-            ChangeItem(item, amount, ((int)SlotType.FirstWeapon));
-            break;
+                ChangeItem(item, amount, ((int)SlotType.FirstWeapon));
+                break;
             case ItemType.SecondWeapon:
-            ChangeItem(item, amount, ((int)SlotType.SecondWeapon));
-            break;
+                ChangeItem(item, amount, ((int)SlotType.SecondWeapon));
+                break;
             case ItemType.ThrowableWeapon:
-            ChangeItem(item, amount, ((int)SlotType.ThrowableWeapon));
-            break;
+                ChangeItem(item, amount, ((int)SlotType.ThrowableWeapon));
+                break;
             default:
-            return;
+                return;
         }
 
     }

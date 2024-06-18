@@ -142,7 +142,7 @@ namespace Player
         private void FixedUpdate()
         {
             playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));
-            Debug.Log("CurrentHealthPlayer: " + healthModule.CurrentHP.ToString());
+            //Debug.Log("CurrentHealthPlayer: " + healthModule.CurrentHP.ToString());
         }
         #endregion
 

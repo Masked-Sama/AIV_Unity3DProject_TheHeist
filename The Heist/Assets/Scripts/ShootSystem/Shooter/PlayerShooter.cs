@@ -21,7 +21,7 @@ public class PlayerShooter : MonoBehaviour
 
     public void Start()
     {
-        currentAmmo = weaponData.MaxAmmo;
+        currentAmmo = weaponData.MaxAmmoForMagazine;
         canShoot = true;
         // Initialize directions array
        /* for (int i = 0; i < directions.Length; i++)
@@ -36,7 +36,7 @@ public class PlayerShooter : MonoBehaviour
 
     public void Reload()
     {
-        if (currentAmmo >= weaponData.MaxAmmo || reloadTimer > 0f)
+        if (currentAmmo >= weaponData.MaxAmmoForMagazine || reloadTimer > 0f)
         {
             return;
         }
@@ -91,7 +91,7 @@ public class PlayerShooter : MonoBehaviour
 
             if (reloadTimer <= 0f)
             {
-                currentAmmo = weaponData.MaxAmmo;
+                currentAmmo = weaponData.MaxAmmoForMagazine;
                 canShoot = true;
             }
         }

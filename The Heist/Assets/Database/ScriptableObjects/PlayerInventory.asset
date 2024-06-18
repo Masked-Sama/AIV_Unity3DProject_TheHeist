@@ -15,8 +15,8 @@ MonoBehaviour:
   inventoryObjects:
   - itemData: {fileID: 11400000, guid: 098dfc6ff0343584ebc5724260849f72, type: 2}
     amount: 0
-  - itemData: {fileID: 11400000, guid: cdbe35db9b8f0a04980a8b7496608d88, type: 2}
-    amount: 11
+  - itemData: {fileID: 0}
+    amount: 0
   - itemData: {fileID: 0}
     amount: 0
   maxSlotNumber: 3
