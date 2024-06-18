@@ -20,6 +20,8 @@ public static class GlobalEventArgsFactory {
         methodDebugString.Add(GlobalEventIndex.AddItemToInventory, new EventDebug(AddItemToInventoryDebug));
         methodDebugString.Add(GlobalEventIndex.BuyItem, new EventDebug(BuyItemDebug));
         methodDebugString.Add(GlobalEventIndex.Shoot, new EventDebug(ShootDebug));
+        methodDebugString.Add(GlobalEventIndex.ShowStringInUI, new EventDebug(ShowStringInUIDebug));
+        methodDebugString.Add(GlobalEventIndex.HideStringInUI, new EventDebug(HideStringInUIDebug));
 
     }
 
@@ -218,5 +220,41 @@ public static class GlobalEventArgsFactory {
     }
     #endregion
 
-    
+    #region ShowStringInUI
+    public static GlobalEventArgs ShowStringInUIFactory(string stringToShow, Color color, uint fontSize = 18)
+    {
+        GlobalEventArgs message = new GlobalEventArgs();
+        message.args = new ExtendedVariable[3];
+        message.args[0] = new ExtendedVariable("StringToShow", ExtendedVariableType.String,stringToShow);
+        message.args[1] = new ExtendedVariable("Color", ExtendedVariableType.Color, color);
+        message.args[2] = new ExtendedVariable("FontSize", ExtendedVariableType.UInt,fontSize);
+        return message;
+    }
+    public static void ShowStringInUIParser(GlobalEventArgs message,out string stringToShow,out Color color,out uint fontSize)
+    {
+        stringToShow = (string)message.args[0].GetValue();
+        color = (Color)message.args[1].GetValue();
+        fontSize = (uint)message.args[2].GetValue();
+    }
+    public static string ShowStringInUIDebug(GlobalEventArgs message)
+    {
+        return " ShowStringInUIDebug: String " + (string)message.args[0].GetValue();
+    }
+    #endregion
+
+    #region HideStringInUI
+    public static GlobalEventArgs HideStringInUIFactory()
+    {
+        GlobalEventArgs message = new GlobalEventArgs();
+        return message;
+    }
+    public static void HideStringInUIParser()
+    {
+    }
+    public static string HideStringInUIDebug(GlobalEventArgs message)
+    {
+        return " HideStringInUIDebug";
+    }
+    #endregion
+
 }

@@ -18,9 +18,7 @@ namespace Player
         private LayerMask wallMask;
 
         private GameObject itemDetected;
-
-        //private Action onItemDetected;
-        //private Action onItemUndetected;
+        private Item itemComponent;
         private RaycastHit hit;
         private bool canInteract = false;
 
@@ -76,32 +74,44 @@ namespace Player
             if (canInteract)
             {
                 itemDetected = hit.collider.gameObject;
+                itemComponent = itemDetected.GetComponent<Item>();
                 playerController.OnItemDetected?.Invoke();
             }
             else
             {
+                itemComponent = null;
                 playerController.OnItemUndetected?.Invoke();
             }
         }
 
         private void ItemDetected()
         {
-            if (itemDetected.GetComponent<Item>() != null)
-                textUI.GetComponent<UnityEngine.UI.Text>().text =
-                    $"{itemDetected.GetComponent<Item>().ItemData.ItemName} - Cost: {itemDetected.GetComponent<Item>().ItemData.Cost}"; //DA CAMBIARE ASSOLUTAMENTE
+            canInteract = true;
+            string message;
+            if (itemComponent== null)
+            {
+                message = "E\n Start Mission";
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message,Color.yellow,24));                
+                return;
+            }
+            if (itemDetected.CompareTag(sellingWeaponTag))
+            {
+                message = $"E\nBuy {itemComponent.ItemData.ItemName} - Cost: {itemComponent.ItemData.Cost}";
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI,GlobalEventArgsFactory.ShowStringInUIFactory(message,Color.green, 18));
+                return;
+            }
             else
             {
-                textUI.GetComponent<UnityEngine.UI.Text>().text = "Press E to Interact";
+                message = $"E\n Pick up {itemComponent.ItemData.ItemName} - Quantity: {itemComponent.Quantity}";
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message, Color.green, 18));
+                return;
             }
-
-            textUI.SetActive(true);
-            canInteract = true;
+            
         }
 
         private void ItemUndetected()
         {
-            if (textUI == null) return;
-            textUI.SetActive(false);
+            GlobalEventManager.CastEvent(GlobalEventIndex.HideStringInUI, GlobalEventArgsFactory.HideStringInUIFactory());
             canInteract = false;
         }
 
@@ -114,7 +124,7 @@ namespace Player
                 sceneRef.ChangeSceneStarter = true;
                 return;
             }
-            Item itemComponent = itemDetected.GetComponent<Item>();
+            itemComponent = itemDetected.GetComponent<Item>();
             if (itemComponent == null) return;
 
             if (itemDetected.CompareTag(sellingWeaponTag))
@@ -122,18 +132,16 @@ namespace Player
                 if (playerController.OnTryToBuyItem == null) return;
                 if (playerController.OnTryToBuyItem.Invoke(itemComponent.ItemData.Cost))
                 {
-                    Debug.Log("C'ho li sordi");
                     GlobalEventManager.CastEvent(GlobalEventIndex.BuyItem,
                         GlobalEventArgsFactory.BuyItemFactory(itemDetected));
                 }
                 else
                 {
-                    Debug.Log("Non c'ho li sordi");
                     return;
                 }
             }
 
-            WeaponData weapon;
+            WeaponData weapon=null;
             switch (itemComponent.ItemData.ItemType)
             {
                 case ItemType.FirstWeapon:
@@ -158,6 +166,8 @@ namespace Player
 
             if (!itemDetected.CompareTag(sellingWeaponTag))
                 itemDetected.SetActive(false);
+            if (weapon !=null)
+                playerController.OnChangeWeapon?.Invoke(weapon);
         }
 
         /*private void OnDrawGizmos()

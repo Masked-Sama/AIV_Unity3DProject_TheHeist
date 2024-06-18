@@ -10,8 +10,6 @@ namespace Player
         #region Variables
         [SerializeField]
         private Transform socketShoot;
-        [SerializeField]
-        private GameObject textReloading;
 
         private WeaponData currentWeaponData;
         private int currentWeaponIndex;
@@ -52,7 +50,6 @@ namespace Player
             if (reloadTimer > 0f)   //se il tempo di ricarica non è ancora finito, decremento e ritorno
             {
                 reloadTimer -= Time.fixedDeltaTime;
-                textReloading.GetComponent<UnityEngine.UI.Text>().text = "Reloading " + ((short)reloadTimer);
                 return;
             }
             if (fireTime > 0f)      //se il tempo tra uno sparo e l'altro non è ancora finito, decremento e ritorno
@@ -63,7 +60,6 @@ namespace Player
             if (!canShoot)
             {
                 canShoot = true;    //altrimenti posso sparare
-                textReloading.SetActive(false);
             }
 
             if (!hasMultiShot) return;
@@ -184,12 +180,10 @@ namespace Player
         #region IShooter
         public void Reload()
         {
-            //if (playerController.Inventory.InventorySlots[currentWeaponIndex].Amount >= currentWeaponData.MaxAmmoForMagazine || reloadTimer > 0f) return;
             if (currentAmmoInMagazine > 0 || reloadTimer > 0f) return;
             canShoot = false;
             ReloadCurrentAmmo();
             if(currentAmmoInMagazine > 0)
-            textReloading.SetActive(true);
             reloadTimer = currentWeaponData.ReloadTime;
         }
 

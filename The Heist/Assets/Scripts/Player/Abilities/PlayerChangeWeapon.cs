@@ -20,23 +20,19 @@ namespace Player
         private void OnChangeWeaponPerformed(InputAction.CallbackContext context)
         {
             if (!CanChangeWeapon()) return;
+            WeaponData weapon;
             switch (int.Parse(context.control.displayName))
             {
                 case 1:
-                    WeaponData firstWeapon = (WeaponData)playerController.Inventory.GetItem(0);
-                    if (firstWeapon == null) return;
-                    playerController.OnChangeWeapon?.Invoke(firstWeapon);
-                    Debug.Log("Hai cambiato in prima arma");
+                    weapon = (WeaponData)playerController.Inventory.GetItem((int)ItemType.FirstWeapon);                    
                     break;
                 case 2:
-                    WeaponData secondWeapon = (WeaponData)playerController.Inventory.GetItem(1);
-                    if (secondWeapon == null) return;
-                    playerController.OnChangeWeapon?.Invoke(secondWeapon);
-                    Debug.Log("Hai cambiato in seconda arma");
+                    weapon = (WeaponData)playerController.Inventory.GetItem((int)ItemType.SecondWeapon);                    
                     break;
                 default: return;
             }
-            // Debug.Log(context.control.displayName);
+            if (weapon == null) return;
+            playerController.OnChangeWeapon?.Invoke(weapon);
         }
 
         #region PrivateMethods

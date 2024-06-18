@@ -100,6 +100,8 @@ public enum GlobalEventIndex {
     PlayerEnergyUpdated,
     AddItemToInventory,
     BuyItem,
-    Shoot
+    Shoot,
+    ShowStringInUI,
+    HideStringInUI
 }
 
