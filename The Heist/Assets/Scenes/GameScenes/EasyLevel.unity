@@ -24247,6 +24247,8 @@ GameObject:
   - component: {fileID: 807255286}
   - component: {fileID: 807255287}
   - component: {fileID: 807255288}
+  - component: {fileID: 807255290}
+  - component: {fileID: 807255289}
   m_Layer: 0
   m_Name: PoolRequester
   m_TagString: Untagged
@@ -24321,6 +24323,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 46ab72d349ede534c80a1d8a69e03e7b, type: 2}
+--- !u!114 &807255289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807255283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd421bd3bdafec4e94c828611a0771a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 81c43f430e68f344d8acc789fcc26245, type: 2}
+--- !u!114 &807255290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807255283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd421bd3bdafec4e94c828611a0771a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: f3b41928b2b22ab44935f1645e3787d0, type: 2}
 --- !u!1001 &809118442
 PrefabInstance:
   m_ObjectHideFlags: 0
