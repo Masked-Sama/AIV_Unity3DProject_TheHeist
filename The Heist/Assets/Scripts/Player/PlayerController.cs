@@ -28,7 +28,6 @@ namespace Player
 
         private PlayerAbilityBase[] abilities;
 
-        private GameObject weaponVisual;
         #region PlayerCollision
         public bool IsGrounded { get; set; }
 
@@ -60,6 +59,11 @@ namespace Player
         {
             get { return playerPhysicsCollider; }
         }
+
+        public Transform BoneWeapon
+        {
+            get { return boneWeapon; }
+        }
         #endregion
 
         #region PlayerJump
@@ -74,6 +78,7 @@ namespace Player
         #region PlayerInteract
         public Action OnItemDetected;
         public Action OnItemUndetected;
+        public Action<ItemData> OnPickUpItem;
 
         [SerializeField]
         private InventoryData inventory;
@@ -85,14 +90,7 @@ namespace Player
         #endregion
 
         #region PlayerChangeWeapon
-        public Action<WeaponData> OnChangeWeapon;
-        private void visualOnChangeWeapon(WeaponData data)
-        {
-            Destroy(weaponVisual);
-            weaponVisual = Instantiate(data.Prefab, boneWeapon.position, boneWeapon.rotation);
-            weaponVisual.transform.SetParent(boneWeapon);
-
-        }
+        public Action<WeaponData> OnChangeWeapon;        
         #endregion
 
         #region PlayerCurrency
@@ -106,7 +104,7 @@ namespace Player
             //Debug.Log("Change Scene Player");
             if (cameraPositionTransform == null)
             {
-                cameraPositionTransform = GameObject.FindObjectOfType<CinemachineBrain>().transform;
+                cameraPositionTransform = FindObjectOfType<CinemachineBrain>().transform;
             }
             abilities = GetComponentsInChildren<PlayerAbilityBase>();
             foreach (var ability in abilities)
@@ -120,23 +118,19 @@ namespace Player
 
         }
 
-
-
         private void OnEnable()
         {
-            OnChangeWeapon += visualOnChangeWeapon;
             healthModule.OnDeath += IsDeath;
         }
         private void OnDisable()
         {
-            OnChangeWeapon -= visualOnChangeWeapon;
             healthModule.OnDeath -= IsDeath;
         }
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            DontDestroyOnLoad(GameObject.FindObjectOfType<CinemachineBrain>());
+            DontDestroyOnLoad(FindObjectOfType<CinemachineBrain>());
         }
 
         private void FixedUpdate()

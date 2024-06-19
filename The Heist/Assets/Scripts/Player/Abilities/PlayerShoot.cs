@@ -24,6 +24,7 @@ namespace Player
 
         private bool hasShot = false;
         private bool hasMultiShot = false;
+        private GameObject weaponVisual;
         #endregion
 
         #region Mono
@@ -34,6 +35,7 @@ namespace Player
             InputManager.Player.Aim.performed += OnAimPerformed;
             InputManager.Player.Aim.canceled += OnAimCanceled;
             playerController.OnChangeWeapon += ChangeWeapon;
+            playerController.OnPickUpItem += PickUpWeapon;
         }
 
         private void OnDisable()
@@ -43,6 +45,7 @@ namespace Player
             InputManager.Player.Aim.performed -= OnAimPerformed;
             InputManager.Player.Aim.canceled -= OnAimCanceled;
             playerController.OnChangeWeapon -= ChangeWeapon;
+            playerController.OnPickUpItem -= PickUpWeapon;
         }
 
         private void FixedUpdate()
@@ -122,13 +125,31 @@ namespace Player
             currentWeaponData = newWeapon;
             currentWeaponIndex = playerController.Inventory.FindWeaponSlot(currentWeaponData);
             ReloadCurrentAmmo();
+            VisualChangeWeapon(newWeapon);
         }
+        private void VisualChangeWeapon(WeaponData data)
+        {
+            Destroy(weaponVisual);
+            weaponVisual = Instantiate(data.Prefab, playerController.BoneWeapon.position, playerController.BoneWeapon.rotation);
+            weaponVisual.transform.SetParent(playerController.BoneWeapon);
+        }
+
+        private void PickUpWeapon(ItemData item)
+        {
+            if (!(item is WeaponData) || currentWeaponData == null) return;      //Se non sto raccogliendo un arma (o se non ho niente in mano), ritorno
+            WeaponData newWeapon = item as WeaponData;
+            if (newWeapon.ItemType != currentWeaponData.ItemType) return;
+            //continua solo se l'attuale arma è dello stesso tipo di quella raccolta ma non è la stessa arma
+            ChangeWeapon(newWeapon);
+        }
+
 
         private void ReloadCurrentAmmo()
         {
             currentAmmoInMagazine = playerController.Inventory.InventorySlots[currentWeaponIndex].Amount >= currentWeaponData.MaxAmmoForMagazine
                         ? currentWeaponData.MaxAmmoForMagazine : playerController.Inventory.InventorySlots[currentWeaponIndex].Amount;
         }
+
 
         private void ComputeShootRange(Vector3 initialPosition, Vector3 finalPosition)
         {

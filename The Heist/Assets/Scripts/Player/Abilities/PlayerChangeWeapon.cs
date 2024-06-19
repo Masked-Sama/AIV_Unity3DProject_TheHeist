@@ -34,7 +34,7 @@ namespace Player
             if (weapon == null) return;
             playerController.OnChangeWeapon?.Invoke(weapon);
         }
-
+        
         #region PrivateMethods
         private bool CanChangeWeapon()
         {

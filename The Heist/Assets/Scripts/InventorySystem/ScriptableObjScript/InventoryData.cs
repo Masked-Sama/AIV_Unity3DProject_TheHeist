@@ -11,10 +11,10 @@ public class InventoryData : ScriptableObject
     public int SlotsNumber { get { return maxSlotNumber; } }
     public InventorySlot[] InventorySlots { get { return inventoryObjects; } }
 
-    private void Awake()
-    {
-        inventoryObjects = new InventorySlot[maxSlotNumber];
-    }
+    //private void Awake()
+    //{
+    //    inventoryObjects = new InventorySlot[maxSlotNumber];
+    //}
 
     public void AddItem(ItemData item, int amount)
     {

@@ -9,9 +9,6 @@ namespace Player
 
         [SerializeField]
         private float distance;
-
-        [SerializeField]
-        private GameObject textUI;
         [SerializeField]
         private LayerMask layerMask;
         [SerializeField]
@@ -90,7 +87,7 @@ namespace Player
             string message;
             if (itemComponent== null)
             {
-                message = "E\n Start Mission";
+                message = "E\nStart Mission";
                 GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message,Color.yellow,24));                
                 return;
             }
@@ -102,7 +99,7 @@ namespace Player
             }
             else
             {
-                message = $"E\n Pick up {itemComponent.ItemData.ItemName} - Quantity: {itemComponent.Quantity}";
+                message = $"E\nPick up {itemComponent.ItemData.ItemName} - Quantity: {itemComponent.Quantity}";
                 GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message, Color.green, 18));
                 return;
             }
@@ -141,17 +138,23 @@ namespace Player
                 }
             }
 
-            WeaponData weapon=null;
+            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
+            playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
+            if (!itemDetected.CompareTag(sellingWeaponTag))
+                itemDetected.SetActive(false);
+
+
+            ItemData pickUpItem=null;
             switch (itemComponent.ItemData.ItemType)
             {
                 case ItemType.FirstWeapon:
-                    weapon = (FirstWeaponData)itemComponent.ItemData;
+                    pickUpItem = (FirstWeaponData)itemComponent.ItemData;
                     break;
                 case ItemType.SecondWeapon:
-                    weapon = (SecondWeaponData)itemComponent.ItemData;
+                    pickUpItem = (SecondWeaponData)itemComponent.ItemData;
                     break;
                 case ItemType.ThrowableWeapon:
-                    ThrowableData throwable = (ThrowableData)itemComponent.ItemData;
+                    pickUpItem = (ThrowableData)itemComponent.ItemData;                    
                     break;
                 case ItemType.Consumable:
                     //  TODO
@@ -159,15 +162,7 @@ namespace Player
                 default:
                     return;
             }
-
-
-            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
-            playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
-
-            if (!itemDetected.CompareTag(sellingWeaponTag))
-                itemDetected.SetActive(false);
-            if (weapon !=null)
-                playerController.OnChangeWeapon?.Invoke(weapon);
+            playerController.OnPickUpItem?.Invoke(pickUpItem);
         }
 
         /*private void OnDrawGizmos()

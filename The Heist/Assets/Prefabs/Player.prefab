@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 570324578184329112}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4226183, y: -0, z: -0, w: 0.9063078}
-  m_LocalPosition: {x: 0.71730804, y: 3.1236515, z: -1.6971774}
+  m_LocalPosition: {x: 0.8036537, y: 3.1236515, z: -1.6971774}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -448,7 +448,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 10
-  textUI: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 256
