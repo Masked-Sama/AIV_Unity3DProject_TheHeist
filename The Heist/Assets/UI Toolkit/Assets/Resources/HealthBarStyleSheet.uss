@@ -1,0 +1,4 @@
+.colorHealthBar {
+    background-color: rgba(0, 255, 44, 0);
+    -unity-background-image-tint-color: rgb(0, 255, 47);
+}

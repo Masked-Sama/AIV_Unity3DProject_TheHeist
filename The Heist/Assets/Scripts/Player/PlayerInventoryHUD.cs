@@ -5,6 +5,7 @@ public class PlayerInventoryHUD : MonoBehaviour
 {
     private const int maxSlotsNumber = 3;
     private InventoryUI inventoryUI;
+    private HealthUI healthUI;
 
     [SerializeField]
     private InventoryData playerInventory;
@@ -13,7 +14,9 @@ public class PlayerInventoryHUD : MonoBehaviour
     private void Awake()
     {
         inventoryUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI");
+        healthUI = GetComponent<UIDocument>().rootVisualElement.Q<HealthUI>("HealthUI");
         inventoryUI.MaxSlotsNumber = maxSlotsNumber;
+        healthUI.CurrentHealth = 100.0f;
         Init();
     }
     private void OnEnable()
