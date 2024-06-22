@@ -15,8 +15,8 @@ MonoBehaviour:
   itemName: M4A4
   prefab: {fileID: 199910, guid: 4101bd880c926364d88679f098bde112, type: 3}
   cost: 80
-  maxAmmoForMagazine: 10
-  rateOfFire: 0.8
+  maxAmmoForMagazine: 20
+  rateOfFire: 0.3
   damageContainer:
     damageType: 0
     damage: 2
@@ -24,6 +24,6 @@ MonoBehaviour:
     freezeTime: 0
   randomDirection: 0
   typeOfShoot: 0
-  reloadTime: 5
-  range: 250
+  reloadTime: 3.5
+  range: 15
   texture: {fileID: 2800000, guid: 00a98b3cbb4c24e4882ab60443bef5d1, type: 3}
