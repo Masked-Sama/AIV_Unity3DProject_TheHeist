@@ -1,8 +1,9 @@
+.healthBar {
+    flex-grow: 1;
+}
+
 .container {
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-.healthBar {
     flex-grow: 1;
 }

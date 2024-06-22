@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/Assets/Resources/InventoryStyleSheet.uss?fileID=7433441132597879392&amp;guid=b0f9d079bdec0024990518b46a29b56f&amp;type=3#InventoryStyleSheet" />
-    <ui:VisualElement name="Root" style="flex-grow: 1; visibility: visible; overflow: hidden;">
-        <InventoryUI name="InventoryUI" Max_Slots_Size="3" style="width: 400px; height: 140px; background-color: rgba(0, 0, 0, 0.53); align-self: flex-end; justify-content: center; align-items: flex-end; bottom: 0; right: 0; position: absolute; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; flex-direction: column; flex-wrap: nowrap;" />
-        <HealthUI name="HealthUI" style="flex-grow: 1; min-width: 400px; min-height: 100px; background-color: rgba(0, 0, 0, 0.41); -unity-background-image-tint-color: rgb(255, 255, 255); position: absolute; display: flex; height: 33px; opacity: 1; width: 400px;" />
-    </ui:VisualElement>
-</ui:UXML>

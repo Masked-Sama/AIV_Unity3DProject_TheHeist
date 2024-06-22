@@ -16,7 +16,9 @@ public class PlayerInventoryHUD : MonoBehaviour
         inventoryUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI");
         healthUI = GetComponent<UIDocument>().rootVisualElement.Q<HealthUI>("HealthUI");
         inventoryUI.MaxSlotsNumber = maxSlotsNumber;
-        healthUI.CurrentHealth = 100.0f;
+        healthUI.MaxHealth = 10;
+        healthUI.CurrentHealth = 10;
+
         Init();
     }
     private void OnEnable()
