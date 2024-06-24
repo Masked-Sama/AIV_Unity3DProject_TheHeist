@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Assets/Resources/HealthBarStyleSheet.uss?fileID=7433441132597879392&amp;guid=2a70fa712d746654e894df4984d11b9d&amp;type=3#HealthBarStyleSheet" />
+    <ui:VisualElement name="Root" style="flex-grow: 1; min-width: auto; min-height: auto; width: auto; height: auto; flex-direction: row;">
+        <ui:VisualElement name="MaxHealth" style="flex-grow: 1; background-color: rgba(188, 183, 183, 0.48); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; height: auto; width: auto; flex-direction: row; position: relative;">
+            <ui:VisualElement name="CurrentHealth" style="flex-grow: 0; background-color: rgb(0, 190, 60); visibility: visible; overflow: hidden; width: 100%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" name="Root" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Assets/HUD.uss?fileID=7433441132597879392&amp;guid=ed9b24a61abeefd42a154abeedec3ddf&amp;type=3#HUD" />
+    <HealthUI name="HealthUI" style="height: 100px; width: 600px; top: 30px; right: auto; left: 10px;" />
+    <InventoryUI name="InventoryUI" style="height: 130px; width: 400px; position: absolute; bottom: 5px; right: 5px; background-color: rgba(0, 0, 0, 0.45); align-items: center;" />
+</ui:UXML>

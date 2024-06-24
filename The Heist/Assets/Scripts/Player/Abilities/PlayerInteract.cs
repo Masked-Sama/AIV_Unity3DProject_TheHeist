@@ -83,6 +83,7 @@ namespace Player
 
         private void ItemDetected()
         {
+            Debug.Log("Found");
             canInteract = true;
             string message;
             if (itemComponent== null)
@@ -115,33 +116,17 @@ namespace Player
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
             if (!canInteract) return;
+
+            #region Case: ChangeScene
             ChangeScene sceneRef = itemDetected.GetComponent<ChangeScene>();
             if (sceneRef != null)
             {
                 sceneRef.ChangeSceneStarter = true;
                 return;
             }
+            #endregion
             itemComponent = itemDetected.GetComponent<Item>();
             if (itemComponent == null) return;
-
-            if (itemDetected.CompareTag(sellingWeaponTag))
-            {
-                if (playerController.OnTryToBuyItem == null) return;
-                if (playerController.OnTryToBuyItem.Invoke(itemComponent.ItemData.Cost))
-                {
-                    GlobalEventManager.CastEvent(GlobalEventIndex.BuyItem,
-                        GlobalEventArgsFactory.BuyItemFactory(itemDetected));
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
-            playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
-            if (!itemDetected.CompareTag(sellingWeaponTag))
-                itemDetected.SetActive(false);
 
 
             ItemData pickUpItem=null;
@@ -157,15 +142,41 @@ namespace Player
                     pickUpItem = (ThrowableData)itemComponent.ItemData;                    
                     break;
                 case ItemType.Consumable:
-                    //  TODO
+                    pickUpItem = (ConsumableData)itemComponent.ItemData;
                     break;
                 default:
                     return;
             }
             playerController.OnPickUpItem?.Invoke(pickUpItem);
+
+            if(pickUpItem is IInventoried)
+            {             
+                GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
+                playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
+            }
+
+            if (itemDetected.CompareTag(sellingWeaponTag))
+            {
+                if (playerController.OnTryToBuyItem == null) return;
+                if (playerController.OnTryToBuyItem.Invoke(itemComponent.ItemData.Cost))
+                {
+                    GlobalEventManager.CastEvent(GlobalEventIndex.BuyItem,
+                        GlobalEventArgsFactory.BuyItemFactory(itemDetected));
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                itemDetected.SetActive(false);
+            }
+                
         }
 
-        /*private void OnDrawGizmos()
+        /*
+        private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
 
@@ -173,6 +184,7 @@ namespace Player
             //Gizmos.DrawWireSphere(pos + cameraPosition.forward * distance, radius);
 
             Gizmos.DrawRay(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward * distance);
-        }*/
+        }
+        */
     }
 }

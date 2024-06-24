@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789d938dd7a232b40a867a8fc38edc8b, type: 3}
+  m_Name: Medikit
+  m_EditorClassIdentifier: 
+  itemName: Medikit
+  prefab: {fileID: 850589691314536818, guid: 85907bf15506cc44298c2a08fc1ca632, type: 3}
+  cost: 50
+  hp: 50

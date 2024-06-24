@@ -1,4 +1,5 @@
 using Cinemachine;
+using CodiceApp.EventTracking.Plastic;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -121,22 +122,25 @@ namespace Player
         private void OnEnable()
         {
             healthModule.OnDeath += IsDeath;
+            OnPickUpItem += HealthUpdate;
         }
         private void OnDisable()
         {
             healthModule.OnDeath -= IsDeath;
+            OnPickUpItem -= HealthUpdate;
         }
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            ResetHealth();
             DontDestroyOnLoad(FindObjectOfType<CinemachineBrain>());
+
         }
 
         private void FixedUpdate()
         {
-            playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));
-            //Debug.Log("CurrentHealthPlayer: " + healthModule.CurrentHP.ToString());
+            playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));            
         }
         #endregion
 
@@ -196,9 +200,24 @@ namespace Player
         #endregion
 
         #region HealthModule
+        public void ResetHealth()
+        {
+            healthModule.Reset();
+            NotifyHealthUpdatedGlobal();
+        }
+
+        private void HealthUpdate(ItemData item)
+        {
+            if(!(item is ConsumableData)) return;
+            ConsumableData medikit = (ConsumableData)item;
+            healthModule.IncreaseHealth(medikit.HP);
+            NotifyHealthUpdatedGlobal();
+        }
+
         private void InternalTakeDamage(DamageContainer damage)
         {
             healthModule.TakeDamage(damage);
+            NotifyHealthUpdatedGlobal();
             //if (healthModule.IsDead)
             //{
             //    playerVisual.SetAnimatorParameter("Death");
@@ -222,7 +241,11 @@ namespace Player
             playerVisual.SetAnimatorParameter("Respawn");
             changeScene.ChangeSceneStarter = true;
         }
-
+        private void NotifyHealthUpdatedGlobal()
+        {
+            GlobalEventManager.CastEvent(GlobalEventIndex.PlayerHealthUpdated,
+                GlobalEventArgsFactory.PlayerHealthUpdatedFactory(healthModule.MaxHP, healthModule.CurrentHP));
+        }
         #endregion
     }
 }
