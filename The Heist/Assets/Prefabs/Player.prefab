@@ -4763,7 +4763,7 @@ MonoBehaviour:
   playerVisual: {fileID: 6169535074207315861}
   cameraPositionTransform: {fileID: 9189185092706778582, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
   healthModule:
-    maxHP: 10
+    maxHP: 100
   boneWeapon: {fileID: 412484998006263530}
   inventory: {fileID: 11400000, guid: cf38df465301b9e46bea4e94da5c95ce, type: 2}
 --- !u!54 &8475908330164288282

@@ -47,5 +47,10 @@ public class HealthModule
         if (currentHP > 0) return;
         OnDeath?.Invoke();
     }
+
+    public void IncreaseHealth(float hp)
+    {
+        currentHP = Mathf.Clamp(currentHP + hp,0,maxHP);
+    }
     #endregion
 }

@@ -122,24 +122,25 @@ namespace Player
         private void OnEnable()
         {
             healthModule.OnDeath += IsDeath;
+            OnPickUpItem += HealthUpdate;
         }
         private void OnDisable()
         {
             healthModule.OnDeath -= IsDeath;
+            OnPickUpItem -= HealthUpdate;
         }
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            DontDestroyOnLoad(FindObjectOfType<CinemachineBrain>());
             ResetHealth();
+            DontDestroyOnLoad(FindObjectOfType<CinemachineBrain>());
 
         }
 
         private void FixedUpdate()
         {
-            playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));
-            //Debug.Log("CurrentHealthPlayer: " + healthModule.CurrentHP.ToString());
+            playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));            
         }
         #endregion
 
@@ -202,6 +203,14 @@ namespace Player
         public void ResetHealth()
         {
             healthModule.Reset();
+            NotifyHealthUpdatedGlobal();
+        }
+
+        private void HealthUpdate(ItemData item)
+        {
+            if(!(item is ConsumableData)) return;
+            ConsumableData medikit = (ConsumableData)item;
+            healthModule.IncreaseHealth(medikit.HP);
             NotifyHealthUpdatedGlobal();
         }
 
