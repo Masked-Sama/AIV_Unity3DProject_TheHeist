@@ -1,4 +1,5 @@
 using Cinemachine;
+using CodiceApp.EventTracking.Plastic;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -131,6 +132,8 @@ namespace Player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             DontDestroyOnLoad(FindObjectOfType<CinemachineBrain>());
+            ResetHealth();
+
         }
 
         private void FixedUpdate()
@@ -196,9 +199,16 @@ namespace Player
         #endregion
 
         #region HealthModule
+        public void ResetHealth()
+        {
+            healthModule.Reset();
+            NotifyHealthUpdatedGlobal();
+        }
+
         private void InternalTakeDamage(DamageContainer damage)
         {
             healthModule.TakeDamage(damage);
+            NotifyHealthUpdatedGlobal();
             //if (healthModule.IsDead)
             //{
             //    playerVisual.SetAnimatorParameter("Death");
@@ -222,7 +232,11 @@ namespace Player
             playerVisual.SetAnimatorParameter("Respawn");
             changeScene.ChangeSceneStarter = true;
         }
-
+        private void NotifyHealthUpdatedGlobal()
+        {
+            GlobalEventManager.CastEvent(GlobalEventIndex.PlayerHealthUpdated,
+                GlobalEventArgsFactory.PlayerHealthUpdatedFactory(healthModule.MaxHP, healthModule.CurrentHP));
+        }
         #endregion
     }
 }

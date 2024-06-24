@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerInventoryHUD : MonoBehaviour
+public class PlayerHUD : MonoBehaviour
 {
     private const int maxSlotsNumber = 3;
     private InventoryUI inventoryUI;
@@ -16,8 +16,6 @@ public class PlayerInventoryHUD : MonoBehaviour
         inventoryUI = GetComponent<UIDocument>().rootVisualElement.Q<InventoryUI>("InventoryUI");
         healthUI = GetComponent<UIDocument>().rootVisualElement.Q<HealthUI>("HealthUI");
         inventoryUI.MaxSlotsNumber = maxSlotsNumber;
-        healthUI.MaxHealth = 10;
-        healthUI.CurrentHealth = 10;
 
         Init();
     }
@@ -25,8 +23,14 @@ public class PlayerInventoryHUD : MonoBehaviour
     {
         GlobalEventManager.AddListener(GlobalEventIndex.AddItemToInventory, UpdateInventory);
         GlobalEventManager.AddListener(GlobalEventIndex.Shoot, ShootListener);
+        GlobalEventManager.AddListener(GlobalEventIndex.PlayerHealthUpdated, HealthUpdate);
     }
-
+    private void OnDisable()
+    {
+        GlobalEventManager.RemoveListener(GlobalEventIndex.AddItemToInventory, UpdateInventory);
+        GlobalEventManager.RemoveListener(GlobalEventIndex.Shoot, ShootListener);
+        GlobalEventManager.RemoveListener(GlobalEventIndex.PlayerHealthUpdated, HealthUpdate);
+    }
     private void Init()
     {
         foreach(var item in playerInventory.InventorySlots)
@@ -65,6 +69,13 @@ public class PlayerInventoryHUD : MonoBehaviour
         IInventoried inventoried = (IInventoried)weaponItemData;
         if (inventoried == null) return;
         inventoryUI.AddToSlotItem((int)weaponItemData.ItemType, inventoried, bulletAmount*(-1));
+    }
 
+    private void HealthUpdate(GlobalEventArgs message)
+    {
+        GlobalEventArgsFactory.PlayerHealthUpdatedParser(message, out float maxHP, out float currentHP);
+        healthUI.CurrentHealth = currentHP;
+        if (healthUI.MaxHealth == maxHP) return;
+        healthUI.MaxHealth = maxHP;
     }
 }
