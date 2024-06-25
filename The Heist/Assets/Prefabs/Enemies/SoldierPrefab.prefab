@@ -94,7 +94,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 7a81582b666186540b022101fa8ffce0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: cdbe35db9b8f0a04980a8b7496608d88, type: 2}
   randomRange: 0.3
+  trailRenderer: {fileID: 2172579638485346369, guid: e05899197199b334ab9195bed74c8eda, type: 3}
 --- !u!114 &3375792075224296329
 MonoBehaviour:
   m_ObjectHideFlags: 0

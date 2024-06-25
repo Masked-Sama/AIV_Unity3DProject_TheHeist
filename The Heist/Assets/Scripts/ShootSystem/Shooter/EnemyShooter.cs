@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 
@@ -16,6 +17,9 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     [SerializeField]
     private float randomRange;
+
+    [SerializeField]
+    private TrailRenderer trailRenderer;
 
     private bool canShoot;
     private float reloadTimer = 0f;
@@ -43,7 +47,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
             float randomZ = UnityEngine.Random.Range(-randomRange, randomRange);
             directions[i] = new Vector3(randomX, randomY, randomZ);
         }
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         Transform[] allBones = gameObject.GetComponentsInChildren<Transform>();
         boneWeapon = FindBone(allBones, "WeaponHand_R");
@@ -113,6 +117,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
             fireTime = weaponData.RateOfFire;
             canShoot = false;
 
+
             RaycastHit hit;
             int randomDirectionIndex = UnityEngine.Random.Range(0, directions.Length);
             Vector3 randomDirection = directions[randomDirectionIndex];
@@ -124,6 +129,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
                 {
                     Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
                     Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f); // Red line for non-damageable objects
+                    StartCoroutine(SpawnTrail(initialPosition, endPosition));
                 }
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
@@ -131,14 +137,17 @@ public class EnemyShooter : MonoBehaviour, IShooter
                     IDamageble playerDamager = hit.collider.gameObject.GetComponent<IDamageble>();
                     playerDamager.TakeDamage(weaponData.DamageContainer);
                    Debug.DrawLine(initialPosition, hit.point, Color.green, 0.1f);
-                   
+                    StartCoroutine(SpawnTrail(initialPosition, hit.point));
+
                 }
             }
             else
             {
                 Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
-                Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);                       
-            }
+                Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
+                StartCoroutine(SpawnTrail(initialPosition, endPosition));
+            }           
+            
         }
         else if (fireTime <= 0f)
         {
@@ -149,7 +158,26 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     }
 
-    
+    private IEnumerator SpawnTrail(Vector3 initialPos, Vector3 targetPosition) // Use GameObject instead of TrailRenderer
+    {
+        // Get reference from instantiated object
+        TrailRenderer trail = GameObject.Instantiate(trailRenderer, initialPos, Quaternion.identity);
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        while (time < weaponData.RateOfFire * 3)
+        {
+            if (!trail) yield return null;
+
+            trail.transform.position = Vector3.Lerp(startPosition, targetPosition, time);
+            time += Time.deltaTime / trail.time;
+
+            yield return null;
+        }
+
+        // Destroy the trail object after its lifetime
+        Destroy(trail.gameObject, time);
+    }
 
     #endregion
 
