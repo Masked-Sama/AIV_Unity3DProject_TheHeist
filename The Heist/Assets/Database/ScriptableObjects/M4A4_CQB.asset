@@ -19,7 +19,7 @@ MonoBehaviour:
   rateOfFire: 0.8
   damageContainer:
     damageType: 0
-    damage: 2
+    damage: 30
     damageImpulse: {x: 0, y: 0, z: 0}
     freezeTime: 0
   randomDirection: 0
