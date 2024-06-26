@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour, IShooter
 {
+
     [SerializeField]
     private WeaponData weaponData;
 
@@ -53,7 +54,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
         boneWeapon = FindBone(allBones, "WeaponHand_R");
 
         GameObject instance = Instantiate(WeaponData.Prefab, boneWeapon.position, boneWeapon.rotation);
-
+        instance.layer = gameObject.layer;
         instance.transform.SetParent(boneWeapon);
       
     }
