@@ -36,5 +36,9 @@ public interface IEnemyMovement
     {
         get;
     }
-
+    bool IsStunned
+    {
+        get;
+        set;
+    }
 }

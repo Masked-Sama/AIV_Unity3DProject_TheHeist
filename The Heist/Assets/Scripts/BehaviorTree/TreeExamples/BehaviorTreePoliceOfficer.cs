@@ -11,6 +11,7 @@ public enum BehaviourState
     MOVING,
     SHOOTING,
     RELOADING,
+    STUNNED,
     END
     // Add other possible states as needed
 }
@@ -28,6 +29,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     private GameObject player;
 
     private bool isDead;
+    [SerializeField] private bool isStunned;
 
     //SerializeFields
     [SerializeField] bool canFollowThePlayer = true;
@@ -82,6 +84,10 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         var selector = new Selector("Idle||Follow");
 
+        Sequence stunned = new Sequence("Stunned");
+        stunned.AddChild(new Leaf("CanStun?", new Condition(() => CanStun())));
+        stunned.AddChild(new Leaf("Stunned", new Stunned(animator, ownerMovement), behaviorTree: tree));
+
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot, minDistanceToFollow)));
         Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, animator, ownerShooter), behaviorTree: tree));
@@ -90,6 +96,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
         Follow.AddChild(new Leaf("CanFollow?", new Condition(() => CanFollow())));
         Follow.AddChild(new Leaf("Follow", new FollowTarget(ownerMovement, player.transform, speed, animator, true), behaviorTree: tree));
 
+        selector.AddChild(stunned);
         selector.AddChild(Shoot);
         selector.AddChild(Follow);
        // selector.AddChild(new Leaf("Idle", new StayInIdle(ownerMovement), behaviorTree: tree));
@@ -116,6 +123,16 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
         return (distance > maxDistanceToShoot && distance >= minDistanceToFollow);
+    }
+
+    bool CanStun()
+    {
+        // return ownerMovement.IsStunned;
+        if (isStunned) return true;
+
+        if (tree.currentState == BehaviourState.STUNNED) animator.SetBool("Stunned", false);
+
+        return false;
     }
 
     public void EndAnimationReload(string empty)

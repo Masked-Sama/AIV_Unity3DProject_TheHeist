@@ -65,6 +65,11 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
         get;
         set;
     }
+    public bool IsStunned
+    {
+        get;
+        set;
+    }
     #endregion
 
     #region Unity_Game_Loop
