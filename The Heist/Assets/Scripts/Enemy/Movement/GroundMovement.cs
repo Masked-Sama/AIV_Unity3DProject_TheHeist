@@ -161,6 +161,7 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
     public void StopMovement()
     {
         navMesh.ResetPath();
+
     }
 
     public void Teleport(Vector3 position)

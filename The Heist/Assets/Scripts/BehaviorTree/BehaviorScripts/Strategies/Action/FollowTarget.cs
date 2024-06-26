@@ -9,7 +9,7 @@ public class FollowTarget : IStrategy
     private Vector3 target;
     private Transform targetTransform;
     private float speed;
-
+    private float scatterRadius = 4;
     private Animator animator;
 
     BehaviourState state = BehaviourState.MOVING;
@@ -43,11 +43,15 @@ public class FollowTarget : IStrategy
 
         //if (owner != null)
         // {
-        if(target != Vector3.zero)
+        if (target != Vector3.zero)
         {
-        owner.MoveToTarget(target, speed);            
-        } else owner.MoveToTarget(targetTransform.position, speed);
-
+            owner.MoveToTarget(target, speed);
+        }
+        else
+        {
+            Vector3 randomOffset = Random.insideUnitCircle * scatterRadius;
+            owner.MoveToTarget(targetTransform.position + randomOffset, speed);
+        }
         //if(animator) 
         animator.SetBool("CanShoot", false);
         currentState = state;

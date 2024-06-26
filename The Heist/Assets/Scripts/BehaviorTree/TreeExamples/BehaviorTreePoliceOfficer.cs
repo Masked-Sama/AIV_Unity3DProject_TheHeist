@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public enum BehaviourState
 {
@@ -31,11 +32,41 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     //SerializeFields
     [SerializeField] bool canFollowThePlayer = true;
     [SerializeField] float maxDistanceToShoot = 20;
+    [SerializeField] float minDistanceToFollow = 3f; // Adjust as needed
     [SerializeField] float speed = 5;
 
     private void Awake()
     {
-        maxDistanceToShoot = Random.Range(4f, 15f);
+        maxDistanceToShoot = Random.Range(8f, 16f);
+        // Get all MeshRenderer components
+        SkinnedMeshRenderer[] meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        // Filter meshes starting with "Character"
+        List<SkinnedMeshRenderer> characterMeshes = new List<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer meshRenderer in meshRenderers)
+        {
+            if (meshRenderer.name.StartsWith("Character"))
+            {
+                characterMeshes.Add(meshRenderer);
+            }
+        }
+
+        // Randomly select a mesh index
+        int randomIndex = Random.Range(0, characterMeshes.Count);
+
+        // Activate the randomly selected mesh
+        if (characterMeshes.Count > 0)
+        {
+            characterMeshes[randomIndex].enabled = true;
+        }
+        // Disable other meshes (optional)
+        foreach (SkinnedMeshRenderer meshRenderer in characterMeshes)
+        {
+            if (meshRenderer != characterMeshes[randomIndex])
+            {
+                meshRenderer.enabled = false;
+            }
+        }
     }
     void Start()
     {
@@ -52,7 +83,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
         var selector = new Selector("Idle||Follow");
 
         Sequence Shoot = new Sequence("ShootPlayer");
-        Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot)));
+        Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot, minDistanceToFollow)));
         Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, animator, ownerShooter), behaviorTree: tree));
 
         Sequence Follow = new Sequence("FollowPlayer");
@@ -75,14 +106,16 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
         {
         tree.Process();
         }
+        
         //Debug.Log(tree.CurrentState.ToString());
     }
 
     bool CanFollow()
     {
         if (tree.currentState == BehaviourState.RELOADING || tree.currentState == BehaviourState.IDLE) return false;
-                
-        return true;
+
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return (distance > maxDistanceToShoot && distance >= minDistanceToFollow);
     }
 
     public void EndAnimationReload(string empty)
@@ -94,5 +127,6 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     {
         isDead = true;
         waveMenager.EnemyDied();
+        ownerMovement.StopMovement();
     }
 }
