@@ -114,7 +114,7 @@ namespace Player
         private bool CanShoot()
         {
             return !isPrevented
-                && currentAmmoInMagazine>0
+                && currentAmmoInMagazine > 0
                 && canShoot
                 && isAiming;
         }
@@ -204,8 +204,8 @@ namespace Player
             if (currentAmmoInMagazine > 0 || reloadTimer > 0f) return;
             canShoot = false;
             ReloadCurrentAmmo();
-            if(currentAmmoInMagazine > 0)
-            reloadTimer = currentWeaponData.ReloadTime;
+            if (currentAmmoInMagazine > 0)
+                reloadTimer = currentWeaponData.ReloadTime;
         }
 
         public bool Shoot(Vector3 initialPosition, Vector3 finalPosition, ShootType currentShootType)
@@ -213,7 +213,7 @@ namespace Player
             canShoot = false;
             fireTime = currentWeaponData.RateOfFire;
             currentAmmoInMagazine--;
-            
+
             //To change when shotgun logic is implemented
             GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(currentWeaponData.Prefab, 1));
             playerController.Inventory.InventorySlots[currentWeaponIndex].AddAmount(-1);
@@ -221,16 +221,16 @@ namespace Player
             switch (currentShootType)
             {
                 case ShootType.Single:
-                    if (hasShot) return true;
-                    ComputeShootRange(initialPosition, finalPosition);
-                    break;
+                if (hasShot) return true;
+                ComputeShootRange(initialPosition, finalPosition);
+                break;
                 case ShootType.Multiple:
-                    hasMultiShot = true;
-                    ComputeShootRange(initialPosition, finalPosition);
-                    break;
+                hasMultiShot = true;
+                ComputeShootRange(initialPosition, finalPosition);
+                break;
                 case ShootType.Shotgun:
-                    // To do
-                    break;
+                // To do
+                break;
                 default: return true;
             }
             return true;

@@ -31,7 +31,7 @@ public class HealthUI : VisualElement
     private float currentHealth;
     private float maxHealth;
 
-    public float CurrentHealth { get { return currentHealth; }set { currentHealth = value; SetHealthUI();} }
+    public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; SetHealthUI();} }
     public float MaxHealth { get { return currentHealth; } set { maxHealth = value; } }
 
     public HealthUI()

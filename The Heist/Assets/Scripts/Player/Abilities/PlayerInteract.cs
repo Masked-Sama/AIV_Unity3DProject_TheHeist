@@ -54,7 +54,7 @@ namespace Player
         private void Update()
         {
             if (isPrevented) return;
-                DetectItem();
+            DetectItem();
 
         }
 
@@ -86,16 +86,16 @@ namespace Player
             Debug.Log("Found");
             canInteract = true;
             string message;
-            if (itemComponent== null)
+            if (itemComponent == null)
             {
                 message = "E\nStart Mission";
-                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message,Color.yellow,24));                
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message, Color.yellow, 24));
                 return;
             }
             if (itemDetected.CompareTag(sellingWeaponTag))
             {
                 message = $"E\nBuy {itemComponent.ItemData.ItemName} - Cost: {itemComponent.ItemData.Cost}";
-                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI,GlobalEventArgsFactory.ShowStringInUIFactory(message,Color.green, 18));
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message, Color.green, 18));
                 return;
             }
             else
@@ -104,7 +104,7 @@ namespace Player
                 GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message, Color.green, 18));
                 return;
             }
-            
+
         }
 
         private void ItemUndetected()
@@ -129,7 +129,7 @@ namespace Player
             if (itemComponent == null) return;
 
 
-            ItemData pickUpItem=null;
+            ItemData pickUpItem = null;
             switch (itemComponent.ItemData.ItemType)
             {
                 case ItemType.FirstWeapon:
@@ -139,7 +139,7 @@ namespace Player
                     pickUpItem = (SecondWeaponData)itemComponent.ItemData;
                     break;
                 case ItemType.ThrowableWeapon:
-                    pickUpItem = (ThrowableData)itemComponent.ItemData;                    
+                    pickUpItem = (ThrowableData)itemComponent.ItemData;
                     break;
                 case ItemType.Consumable:
                     pickUpItem = (ConsumableData)itemComponent.ItemData;
@@ -149,8 +149,8 @@ namespace Player
             }
             playerController.OnPickUpItem?.Invoke(pickUpItem);
 
-            if(pickUpItem is IInventoried)
-            {             
+            if (pickUpItem is IInventoried)
+            {
                 GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
                 playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
             }
@@ -172,7 +172,7 @@ namespace Player
             {
                 itemDetected.SetActive(false);
             }
-                
+
         }
 
         /*

@@ -18,7 +18,7 @@ public class InventoryData : ScriptableObject
 
     public void AddItem(ItemData item, int amount)
     {
-        
+
         if (inventoryObjects[(int)item.ItemType].ItemData == item)
         {
             inventoryObjects[(int)item.ItemType].AddAmount(amount);
@@ -28,16 +28,16 @@ public class InventoryData : ScriptableObject
         switch (item.ItemType)
         {
             case ItemType.FirstWeapon:
-                ChangeItem(item, amount, ((int)SlotType.FirstWeapon));
-                break;
+            ChangeItem(item, amount, ((int)SlotType.FirstWeapon));
+            break;
             case ItemType.SecondWeapon:
-                ChangeItem(item, amount, ((int)SlotType.SecondWeapon));
-                break;
+            ChangeItem(item, amount, ((int)SlotType.SecondWeapon));
+            break;
             case ItemType.ThrowableWeapon:
-                ChangeItem(item, amount, ((int)SlotType.ThrowableWeapon));
-                break;
+            ChangeItem(item, amount, ((int)SlotType.ThrowableWeapon));
+            break;
             default:
-                return;
+            return;
         }
 
     }
@@ -57,8 +57,11 @@ public class InventoryData : ScriptableObject
     {
         for (int i = 0; i < inventoryObjects.Length; i++)
         {
-            if(inventoryObjects[i].ItemData == item)
+            if (inventoryObjects[i].ItemData.GetType() == item.GetType())
+            {
                 return i;
+            }
+
         }
         return -1;
     }
