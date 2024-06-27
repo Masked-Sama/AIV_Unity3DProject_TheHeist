@@ -105,7 +105,7 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
     {
         StopMovement();
         myCollider.enabled = false;
-        //WaveMenager.Get();
+        
         animator.SetTrigger("Dead");
     }
 
@@ -166,6 +166,7 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
     public void StopMovement()
     {
         navMesh.ResetPath();
+        navMesh.isStopped = true;
 
     }
 

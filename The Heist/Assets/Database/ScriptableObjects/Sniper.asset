@@ -15,8 +15,8 @@ MonoBehaviour:
   itemName: Sniper
   prefab: {fileID: 146790, guid: 2c618085f7f86ff4ca275f4d230df2c5, type: 3}
   cost: 50
-  maxAmmoForMagazine: 1
-  rateOfFire: 2.5
+  maxAmmoForMagazine: 5
+  rateOfFire: 1
   damageContainer:
     damageType: 0
     damage: 100
@@ -25,5 +25,5 @@ MonoBehaviour:
   randomDirection: 0
   typeOfShoot: 0
   reloadTime: 5
-  range: 1000
+  range: 20
   texture: {fileID: 2800000, guid: 019287451b017194a86b396c06208d64, type: 3}

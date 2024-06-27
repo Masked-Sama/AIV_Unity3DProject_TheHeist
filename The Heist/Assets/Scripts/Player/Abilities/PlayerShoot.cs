@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,8 @@ namespace Player
         #region Variables
         [SerializeField]
         private Transform socketShoot;
+        [SerializeField]
+        private TrailRenderer trailRenderer;
 
         private WeaponData currentWeaponData;
         private int currentWeaponIndex;
@@ -150,7 +153,7 @@ namespace Player
                         ? currentWeaponData.MaxAmmoForMagazine : playerController.Inventory.InventorySlots[currentWeaponIndex].Amount;
         }
 
-
+        
         private void ComputeShootRange(Vector3 initialPosition, Vector3 finalPosition)
         {
             Vector3 contactPoint = Vector3.zero;
@@ -160,6 +163,7 @@ namespace Player
             {
                 contactPoint = hit.point;
                 Debug.DrawLine(socketShoot.position, contactPoint, Color.red, .1f); // SARA' QUESTA LA DIRECTION DEL BULLET!
+                StartCoroutine(SpawnTrail(socketShoot.position, contactPoint));
 
                 IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
                 if (damageble == null) return;
@@ -169,8 +173,29 @@ namespace Player
             {
                 contactPoint = finalPosition;
                 Debug.DrawLine(socketShoot.position, finalPosition, Color.red, .1f);
+                StartCoroutine(SpawnTrail(socketShoot.position, finalPosition));
             }
 
+        }
+        private IEnumerator SpawnTrail(Vector3 initialPos, Vector3 targetPosition) // Use GameObject instead of TrailRenderer
+        {
+            // Get reference from instantiated object
+            TrailRenderer trail = GameObject.Instantiate(trailRenderer, initialPos, Quaternion.identity);
+            float time = 0;
+            Vector3 startPosition = trail.transform.position;
+
+            while (time < 0.8)
+            {
+                if (!trail) yield return null;
+
+                trail.transform.position = Vector3.Lerp(startPosition, targetPosition, time);
+                time += Time.deltaTime / trail.time;
+
+                yield return null;
+            }
+
+            // Destroy the trail object after its lifetime
+            Destroy(trail.gameObject, time);
         }
         #endregion
 

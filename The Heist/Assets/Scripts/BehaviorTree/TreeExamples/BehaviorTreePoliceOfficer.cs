@@ -36,6 +36,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
     [SerializeField] float maxDistanceToShoot = 20;
     [SerializeField] float minDistanceToFollow = 3f; // Adjust as needed
     [SerializeField] float speed = 5;
+    [SerializeField] Transform gunTransform;
 
     private void Awake()
     {
@@ -90,7 +91,7 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
         Sequence Shoot = new Sequence("ShootPlayer");
         Shoot.AddChild(new Leaf("CanShoot?", new CanShootTheTarget(transform, player.transform, maxDistanceToShoot, minDistanceToFollow)));
-        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, animator, ownerShooter), behaviorTree: tree));
+        Shoot.AddChild(new Leaf("Shoot", new ShootTheTarget(ownerMovement, player.transform, gunTransform, animator, ownerShooter), behaviorTree: tree));
 
         Sequence Follow = new Sequence("FollowPlayer");
         Follow.AddChild(new Leaf("CanFollow?", new Condition(() => CanFollow())));
@@ -142,8 +143,9 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
 
     public void onDeath(string empty)
     {
+        if(isDead) return;
         isDead = true;
         waveMenager.EnemyDied();
-        ownerMovement.StopMovement();
+        ownerMovement.Die();
     }
 }

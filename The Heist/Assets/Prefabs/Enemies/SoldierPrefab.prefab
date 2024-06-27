@@ -168,10 +168,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1428ac41f7f6ca43a386fa0bb8f1c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStunned: 0
   canFollowThePlayer: 1
   maxDistanceToShoot: 20
   minDistanceToFollow: 3
   speed: 5
+  gunTransform: {fileID: 1009122002596146558}
 --- !u!195 &2183756744949783040
 NavMeshAgent:
   m_ObjectHideFlags: 0
