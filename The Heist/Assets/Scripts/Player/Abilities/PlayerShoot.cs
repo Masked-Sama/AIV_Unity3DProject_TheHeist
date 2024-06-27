@@ -5,8 +5,6 @@ namespace Player
 {
     public class PlayerShoot : PlayerAbilityBase, IShooter
     {
-        private const string aimStringParameter = "Aim";
-
         #region Variables
         [SerializeField]
         private Transform socketShoot;
@@ -20,7 +18,6 @@ namespace Player
         private float fireTime;
 
         private bool canShoot = true;
-        private bool isAiming = false;
 
         private bool hasShot = false;
         private bool hasMultiShot = false;
@@ -32,8 +29,6 @@ namespace Player
         {
             InputManager.Player.Shoot.performed += OnShootPerformed;
             InputManager.Player.Shoot.canceled += OnShootCanceled;
-            InputManager.Player.Aim.performed += OnAimPerformed;
-            InputManager.Player.Aim.canceled += OnAimCanceled;
             playerController.OnChangeWeapon += ChangeWeapon;
             playerController.OnPickUpItem += PickUpWeapon;
         }
@@ -42,8 +37,6 @@ namespace Player
         {
             InputManager.Player.Shoot.performed -= OnShootPerformed;
             InputManager.Player.Shoot.canceled -= OnShootCanceled;
-            InputManager.Player.Aim.performed -= OnAimPerformed;
-            InputManager.Player.Aim.canceled -= OnAimCanceled;
             playerController.OnChangeWeapon -= ChangeWeapon;
             playerController.OnPickUpItem -= PickUpWeapon;
         }
@@ -93,18 +86,6 @@ namespace Player
             }
         }
 
-        private void OnAimPerformed(InputAction.CallbackContext context)
-        {
-            isAiming = true;
-            playerVisual.SetAnimatorParameter(aimStringParameter, isAiming);
-        }
-
-        private void OnAimCanceled(InputAction.CallbackContext context)
-        {
-            isAiming = false;
-            playerVisual.SetAnimatorParameter(aimStringParameter, isAiming);
-        }
-
         private void OnShootCanceled(InputAction.CallbackContext context)
         {
             hasShot = false;
@@ -116,7 +97,7 @@ namespace Player
             return !isPrevented
                 && currentAmmoInMagazine > 0
                 && canShoot
-                && isAiming;
+                && playerController.IsAiming;
         }
 
         private void ChangeWeapon(WeaponData newWeapon)
@@ -170,7 +151,6 @@ namespace Player
                 contactPoint = finalPosition;
                 Debug.DrawLine(socketShoot.position, finalPosition, Color.red, .1f);
             }
-
         }
         #endregion
 
@@ -192,10 +172,7 @@ namespace Player
             isPrevented = false;
         }
 
-        public override void StopAbility()
-        {
-
-        }
+        public override void StopAbility() { }
         #endregion
 
         #region IShooter
@@ -221,18 +198,19 @@ namespace Player
             switch (currentShootType)
             {
                 case ShootType.Single:
-                if (hasShot) return true;
-                ComputeShootRange(initialPosition, finalPosition);
-                break;
+                    if (hasShot) return true;
+                    ComputeShootRange(initialPosition, finalPosition);
+                    break;
                 case ShootType.Multiple:
-                hasMultiShot = true;
-                ComputeShootRange(initialPosition, finalPosition);
-                break;
+                    hasMultiShot = true;
+                    ComputeShootRange(initialPosition, finalPosition);
+                    break;
                 case ShootType.Shotgun:
-                // To do
-                break;
+                    // To do
+                    break;
                 default: return true;
             }
+
             return true;
         }
         #endregion

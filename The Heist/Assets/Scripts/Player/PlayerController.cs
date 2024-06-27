@@ -41,6 +41,7 @@ namespace Player
 
         public Action OnWalkStarted;
         public Action OnWalkEnded;
+
         public Action OnRunStarted;
         public Action OnRunEnded;
         #endregion
@@ -86,17 +87,16 @@ namespace Player
         public InventoryData Inventory { get { return inventory; } }
         #endregion
 
-        #region PlayerShoot + Aim
+        #region PlayerAim + PlayerShoot
         public bool IsAiming { get; set; }
         #endregion
 
         #region PlayerChangeWeapon
-        public Action<WeaponData> OnChangeWeapon;        
+        public Action<WeaponData> OnChangeWeapon;
         #endregion
 
         #region PlayerCurrency
         public Func<int, bool> OnTryToBuyItem;
-
         #endregion
 
         #region Mono
@@ -140,7 +140,7 @@ namespace Player
 
         private void FixedUpdate()
         {
-            playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));            
+            playerVisual.SetAnimatorParameter(currentSpeedParameter, GetDistanceSquared(velocityX: playerRigidbody.velocity.x, velocityZ: playerRigidbody.velocity.z));
         }
         #endregion
 
@@ -208,7 +208,7 @@ namespace Player
 
         private void HealthUpdate(ItemData item)
         {
-            if(!(item is ConsumableData)) return;
+            if (!(item is ConsumableData)) return;
             ConsumableData medikit = (ConsumableData)item;
             healthModule.IncreaseHealth(medikit.HP);
             NotifyHealthUpdatedGlobal();

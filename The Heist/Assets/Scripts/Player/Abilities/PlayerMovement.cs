@@ -38,8 +38,6 @@ namespace Player
             runAction = InputManager.Player.Run;
             runAction.performed += OnRunActionPerformed;
             runAction.canceled += OnRunActionCanceled;
-
-            
         }
 
         private void OnDisable()
@@ -135,8 +133,8 @@ namespace Player
             bool isWalking = (lengthSquared > moveThreshold * moveThreshold) && !isRunning;
 
             if (isWalking && !wasWalking) playerController.OnWalkStarted?.Invoke();
-            if (isRunning && !wasRunning) playerController.OnRunStarted?.Invoke();
-            if (wasRunning && !isRunning) playerController.OnRunEnded?.Invoke();
+            if (isRunning && !wasRunning) { playerController.OnRunStarted?.Invoke(); }
+            if (wasRunning && !isRunning) { playerController.OnRunEnded?.Invoke(); }
             if (wasWalking && !isWalking) playerController.OnWalkEnded?.Invoke();
 
             wasWalking = isWalking;
