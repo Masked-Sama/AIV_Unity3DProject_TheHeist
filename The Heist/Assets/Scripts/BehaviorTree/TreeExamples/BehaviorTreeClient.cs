@@ -65,7 +65,7 @@ public class BehaviorTreeClient : MonoBehaviour
     //DA INSERIRE IN SINGOLE CLASSI PER RIUTILIZZARLE
     bool IsPlayerDistance()
     {
-        return (transform.position - player.transform.position).sqrMagnitude < maxDistanceToEscape * 2;
+        return (transform.position - player.transform.position).sqrMagnitude < maxDistanceToEscape * 2; //Da correggere!!!
     }
     void MoveToPosition()
     {

@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-using static Codice.Client.Common.Connection.AskCredentialsToUser;
-using UnityEditor.UIElements;
 
 namespace Player
 {
@@ -10,18 +7,15 @@ namespace Player
     {
         private const string sellingWeaponTag = "SellingWeapon";
 
-        [SerializeField] private Transform cameraPosition;
-        [SerializeField] private float distance;
-
-        [SerializeField] private GameObject textUI;
-        [SerializeField] private LayerMask layerMask;
-        [SerializeField] private LayerMask wallMask;
-        [SerializeField] private InventoryObject playerInventory;
+        [SerializeField]
+        private float distance;
+        [SerializeField]
+        private LayerMask layerMask;
+        [SerializeField]
+        private LayerMask wallMask;
 
         private GameObject itemDetected;
-
-        //private Action onItemDetected;
-        //private Action onItemUndetected;
+        private Item itemComponent;
         private RaycastHit hit;
         private bool canInteract = false;
 
@@ -59,7 +53,9 @@ namespace Player
 
         private void Update()
         {
-            DetectItem();
+            if (isPrevented) return;
+                DetectItem();
+
         }
 
         #endregion
@@ -67,105 +63,119 @@ namespace Player
         private void DetectItem()
         {
             bool wasInteract = canInteract;
-
-            //canInteract = Physics.SphereCast(transform.position, radius, cameraPosition.forward, out hit, distance)
-            //        && (1 << hit.collider.gameObject.layer) == layerMask.value
-            //        && !Physics.CheckSphere(transform.position, radius, wallMask.value);
-
-            canInteract = Physics.Raycast(cameraPosition.position, cameraPosition.forward, out hit, distance)
-                          && (1 << hit.collider.gameObject.layer) == layerMask.value
-                          && (1 << hit.collider.gameObject.layer) != wallMask.value;
+            canInteract = Physics.Raycast(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward, out hit, distance)
+                        && (1 << hit.collider.gameObject.layer) == layerMask.value
+                        && (1 << hit.collider.gameObject.layer) != wallMask.value;
 
             if (wasInteract == canInteract) return;
             if (canInteract)
             {
                 itemDetected = hit.collider.gameObject;
+                itemComponent = itemDetected.GetComponent<Item>();
                 playerController.OnItemDetected?.Invoke();
             }
             else
             {
+                itemComponent = null;
                 playerController.OnItemUndetected?.Invoke();
             }
         }
 
         private void ItemDetected()
         {
-            if (itemDetected.GetComponent<Item>() != null)
-                textUI.GetComponent<UnityEngine.UI.Text>().text =
-                    $"{itemDetected.GetComponent<Item>().ItemData.ItemName} - Cost: {itemDetected.GetComponent<Item>().ItemData.Cost}"; //DA CAMBIARE ASSOLUTAMENTE
-            else {
-                textUI.GetComponent<UnityEngine.UI.Text>().text = "Press E to Interact";
-            }
-
-            textUI.SetActive(true);
+            Debug.Log("Found");
             canInteract = true;
+            string message;
+            if (itemComponent== null)
+            {
+                message = "E\nStart Mission";
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message,Color.yellow,24));                
+                return;
+            }
+            if (itemDetected.CompareTag(sellingWeaponTag))
+            {
+                message = $"E\nBuy {itemComponent.ItemData.ItemName} - Cost: {itemComponent.ItemData.Cost}";
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI,GlobalEventArgsFactory.ShowStringInUIFactory(message,Color.green, 18));
+                return;
+            }
+            else
+            {
+                message = $"E\nPick up {itemComponent.ItemData.ItemName} - Quantity: {itemComponent.Quantity}";
+                GlobalEventManager.CastEvent(GlobalEventIndex.ShowStringInUI, GlobalEventArgsFactory.ShowStringInUIFactory(message, Color.green, 18));
+                return;
+            }
+            
         }
 
         private void ItemUndetected()
         {
-            textUI.SetActive(false);
+            GlobalEventManager.CastEvent(GlobalEventIndex.HideStringInUI, GlobalEventArgsFactory.HideStringInUIFactory());
             canInteract = false;
         }
 
         private void OnInteractPerform(InputAction.CallbackContext context)
         {
             if (!canInteract) return;
+
+            #region Case: ChangeScene
             ChangeScene sceneRef = itemDetected.GetComponent<ChangeScene>();
             if (sceneRef != null)
             {
                 sceneRef.ChangeSceneStarter = true;
                 return;
             }
-            Item itemComponent = itemDetected.GetComponent<Item>();
+            #endregion
+            itemComponent = itemDetected.GetComponent<Item>();
             if (itemComponent == null) return;
+
+
+            ItemData pickUpItem=null;
+            switch (itemComponent.ItemData.ItemType)
+            {
+                case ItemType.FirstWeapon:
+                    pickUpItem = (FirstWeaponData)itemComponent.ItemData;
+                    break;
+                case ItemType.SecondWeapon:
+                    pickUpItem = (SecondWeaponData)itemComponent.ItemData;
+                    break;
+                case ItemType.ThrowableWeapon:
+                    pickUpItem = (ThrowableData)itemComponent.ItemData;                    
+                    break;
+                case ItemType.Consumable:
+                    pickUpItem = (ConsumableData)itemComponent.ItemData;
+                    break;
+                default:
+                    return;
+            }
+            playerController.OnPickUpItem?.Invoke(pickUpItem);
+
+            if(pickUpItem is IInventoried)
+            {             
+                GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory, GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
+                playerController.Inventory.AddItem(itemComponent.ItemData, itemComponent.Quantity);
+            }
 
             if (itemDetected.CompareTag(sellingWeaponTag))
             {
                 if (playerController.OnTryToBuyItem == null) return;
                 if (playerController.OnTryToBuyItem.Invoke(itemComponent.ItemData.Cost))
                 {
-                    Debug.Log("C'ho li sordi");
                     GlobalEventManager.CastEvent(GlobalEventIndex.BuyItem,
                         GlobalEventArgsFactory.BuyItemFactory(itemDetected));
                 }
                 else
                 {
-                    Debug.Log("Non c'ho li sordi");
                     return;
                 }
             }
-
-            WeaponData weapon;
-            switch (itemComponent.ItemData.ItemType)
+            else
             {
-                case ItemType.FirstWeapon:
-                    weapon = (FirstWeaponData)itemComponent.ItemData;
-                    playerController.OnChangeWeapon?.Invoke(weapon);
-                    break;
-                case ItemType.SecondWeapon:
-                    weapon = (SecondWeaponData)itemComponent.ItemData;
-                    playerController.OnChangeWeapon?.Invoke(weapon);
-                    break;
-                case ItemType.ThrowableWeapon:
-                    ThrowableData throwable = (ThrowableData)itemComponent.ItemData;
-                    break;
-                case ItemType.Consumable:
-                    //  TODO
-                    break;
-                default:
-                    return;
-            }
-
-            GlobalEventManager.CastEvent(GlobalEventIndex.AddItemToInventory,
-                GlobalEventArgsFactory.AddItemToInventoryFactory(itemDetected));
-            playerInventory.AddItem(itemComponent.ItemData, itemComponent.Quantity, true);
-
-
-            if (!itemDetected.CompareTag(sellingWeaponTag))
                 itemDetected.SetActive(false);
+            }
+                
         }
 
-
+        /*
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -173,25 +183,8 @@ namespace Player
             //Gizmos.DrawWireSphere(pos, radius);
             //Gizmos.DrawWireSphere(pos + cameraPosition.forward * distance, radius);
 
-            Gizmos.DrawRay(cameraPosition.position, cameraPosition.forward * distance);
+            Gizmos.DrawRay(playerController.CameraPositionTransform.position, playerController.CameraPositionTransform.forward * distance);
         }
+        */
     }
 }
-
-
-/*
-private void OnTriggerEnter(Collider other)
-{
-    if (myCollider == null) return;
-    if ((1<< other.gameObject.layer) != layerMask.value) return;
-    otherObjs.Add(other);
-    textUI.SetActive(true);
-}
-
-private void OnTriggerExit(Collider other)
-{
-    otherObjs.Remove(other);
-    if (!IsEmptyItemList()) return;
-    textUI.SetActive(false);
-}
-*/

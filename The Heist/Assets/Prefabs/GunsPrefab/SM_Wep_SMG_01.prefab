@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 425722}
   - component: {fileID: 3307970}
   - component: {fileID: 2355962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_SMG_Mag_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2324126}
   - component: {fileID: 64313593194440506}
   - component: {fileID: 3199188764565173398}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_SMG_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 11400000, guid: 098dfc6ff0343584ebc5724260849f72, type: 2}
+  itemData: {fileID: 11400000, guid: 098dfc6ff0343584ebc5724260849f72, type: 2}
   quantity: 20
 --- !u!1 &128004
 GameObject:
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 434260}
   - component: {fileID: 3346248}
   - component: {fileID: 2320876}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_SMG_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 486702}
   - component: {fileID: 3396778}
   - component: {fileID: 2389632}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_SMG_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

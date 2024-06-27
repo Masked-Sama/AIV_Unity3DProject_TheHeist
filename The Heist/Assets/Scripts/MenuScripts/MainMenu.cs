@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync("LobbyScene");
+        SceneManager.LoadScene("LobbyScene");
     }
 
     public void QuitGame()

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolKey: Soldier
   prefab: {fileID: 153790681395809924, guid: 6e3a066c65134bd4ab029da80bc6bb06, type: 3}
-  poolNumber: 20
+  poolNumber: 5
   resizablePool: 0

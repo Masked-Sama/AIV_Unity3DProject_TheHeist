@@ -14,8 +14,8 @@ public class ChangeScene : MonoBehaviour
 {
     [SerializeField]
     private Scenes scene = new Scenes();
-    [SerializeField]
-    private bool changeSceneStarter;
+
+    private bool changeSceneStarter = false;
     
     private Coroutine changeSceneCoroutine;
     private string sceneToLoad;
@@ -30,17 +30,13 @@ public class ChangeScene : MonoBehaviour
                 if (changeSceneCoroutine != null) return;
                 ChooseScene(scene);
                 if (sceneToLoad == null) return;
-                changeSceneCoroutine = StartCoroutine(ChangeSceneCoroutine());
+                //changeSceneCoroutine = StartCoroutine(ChangeSceneCoroutine());
+                SceneManager.LoadScene(sceneToLoad);
             }
            
         }
     }
 
-    private void Awake()
-    {
-        changeSceneStarter = false;
-    }
-    
     private void ChooseScene(Scenes choosedScene)
     {
         switch (choosedScene)
@@ -51,10 +47,14 @@ public class ChangeScene : MonoBehaviour
                 break;
         }
     }
-    private IEnumerator ChangeSceneCoroutine () {
-        var loadScene = SceneManager.LoadSceneAsync(sceneToLoad);
-        while (!loadScene.isDone) {
-            yield return new WaitForEndOfFrame();
-        }
-    }
+
+    //private IEnumerator ChangeSceneCoroutine()
+    //{
+    //    var loadScene = SceneManager.LoadSceneAsync(sceneToLoad);
+    //    while (!loadScene.isDone)
+    //    {
+    //        yield return new WaitForEndOfFrame();
+    //    }
+
+    //}
 }

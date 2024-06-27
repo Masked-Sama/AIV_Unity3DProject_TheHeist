@@ -25,9 +25,9 @@ public class Crouch : IStrategy
 
         currentState = state;
         if (owner != null) owner.StopMovement();
-        animator.SetTrigger("Crouch");
         animator.SetBool("CanShoot", false);
-        Debug.Log("Stay in Idle"); 
+        animator.SetTrigger("Crouch");
+
 
         return Node.Status.Success;
     }

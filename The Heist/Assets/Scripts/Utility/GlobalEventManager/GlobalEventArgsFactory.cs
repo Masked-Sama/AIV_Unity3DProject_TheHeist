@@ -19,6 +19,10 @@ public static class GlobalEventArgsFactory {
         methodDebugString.Add(GlobalEventIndex.PlayerEnergyUpdated, new EventDebug(PlayerEnergyUpdatedDebug));
         methodDebugString.Add(GlobalEventIndex.AddItemToInventory, new EventDebug(AddItemToInventoryDebug));
         methodDebugString.Add(GlobalEventIndex.BuyItem, new EventDebug(BuyItemDebug));
+        methodDebugString.Add(GlobalEventIndex.Shoot, new EventDebug(ShootDebug));
+        methodDebugString.Add(GlobalEventIndex.ShowStringInUI, new EventDebug(ShowStringInUIDebug));
+        methodDebugString.Add(GlobalEventIndex.HideStringInUI, new EventDebug(HideStringInUIDebug));
+
     }
 
     public static string GetDebugString(GlobalEventIndex eventType, GlobalEventArgs message) {
@@ -194,6 +198,63 @@ public static class GlobalEventArgsFactory {
     {
         return " BuyItemDebug: " + (GameObject)message.args[0].GetValue();
     }
-
     #endregion
+
+    #region Shoot
+    public static GlobalEventArgs ShootFactory(GameObject weapon,int bulletAmount)
+    {
+        GlobalEventArgs message = new GlobalEventArgs();
+        message.args = new ExtendedVariable[2];
+        message.args[0] = new ExtendedVariable("WeaponValue", ExtendedVariableType.GameObject, weapon);
+        message.args[1] = new ExtendedVariable("BulletNumberValue", ExtendedVariableType.Int,bulletAmount);
+        return message;
+    }
+    public static void ShootParser(GlobalEventArgs message, out GameObject weapon ,out int bulletAmount)
+    {
+        weapon = (GameObject)message.args[0].GetValue();
+        bulletAmount = (int)message.args[1].GetValue();
+    }
+    public static string ShootDebug(GlobalEventArgs message)
+    {
+        return " ShootDebug: Weapon " + (GameObject)message.args[0].GetValue() +" - BulletsNumber " + (int)message.args[1].GetValue();
+    }
+    #endregion
+
+    #region ShowStringInUI
+    public static GlobalEventArgs ShowStringInUIFactory(string stringToShow, Color color, uint fontSize = 18)
+    {
+        GlobalEventArgs message = new GlobalEventArgs();
+        message.args = new ExtendedVariable[3];
+        message.args[0] = new ExtendedVariable("StringToShow", ExtendedVariableType.String,stringToShow);
+        message.args[1] = new ExtendedVariable("Color", ExtendedVariableType.Color, color);
+        message.args[2] = new ExtendedVariable("FontSize", ExtendedVariableType.UInt,fontSize);
+        return message;
+    }
+    public static void ShowStringInUIParser(GlobalEventArgs message,out string stringToShow,out Color color,out uint fontSize)
+    {
+        stringToShow = (string)message.args[0].GetValue();
+        color = (Color)message.args[1].GetValue();
+        fontSize = (uint)message.args[2].GetValue();
+    }
+    public static string ShowStringInUIDebug(GlobalEventArgs message)
+    {
+        return " ShowStringInUIDebug: String " + (string)message.args[0].GetValue();
+    }
+    #endregion
+
+    #region HideStringInUI
+    public static GlobalEventArgs HideStringInUIFactory()
+    {
+        GlobalEventArgs message = new GlobalEventArgs();
+        return message;
+    }
+    public static void HideStringInUIParser()
+    {
+    }
+    public static string HideStringInUIDebug(GlobalEventArgs message)
+    {
+        return " HideStringInUIDebug";
+    }
+    #endregion
+
 }

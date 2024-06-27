@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
@@ -12,6 +11,8 @@ public class EnemyComponent : MonoBehaviour, IDamageble
 
     [SerializeField]
     private EnemyMovementType movementType;
+
+ 
 
     [SerializeField]
     private EnemyShooter shooterComponent;
@@ -47,7 +48,15 @@ public class EnemyComponent : MonoBehaviour, IDamageble
         if(healthModule.IsDead)
         {
             movementComponent.Die();
+            Rigidbody b = gameObject.GetComponent<Rigidbody>();
+            b.useGravity = false;
+            foreach (var e in gameObject.GetComponents<Collider>())
+            {
+                e.enabled = false;
+            }
+
         }
+
     }
 
 

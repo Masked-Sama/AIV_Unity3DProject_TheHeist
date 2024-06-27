@@ -1,211 +1,299 @@
-using Player;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerShoot : PlayerAbilityBase, IShooter
+namespace Player
 {
-    private const string aimStringParameter = "Aim";
-
-    #region Variables
-    [SerializeField]
-    private Transform socketShoot;
-
-    private WeaponData currentWeaponData;
-    private int currentAmmo;
-
-    private float reloadTimer=0.0f;
-    private float fireTime;
-
-    private bool canShoot = true;
-    private bool isAiming = false;
-    private bool hasShot = false;
-
-    private bool hasMultiShot = false;
-    #endregion
-
-    #region Mono
-    private void OnEnable()
+    public class PlayerShoot : PlayerAbilityBase, IShooter
     {
-        InputManager.Player.Shoot.performed += OnShootPerformed;
-        InputManager.Player.Shoot.canceled += OnShootCanceled;
-        InputManager.Player.Aim.performed += OnAimPerformed;
-        InputManager.Player.Aim.canceled += OnAimCanceled;
-        playerController.OnChangeWeapon += ChangeWeapon;
-    }
+        private const string aimStringParameter = "Aim";
 
-    private void OnDisable()
-    {
-        InputManager.Player.Shoot.performed -= OnShootPerformed;
-        InputManager.Player.Shoot.canceled -= OnShootCanceled;
-        InputManager.Player.Aim.performed -= OnAimPerformed;
-        InputManager.Player.Aim.canceled -= OnAimCanceled;
-        playerController.OnChangeWeapon -= ChangeWeapon;
-    }
+        #region Variables
+        [SerializeField]
+        private Transform socketShoot;
+        [SerializeField]
+        private TrailRenderer trailRenderer;
 
-    private void FixedUpdate()
-    {
-        if (reloadTimer > 0f)
+        private WeaponData currentWeaponData;
+        private int currentWeaponIndex;
+
+        private int currentAmmoInMagazine;
+
+        private float reloadTimer = 0.0f;
+        private float fireTime;
+
+        private bool canShoot = true;
+        private bool isAiming = false;
+
+        private bool hasShot = false;
+        private bool hasMultiShot = false;
+        private GameObject weaponVisual;
+        #endregion
+
+        #region Mono
+        private void OnEnable()
         {
-            reloadTimer -= Time.fixedDeltaTime;
+            InputManager.Player.Shoot.performed += OnShootPerformed;
+            InputManager.Player.Shoot.canceled += OnShootCanceled;
+            InputManager.Player.Aim.performed += OnAimPerformed;
+            InputManager.Player.Aim.canceled += OnAimCanceled;
+            playerController.OnChangeWeapon += ChangeWeapon;
+            playerController.OnPickUpItem += PickUpWeapon;
+        }
 
-            if (reloadTimer <= 0f)
+        private void OnDisable()
+        {
+            InputManager.Player.Shoot.performed -= OnShootPerformed;
+            InputManager.Player.Shoot.canceled -= OnShootCanceled;
+            InputManager.Player.Aim.performed -= OnAimPerformed;
+            InputManager.Player.Aim.canceled -= OnAimCanceled;
+            playerController.OnChangeWeapon -= ChangeWeapon;
+            playerController.OnPickUpItem -= PickUpWeapon;
+        }
+
+        private void FixedUpdate()
+        {
+            if (reloadTimer > 0f)   //se il tempo di ricarica non è ancora finito, decremento e ritorno
             {
-                currentAmmo = currentWeaponData.MaxAmmo;
-                canShoot = true;
+                reloadTimer -= Time.fixedDeltaTime;
+                return;
+            }
+            if (fireTime > 0f)      //se il tempo tra uno sparo e l'altro non è ancora finito, decremento e ritorno
+            {
+                fireTime -= Time.fixedDeltaTime;
+                return;
+            }
+            if (!canShoot)
+            {
+                canShoot = true;    //altrimenti posso sparare
+            }
+
+            if (!hasMultiShot) return;
+            InternalOnShootPerformed(); //se sto sparando con un arma multishot, continuo a sparare
+        }
+        #endregion
+
+        #region PrivateMethods
+        private void OnShootPerformed(InputAction.CallbackContext context)
+        {
+            InternalOnShootPerformed();
+        }
+
+        private void InternalOnShootPerformed()
+        {
+            if (currentWeaponData == null) return;
+            //Posso sparare quando sto mirando && ho almeno un proiettile && il cooldown tra un colpo e l'altro è 0
+            if (CanShoot())
+            {
+                Vector3 initialPosition = playerController.CameraPositionTransform.position;
+                Vector3 finalPosition = initialPosition + (playerController.CameraPositionTransform.forward * currentWeaponData.Range);
+
+                Shoot(initialPosition, finalPosition, currentWeaponData.TypeOfShoot);
+            }
+            else if (fireTime <= 0f)    //Se invece non posso sparare  il cooldown è 0, allora Faccio il reload
+            {
+                Reload();
             }
         }
 
-        if (fireTime > 0f)
+        private void OnAimPerformed(InputAction.CallbackContext context)
         {
-            fireTime -= Time.fixedDeltaTime;
+            isAiming = true;
+            playerVisual.SetAnimatorParameter(aimStringParameter, isAiming);
+        }
 
-            if (fireTime <= 0f)
+        private void OnAimCanceled(InputAction.CallbackContext context)
+        {
+            isAiming = false;
+            playerVisual.SetAnimatorParameter(aimStringParameter, isAiming);
+        }
+
+        private void OnShootCanceled(InputAction.CallbackContext context)
+        {
+            hasShot = false;
+            hasMultiShot = false;
+        }
+
+        private bool CanShoot()
+        {
+            return !isPrevented
+                && currentAmmoInMagazine>0
+                && canShoot
+                && isAiming;
+        }
+
+        private void ChangeWeapon(WeaponData newWeapon)
+        {
+            if (currentWeaponData == newWeapon) return;
+            currentWeaponData = newWeapon;
+            currentWeaponIndex = playerController.Inventory.FindWeaponSlot(currentWeaponData);
+            ReloadCurrentAmmo();
+            VisualChangeWeapon(newWeapon);
+        }
+        private void VisualChangeWeapon(WeaponData data)
+        {
+            Destroy(weaponVisual);
+            weaponVisual = Instantiate(data.Prefab, playerController.BoneWeapon.position, playerController.BoneWeapon.rotation);
+            weaponVisual.transform.SetParent(playerController.BoneWeapon);
+        }
+
+        private void PickUpWeapon(ItemData item)
+        {
+            if (!(item is WeaponData) || currentWeaponData == null) return;      //Se non sto raccogliendo un arma (o se non ho niente in mano), ritorno
+            WeaponData newWeapon = item as WeaponData;
+            if (newWeapon.ItemType != currentWeaponData.ItemType) return;
+            //continua solo se l'attuale arma è dello stesso tipo di quella raccolta ma non è la stessa arma
+            ChangeWeapon(newWeapon);
+        }
+
+
+        private void ReloadCurrentAmmo()
+        {
+            currentAmmoInMagazine = playerController.Inventory.InventorySlots[currentWeaponIndex].Amount >= currentWeaponData.MaxAmmoForMagazine
+                        ? currentWeaponData.MaxAmmoForMagazine : playerController.Inventory.InventorySlots[currentWeaponIndex].Amount;
+        }
+
+        
+        private void ComputeShootRange(Vector3 initialPosition, Vector3 finalPosition)
+        {
+            Vector3 contactPoint = Vector3.zero;
+
+            // Questi due vettori andranno sottratti per trovare ufficialmente la direction del bullet.
+            if (Physics.Linecast(initialPosition, finalPosition, out RaycastHit hit))
             {
-                canShoot = true;
-                if (!hasMultiShot) return;
-                InternalOnShootPerformed();
+                contactPoint = hit.point;
+                Debug.DrawLine(socketShoot.position, contactPoint, Color.red, .1f); // SARA' QUESTA LA DIRECTION DEL BULLET!
+                StartCoroutine(SpawnTrail(socketShoot.position, contactPoint));
+
+                IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
+                if (damageble == null) return;
+                damageble.TakeDamage(currentWeaponData.DamageContainer);
             }
+            else
+            {
+                contactPoint = finalPosition;
+                Debug.DrawLine(socketShoot.position, finalPosition, Color.red, .1f);
+                StartCoroutine(SpawnTrail(socketShoot.position, finalPosition));
+            }
+
         }
-    }
-    #endregion
-
-    #region PrivateMethods
-    private void OnShootPerformed(InputAction.CallbackContext context)
-    {
-        InternalOnShootPerformed();
-    }
-
-    private void InternalOnShootPerformed()
-    {
-        if (currentWeaponData == null) return;
-        if (CanShoot())
+        private IEnumerator SpawnTrail(Vector3 initialPos, Vector3 targetPosition) // Use GameObject instead of TrailRenderer
         {
-            Vector3 initialPosition = playerController.CameraPositionTransform.position;
-            Vector3 direction = initialPosition + (playerController.CameraPositionTransform.forward * currentWeaponData.Range);
+            // Get reference from instantiated object
+            TrailRenderer trail = GameObject.Instantiate(trailRenderer, initialPos, Quaternion.identity);
+            float time = 0;
+            Vector3 startPosition = trail.transform.position;
 
-            Shoot(initialPosition, direction, currentWeaponData.TypeOfShoot);
+            while (time < 0.8)
+            {
+                if (!trail) yield return null;
+
+                trail.transform.position = Vector3.Lerp(startPosition, targetPosition, time);
+                time += Time.deltaTime / trail.time;
+
+                yield return null;
+            }
+
+            // Destroy the trail object after its lifetime
+            Destroy(trail.gameObject, time);
         }
-        else if (fireTime <= 0f)
+        #endregion
+
+        #region ShootTypes
+        private void ShotgunShot(Vector3 initialPosition, Vector3 finalPosition)
         {
+            float randomRange = 2f;
+            for (int i = 0; i < 5; i++)
+            {
+                // Calculate random spread within the specified angle
+                float randomX = UnityEngine.Random.Range(-randomRange, randomRange);
+                float randomY = UnityEngine.Random.Range(-randomRange, randomRange);
+                float randomZ = UnityEngine.Random.Range(-randomRange, randomRange);
+                Vector3 randDirection = new Vector3(randomX, randomY, randomZ);
+
+                Vector3 contactPoint = Vector3.zero;
+
+                // Questi due vettori andranno sottratti per trovare ufficialmente la direction del bullet.
+                if (Physics.Linecast(initialPosition, finalPosition + randDirection, out RaycastHit hit))
+                {
+                    contactPoint = hit.point;
+                    Debug.DrawLine(socketShoot.position, contactPoint, Color.red, .1f); // SARA' QUESTA LA DIRECTION DEL BULLET!
+                    StartCoroutine(SpawnTrail(socketShoot.position, contactPoint));
+
+                    IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
+                    if (damageble == null) continue;
+                    damageble.TakeDamage(currentWeaponData.DamageContainer);
+                }
+                else
+                {
+                    contactPoint = finalPosition + randDirection;
+                    Debug.DrawLine(socketShoot.position, finalPosition + randDirection, Color.red, .1f);
+                    StartCoroutine(SpawnTrail(socketShoot.position, finalPosition + randDirection));
+                }
+
+            }
             Reload();
+
+            // Spawn trail effect (modify as needed)
+            //StartCoroutine(SpawnTrail(initialPosition, initialPosition + targetDirection)); // Adjust based on your trail effect implementation
         }
-    }
+        #endregion
 
-    private void OnAimPerformed(InputAction.CallbackContext context)
-    {
-        isAiming = true;
-        playerVisual.SetAnimatorParameter(aimStringParameter, isAiming);
-    }
-
-    private void OnAimCanceled(InputAction.CallbackContext context)
-    {
-        isAiming = false;
-        playerVisual.SetAnimatorParameter(aimStringParameter, isAiming);
-    }
-
-    private void OnShootCanceled(InputAction.CallbackContext context)
-    {
-        hasShot = false;
-        hasMultiShot = false;
-    }
-
-    private bool CanShoot()
-    {
-        return !isPrevented
-            && currentAmmo > 0
-            && canShoot
-            && isAiming;
-    }
-
-    private void ChangeWeapon(WeaponData newWeapon)
-    {
-        if (currentWeaponData == newWeapon) return;
-        currentWeaponData = newWeapon;
-        currentAmmo = newWeapon.MaxAmmo;
-    }
-
-    private void ComputeShootRange(Vector3 direction)
-    {
-        Vector3 contactPoint = Vector3.zero;
-
-        // Questi due vettori andranno sottratti per trovare ufficialmente la direction del bullet.
-        if (Physics.Linecast(socketShoot.position, direction, out RaycastHit hit))
+        #region InputMethods
+        public override void OnInputDisabled()
         {
-            contactPoint = hit.point;
-            //Debug.Log("Colpito!" + hit.collider.gameObject.name);
-
-            Debug.DrawLine(socketShoot.position, contactPoint, Color.red, 0.1f);
-            //Debug.DrawLine(initialPosition, contactPoint, Color.blue, 30f);
-
-            IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
-            if (damageble == null) return;
-            damageble.TakeDamage(currentWeaponData.DamageContainer);
+            isPrevented = true;
         }
-        else
+
+        public override void OnInputEnabled()
         {
-            contactPoint = playerController.CameraPositionTransform.forward * currentWeaponData.Range;
-            //Debug.Log("Non Colpito!");
-
-            Debug.DrawLine(socketShoot.position, direction, Color.red, 0.1f);
-            //Debug.DrawLine(initialPosition, playerController.CameraPositionTransform.position + contactPoint, Color.blue, 30f);
+            isPrevented = false;
         }
-    }
-    #endregion
 
-    #region ShootTypes
-    private void ShotgunShot()
-    {
-
-    }
-    #endregion
-
-    #region InputMethods
-    public override void OnInputDisabled()
-    {
-        isPrevented = true;
-    }
-
-    public override void OnInputEnabled()
-    {
-        isPrevented = false;
-    }
-
-    public override void StopAbility()
-    {
-
-    }
-    #endregion
-
-    #region IShooter
-    public void Reload()
-    {
-        if (currentAmmo >= currentWeaponData.MaxAmmo || reloadTimer > 0f) return;
-        canShoot = false;
-        reloadTimer = currentWeaponData.ReloadTime;
-    }
-
-    public bool Shoot(Vector3 initialPosition, Vector3 direction, ShootType currentShootType)
-    {
-        currentAmmo--;
-        canShoot = false;
-        fireTime = currentWeaponData.RateOfFire;
-
-        switch (currentShootType)
+        public override void StopAbility()
         {
-            case ShootType.Single:
-                if (hasShot) return true;
-                ComputeShootRange(direction);
-            break;
-            case ShootType.Multiple:
-                hasMultiShot = true;
-                ComputeShootRange(direction);
-            break;
-            case ShootType.Shotgun:
-                // To do
-            break;
-            default: return true;
+
         }
-        return true;
+        #endregion
+
+        #region IShooter
+        public void Reload()
+        {
+            if (currentAmmoInMagazine > 0 || reloadTimer > 0f) return;
+            canShoot = false;
+            ReloadCurrentAmmo();
+            if(currentAmmoInMagazine > 0)
+            reloadTimer = currentWeaponData.ReloadTime;
+        }
+
+        public bool Shoot(Vector3 initialPosition, Vector3 finalPosition, ShootType currentShootType)
+        {
+            canShoot = false;
+            fireTime = currentWeaponData.RateOfFire;
+            currentAmmoInMagazine--;
+            
+            //To change when shotgun logic is implemented
+            GlobalEventManager.CastEvent(GlobalEventIndex.Shoot, GlobalEventArgsFactory.ShootFactory(currentWeaponData.Prefab, 1));
+            playerController.Inventory.InventorySlots[currentWeaponIndex].AddAmount(-1);
+
+            switch (currentShootType)
+            {
+                case ShootType.Single:
+                    if (hasShot) return true;
+                    ComputeShootRange(initialPosition, finalPosition);
+                    break;
+                case ShootType.Multiple:
+                    hasMultiShot = true;
+                    ComputeShootRange(initialPosition, finalPosition);
+                    break;
+                case ShootType.Shotgun:
+                    // To do
+                    ShotgunShot(initialPosition, finalPosition);
+                    break;
+                default: return true;
+            }
+            return true;
+        }
+        #endregion
     }
-    #endregion
 }

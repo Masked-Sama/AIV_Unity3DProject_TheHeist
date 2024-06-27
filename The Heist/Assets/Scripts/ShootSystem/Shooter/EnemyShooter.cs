@@ -1,15 +1,11 @@
-using JetBrains.Annotations;
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
-using System.IO.Pipes;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using Unity.VisualScripting.YamlDotNet.Core;
 using UnityEngine;
 
 
 public class EnemyShooter : MonoBehaviour, IShooter
 {
+
     [SerializeField]
     private WeaponData weaponData;
 
@@ -23,6 +19,9 @@ public class EnemyShooter : MonoBehaviour, IShooter
     [SerializeField]
     private float randomRange;
 
+    [SerializeField]
+    private TrailRenderer trailRenderer;
+
     private bool canShoot;
     private float reloadTimer = 0f;
     private float fireTime = 0f;
@@ -35,11 +34,10 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     private bool isReloading = false;
 
-
     #region Mono
     public void Start()
     {
-        currentAmmo = weaponData.MaxAmmo;
+        currentAmmo = weaponData.MaxAmmoForMagazine;
         canShoot = true;
         // Initialize directions array
         for (int i = 0; i < directions.Length; i++)
@@ -50,14 +48,16 @@ public class EnemyShooter : MonoBehaviour, IShooter
             float randomZ = UnityEngine.Random.Range(-randomRange, randomRange);
             directions[i] = new Vector3(randomX, randomY, randomZ);
         }
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         Transform[] allBones = gameObject.GetComponentsInChildren<Transform>();
         boneWeapon = FindBone(allBones, "WeaponHand_R");
 
         GameObject instance = Instantiate(WeaponData.Prefab, boneWeapon.position, boneWeapon.rotation);
-
+        instance.layer = gameObject.layer;
         instance.transform.SetParent(boneWeapon);
+        instance.GetComponent<MeshCollider>().enabled = false;
+      
     }
 
     public void FixedUpdate()
@@ -68,7 +68,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
             if (reloadTimer <= 0f)
             {
-                currentAmmo = weaponData.MaxAmmo;
+                currentAmmo = weaponData.MaxAmmoForMagazine;
                 canShoot = true;
                 isReloading = false;
             }
@@ -101,7 +101,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
     #region IShooter
     public void Reload()
     {
-        if (currentAmmo >= weaponData.MaxAmmo || reloadTimer > 0f)
+        if (currentAmmo >= weaponData.MaxAmmoForMagazine || reloadTimer > 0f)
         {
             return;
         }
@@ -119,6 +119,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
             fireTime = weaponData.RateOfFire;
             canShoot = false;
 
+
             RaycastHit hit;
             int randomDirectionIndex = UnityEngine.Random.Range(0, directions.Length);
             Vector3 randomDirection = directions[randomDirectionIndex];
@@ -126,28 +127,29 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
             if (Physics.Raycast(initialPosition, finalDirection, out hit, weaponData.Range))
             {
-                if (hit.collider.gameObject.GetComponent<IDamageble>() == null && hit.collider.gameObject == gameObject)
+                if (hit.collider.gameObject.GetComponent<IDamageble>() == null && hit.collider.gameObject != gameObject)
                 {
                     Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
-                    Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
-
+                    Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f); // Red line for non-damageable objects
+                    StartCoroutine(SpawnTrail(initialPosition, endPosition));
                 }
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     //Debug.Log("Hit Player!!!");
                     IDamageble playerDamager = hit.collider.gameObject.GetComponent<IDamageble>();
                     playerDamager.TakeDamage(weaponData.DamageContainer);
-                    Debug.DrawLine(initialPosition, hit.point, Color.green, 0.1f);
+                   Debug.DrawLine(initialPosition, hit.point, Color.green, 0.1f);
+                    StartCoroutine(SpawnTrail(initialPosition, hit.point));
+
                 }
             }
             else
             {
                 Vector3 endPosition = initialPosition + finalDirection * weaponData.Range;
                 Debug.DrawLine(initialPosition, endPosition, Color.red, 0.1f);
-            }
-
+                StartCoroutine(SpawnTrail(initialPosition, endPosition));
+            }           
             
-
         }
         else if (fireTime <= 0f)
         {
@@ -158,7 +160,26 @@ public class EnemyShooter : MonoBehaviour, IShooter
 
     }
 
-    
+    private IEnumerator SpawnTrail(Vector3 initialPos, Vector3 targetPosition) // Use GameObject instead of TrailRenderer
+    {
+        // Get reference from instantiated object
+        TrailRenderer trail = GameObject.Instantiate(trailRenderer, initialPos, Quaternion.identity);
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        while (time < weaponData.RateOfFire * 3)
+        {
+            if (!trail) yield return null;
+
+            trail.transform.position = Vector3.Lerp(startPosition, targetPosition, time);
+            time += Time.deltaTime / trail.time;
+
+            yield return null;
+        }
+
+        // Destroy the trail object after its lifetime
+        Destroy(trail.gameObject, time);
+    }
 
     #endregion
 

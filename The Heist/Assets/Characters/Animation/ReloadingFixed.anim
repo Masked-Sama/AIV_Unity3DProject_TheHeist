@@ -97996,8 +97996,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 3.3
-    functionName: Pippo
-    data: Pippo
+    functionName: EndAnimationReload
+    data: empty
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

@@ -65,6 +65,11 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
         get;
         set;
     }
+    public bool IsStunned
+    {
+        get;
+        set;
+    }
     #endregion
 
     #region Unity_Game_Loop
@@ -99,7 +104,8 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
     public void Die()
     {
         StopMovement();
-        myCollider.enabled = false; 
+        myCollider.enabled = false;
+        
         animator.SetTrigger("Dead");
     }
 
@@ -160,6 +166,8 @@ public class GroundMovement : MonoBehaviour, IEnemyMovement
     public void StopMovement()
     {
         navMesh.ResetPath();
+        navMesh.isStopped = true;
+
     }
 
     public void Teleport(Vector3 position)

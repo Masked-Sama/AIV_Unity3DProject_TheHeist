@@ -2,10 +2,15 @@ using UnityEngine;
 
 public enum ItemType
 {
-    FirstWeapon,
-    SecondWeapon,
-    ThrowableWeapon,
-    Consumable
+    FirstWeapon = 0,
+    SecondWeapon = 1,
+    ThrowableWeapon = 2,
+    Consumable = 3
+}
+
+public interface IInventoried 
+{
+    Texture2D Texture2D { get;}
 }
 
 public abstract class ItemData : ScriptableObject

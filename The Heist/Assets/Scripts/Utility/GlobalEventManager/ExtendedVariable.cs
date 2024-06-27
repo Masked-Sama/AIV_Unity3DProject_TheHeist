@@ -10,7 +10,7 @@ public enum ExtendedVariableType {
     Vector2,
     Vector3,
     UInt,
-    WeaponData
+    Color
 }
 
 
@@ -46,6 +46,8 @@ public class ExtendedVariable
     private Vector2 vector2Value;
     [SerializeField]
     private Vector3 vector3Value;
+    [SerializeField]
+    private Color colorValue;
     #endregion
 
     #region Methods
@@ -74,6 +76,8 @@ public class ExtendedVariable
                 return vector3Value;
             case ExtendedVariableType.UInt:
                 return uIntValue;
+             case ExtendedVariableType.Color:
+                 return colorValue;
             default:
                 return null;
         }
@@ -106,6 +110,9 @@ public class ExtendedVariable
                 break;
             case ExtendedVariableType.UInt:
                 uIntValue = (uint)value;
+                break;
+            case ExtendedVariableType.Color:
+                colorValue = (Color)value;
                 break;
         }
     }

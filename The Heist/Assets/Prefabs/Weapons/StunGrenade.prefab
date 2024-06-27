@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 412832}
   - component: {fileID: 3323084}
   - component: {fileID: 2395220}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: SM_Wep_Flashbang_Clip_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 447562}
   - component: {fileID: 3398396}
   - component: {fileID: 2343822}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: SM_Wep_Flashbang_Pin_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,8 @@ GameObject:
   - component: {fileID: 64242218214834610}
   - component: {fileID: 3716974645159752385}
   - component: {fileID: -4527684245831894634}
-  m_Layer: 8
+  - component: {fileID: -8332212272100980211}
+  m_Layer: 10
   m_Name: StunGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,3 +322,17 @@ MonoBehaviour:
   rb: {fileID: 3716974645159752385}
   radius: 4
   stunZones: {fileID: 11400000, guid: 81c43f430e68f344d8acc789fcc26245, type: 2}
+--- !u!114 &-8332212272100980211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f666d640f690e174099b50eed1f0176a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 0}
+  quantity: 0

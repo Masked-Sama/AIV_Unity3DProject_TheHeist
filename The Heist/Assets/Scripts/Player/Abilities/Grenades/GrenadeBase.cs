@@ -1,10 +1,5 @@
 using UnityEngine;
 
-public enum GrenadeType {
-    Incendiary,
-    Stun
-}
-
 public class GrenadeBase : MonoBehaviour, IGrenade
 {
     [SerializeField] 

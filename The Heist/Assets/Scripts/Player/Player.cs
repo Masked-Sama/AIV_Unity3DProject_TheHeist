@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
     public class Player : MonoBehaviour
     {
         private static Player player;
+
+        [SerializeField]
+        private Transform startingPoint;
 
         public static Player Get()
         {
@@ -18,11 +23,23 @@ namespace Player
         {
             if (player != null && player != this)
             {
-                Destroy(player);
+                Destroy(gameObject);
                 return;
             }
             player = this;
+
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
+            if (GameObject.Find("PlayerStartingPosition") == null) return;
+            Debug.Log("Scene loaded player");
+            gameObject.SetActive(false);
+            transform.position = GameObject.Find("PlayerStartingPosition").transform.position;
+            transform.rotation = GameObject.Find("PlayerStartingPosition").transform.rotation;
+            gameObject.SetActive(true);
         }
 
         private void Start()

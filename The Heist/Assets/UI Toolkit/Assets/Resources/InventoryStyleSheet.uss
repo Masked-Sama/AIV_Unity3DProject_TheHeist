@@ -2,3 +2,7 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.healthBar {
+    flex-grow: 1;
+}
