@@ -5,6 +5,8 @@ namespace Player
 {
     public class PlayerChangeWeapon : PlayerAbilityBase
     {
+        private const string riflePullOutAnimatorParameter = "Rifle Pull Out";
+
         #region Mono
         private void OnEnable()
         {
@@ -32,6 +34,8 @@ namespace Player
                 default: return;
             }
             if (weapon == null) return;
+
+            playerVisual.SetAnimatorParameter(riflePullOutAnimatorParameter);
             playerController.OnChangeWeapon?.Invoke(weapon);
         }
         

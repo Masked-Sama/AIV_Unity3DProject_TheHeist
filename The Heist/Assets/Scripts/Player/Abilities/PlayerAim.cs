@@ -8,22 +8,23 @@ namespace Player
     {
         private const string aimStringParameter = "Aim";
 
+        #region SerializeField
         [SerializeField]
         private CinemachineVirtualCamera vCam;
         [SerializeField]
         private float zoomInValue;
+        #endregion
 
+        #region Mono
         private void OnEnable()
         {
             InputManager.Player.Aim.performed += OnAimPerformed;
             InputManager.Player.Aim.canceled += OnAimCanceled;
 
-            // playerController.OnChangeWeapon += OnChangeWeapon; // Disable
             playerController.OnGroundLanded += OnGroundLanded; // Enable
             playerController.OnGroundReleased += OnGroundReleased; // Disable
             playerController.OnRunEnded += OnRunEnded; // Enable
             playerController.OnRunStarted += OnRunStarted; // Disable
-            // playerController.OnThrowGrenade += OnThrowGrenade; // Disable
         }
 
         private void OnDisable()
@@ -31,22 +32,32 @@ namespace Player
             InputManager.Player.Aim.performed -= OnAimPerformed;
             InputManager.Player.Aim.canceled -= OnAimCanceled;
 
-            //playerController.OnChangeWeapon -= OnChangeWeapon; // Disable
             playerController.OnGroundLanded -= OnGroundLanded; // Enable
             playerController.OnGroundReleased -= OnGroundReleased; // Disable
             playerController.OnRunEnded -= OnRunEnded; // Enable
             playerController.OnRunStarted -= OnRunStarted; // Disable
-            //playerController.OnThrowGrenade -= OnThrowGrenade; // Disable
+        }
+        #endregion
+
+        #region PrivateMethods
+        private bool CanAim()
+        {
+            return !isPrevented;
+        }
+
+        private void SetAimEnable(bool value)
+        {
+            isPrevented = !value;
         }
 
         private void OnThrowGrenade(IGrenade grenade)
         {
-            SetAimEnable(false);
+            StopAbility();
         }
 
         private void OnRunStarted()
         {
-            SetAimEnable(false);
+            StopAbility();
         }
 
         private void OnRunEnded()
@@ -56,7 +67,7 @@ namespace Player
 
         private void OnGroundReleased()
         {
-            SetAimEnable(false);
+            StopAbility();
         }
 
         private void OnGroundLanded()
@@ -66,7 +77,7 @@ namespace Player
 
         private void OnChangeWeapon(WeaponData data)
         {
-            SetAimEnable(false);
+            StopAbility();
         }
 
         private void OnAimPerformed(InputAction.CallbackContext context)
@@ -83,7 +94,9 @@ namespace Player
             playerVisual.SetAnimatorParameter(aimStringParameter, playerController.IsAiming);
             vCam.m_Lens.FieldOfView = 45;
         }
+        #endregion
 
+        #region PublicMethods
         public override void OnInputDisabled()
         {
             SetAimEnable(true);
@@ -96,18 +109,12 @@ namespace Player
 
         public override void StopAbility()
         {
+            playerController.IsAiming = false;
+            playerVisual.SetAnimatorParameter(aimStringParameter, playerController.IsAiming);
+            vCam.m_Lens.FieldOfView = 45;
+
             SetAimEnable(false);
         }
-
-        private bool CanAim()
-        {
-            return !isPrevented;
-        }
-
-        private void SetAimEnable(bool value)
-        {
-            isPrevented = !value;
-        }
-
+        #endregion
     }
 }
