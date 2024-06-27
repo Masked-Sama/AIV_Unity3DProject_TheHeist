@@ -200,9 +200,42 @@ namespace Player
         #endregion
 
         #region ShootTypes
-        private void ShotgunShot()
+        private void ShotgunShot(Vector3 initialPosition, Vector3 finalPosition)
         {
+            float randomRange = 2f;
+            for (int i = 0; i < 5; i++)
+            {
+                // Calculate random spread within the specified angle
+                float randomX = UnityEngine.Random.Range(-randomRange, randomRange);
+                float randomY = UnityEngine.Random.Range(-randomRange, randomRange);
+                float randomZ = UnityEngine.Random.Range(-randomRange, randomRange);
+                Vector3 randDirection = new Vector3(randomX, randomY, randomZ);
 
+                Vector3 contactPoint = Vector3.zero;
+
+                // Questi due vettori andranno sottratti per trovare ufficialmente la direction del bullet.
+                if (Physics.Linecast(initialPosition, finalPosition + randDirection, out RaycastHit hit))
+                {
+                    contactPoint = hit.point;
+                    Debug.DrawLine(socketShoot.position, contactPoint, Color.red, .1f); // SARA' QUESTA LA DIRECTION DEL BULLET!
+                    StartCoroutine(SpawnTrail(socketShoot.position, contactPoint));
+
+                    IDamageble damageble = hit.collider.gameObject.GetComponent<IDamageble>();
+                    if (damageble == null) continue;
+                    damageble.TakeDamage(currentWeaponData.DamageContainer);
+                }
+                else
+                {
+                    contactPoint = finalPosition + randDirection;
+                    Debug.DrawLine(socketShoot.position, finalPosition + randDirection, Color.red, .1f);
+                    StartCoroutine(SpawnTrail(socketShoot.position, finalPosition + randDirection));
+                }
+
+            }
+            Reload();
+
+            // Spawn trail effect (modify as needed)
+            //StartCoroutine(SpawnTrail(initialPosition, initialPosition + targetDirection)); // Adjust based on your trail effect implementation
         }
         #endregion
 
@@ -255,6 +288,7 @@ namespace Player
                     break;
                 case ShootType.Shotgun:
                     // To do
+                    ShotgunShot(initialPosition, finalPosition);
                     break;
                 default: return true;
             }

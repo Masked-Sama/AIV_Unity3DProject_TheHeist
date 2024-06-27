@@ -15,15 +15,15 @@ MonoBehaviour:
   itemName: Shotgun
   prefab: {fileID: 160320, guid: b952b4ac9a84721429ec0ec1f125e52a, type: 3}
   cost: 60
-  maxAmmoForMagazine: 2
+  maxAmmoForMagazine: 1
   rateOfFire: 1
   damageContainer:
     damageType: 1
-    damage: 80
+    damage: 20
     damageImpulse: {x: 0, y: 0, z: 0}
     freezeTime: 0
-  randomDirection: 8
+  randomDirection: 0
   typeOfShoot: 2
-  reloadTime: 2
+  reloadTime: 1
   range: 50
   texture: {fileID: 2800000, guid: e9c79121e73396f4e8305f3cad3123a5, type: 3}

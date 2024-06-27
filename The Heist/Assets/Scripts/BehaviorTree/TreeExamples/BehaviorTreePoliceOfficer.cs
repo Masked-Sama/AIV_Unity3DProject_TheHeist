@@ -147,5 +147,6 @@ public class BehaviorTreePoliceOfficer : MonoBehaviour
         isDead = true;
         waveMenager.EnemyDied();
         ownerMovement.Die();
+        
     }
 }

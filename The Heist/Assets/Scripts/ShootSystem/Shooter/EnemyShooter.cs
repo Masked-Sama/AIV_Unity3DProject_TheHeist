@@ -56,6 +56,7 @@ public class EnemyShooter : MonoBehaviour, IShooter
         GameObject instance = Instantiate(WeaponData.Prefab, boneWeapon.position, boneWeapon.rotation);
         instance.layer = gameObject.layer;
         instance.transform.SetParent(boneWeapon);
+        instance.GetComponent<MeshCollider>().enabled = false;
       
     }
 

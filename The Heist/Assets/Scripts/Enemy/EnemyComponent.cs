@@ -12,6 +12,8 @@ public class EnemyComponent : MonoBehaviour, IDamageble
     [SerializeField]
     private EnemyMovementType movementType;
 
+ 
+
     [SerializeField]
     private EnemyShooter shooterComponent;
 
@@ -52,8 +54,9 @@ public class EnemyComponent : MonoBehaviour, IDamageble
             {
                 e.enabled = false;
             }
-            
+
         }
+
     }
 
 
