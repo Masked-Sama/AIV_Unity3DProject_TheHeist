@@ -10475,12 +10475,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsCamera: {fileID: 1043713170}
   cameraBase: {fileID: 1088396706}
-  volumeTextValue: {fileID: 0}
-  volumeSlider: {fileID: 0}
-  confirmationPrompt: {fileID: 0}
-  resolutionDropdown: {fileID: 0}
-  qualityDropdown: {fileID: 0}
-  fullScreenToggle: {fileID: 0}
+  volumeTextValue: {fileID: 1533918591}
+  volumeSlider: {fileID: 293872765}
+  confirmationPrompt: {fileID: 1532434680}
+  resolutionDropdown: {fileID: 1476099344}
+  qualityDropdown: {fileID: 1639663984}
+  fullScreenToggle: {fileID: 1783324894}
 --- !u!1001 &326747882
 PrefabInstance:
   m_ObjectHideFlags: 0

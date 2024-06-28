@@ -25,7 +25,8 @@ public class MainMenu : MonoBehaviour
 
 
     //resolution Dropdown
-    public TMP_Dropdown resolutionDropdown;
+    [SerializeField]
+    private TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
 
     [SerializeField]
@@ -46,10 +47,10 @@ public class MainMenu : MonoBehaviour
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
 
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
-            {
-                currentResolutionIndex = i;
-            }
+            //if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            //{
+            //    currentResolutionIndex = i;
+            //}
         }
 
         resolutionDropdown.AddOptions(options);
