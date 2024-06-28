@@ -1687,7 +1687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5065985450046389167, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: healthModule.maxHP
-      value: 10000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5065985450046389167, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: cameraPositionTransform
@@ -1695,7 +1695,7 @@ PrefabInstance:
       objectReference: {fileID: 1498333407}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.814682
+      value: 0.6678569
       objectReference: {fileID: 0}
     - target: {fileID: 5727491077087691841, guid: 2ce16a492707ec4428717fd18462e548, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2255,6 +2255,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c09ed5870c9ac4baca5dec8f64c4a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1810512810 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7131873179187112704, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
+  m_PrefabInstance: {fileID: 6017383802579261585}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1837449465
 GameObject:
   m_ObjectHideFlags: 0
@@ -2609,6 +2620,10 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 840631536}
+    - target: {fileID: 470298121957166035, guid: 155c42b75192da84591fe4fb1f02ba3c, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 1810512810}
     - target: {fileID: 5507497676382643456, guid: 155c42b75192da84591fe4fb1f02ba3c, type: 3}
       propertyPath: m_Name
       value: GameObject
@@ -2710,6 +2725,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 7131873179187112704, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
+      propertyPath: m_DefaultBlend.m_Style
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9189185092706778582, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6666667
@@ -2724,7 +2743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9189185092706778582, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.48531216
+      value: 0.39784622
       objectReference: {fileID: 0}
     - target: {fileID: 9189185092706778582, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2732,7 +2751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9189185092706778582, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.0110227
+      value: -1.0110202
       objectReference: {fileID: 0}
     - target: {fileID: 9189185092706778582, guid: d0611bad741337c429de1dba8ee272c8, type: 3}
       propertyPath: m_LocalRotation.w

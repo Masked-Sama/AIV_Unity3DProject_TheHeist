@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +10,8 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
     public GameObject pauseMenu;
+    [SerializeField] 
+    private CinemachineBrain playerCamera;
     public static bool bIsPaused;
 
     private void Start()
@@ -44,6 +48,8 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("MenuScene");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        
+        playerCamera.GetComponent<CinemachineBrain>().enabled = true;
     }
 
     public void QuitGame()
@@ -58,6 +64,8 @@ public class PauseMenu : MonoBehaviour
         bIsPaused = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        
+        playerCamera.GetComponent<CinemachineBrain>().enabled = false;
     }
 
     public void ResumeGame()
@@ -67,5 +75,7 @@ public class PauseMenu : MonoBehaviour
         bIsPaused = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        
+        playerCamera.GetComponent<CinemachineBrain>().enabled = true;
     }
 }

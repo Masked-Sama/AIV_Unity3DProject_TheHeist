@@ -140,7 +140,7 @@ MonoBehaviour:
   movementType: 0
   shooterComponent: {fileID: 5038836497127512233}
   healthModule:
-    maxHP: 10
+    maxHP: 80
 --- !u!114 &5038836497127512233
 MonoBehaviour:
   m_ObjectHideFlags: 0
