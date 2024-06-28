@@ -5,16 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77f597e3-daa8-474f-a1d0-2dabecd9d19b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Heist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/M4A4_CQB.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/M4A4_CQB.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/MP-5.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/MP-5.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/Shotgun.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/Shotgun.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/Sniper.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Database/ScriptableObjects/Sniper.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/SniperPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/SniperPrefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/SoldierPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/SoldierPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScenes/LobbyScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScenes/LobbyScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MenuScene/MenuScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MenuScene/MenuScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviorTree/BehaviorScripts/Strategies/Action/ShootTheTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviorTree/BehaviorScripts/Strategies/Action/ShootTheTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviorTree/TreeExamples/BehaviorTreeSniper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviorTree/TreeExamples/BehaviorTreeSniper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PauseMenu/PauseMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PauseMenu/PauseMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Abilities/PlayerCurrency.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Abilities/PlayerCurrency.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ShootSystem/Shooter/EnemyShooter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ShootSystem/Shooter/EnemyShooter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/DontDestroyOnLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/DontDestroyOnLoad.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +72,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Desktop/Build\The Heist.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Desktop/Build/The Heist.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\ceret\OneDrive\Desktop\Build" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -104,10 +105,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="29456">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="29456" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -157,6 +158,7 @@
       <workItem from="1719559825398" duration="2000" />
       <workItem from="1719559844976" duration="975000" />
       <workItem from="1719561887073" duration="1607000" />
+      <workItem from="1719565379190" duration="2010000" />
     </task>
     <servers />
   </component>

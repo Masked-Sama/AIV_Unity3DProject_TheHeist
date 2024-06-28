@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,14 +9,14 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     [SerializeField] 
     private CinemachineBrain playerCamera;
+    
     public static bool bIsPaused;
-
     private void Start()
     {
         pauseMenu.SetActive(false);
+        
     }
 
-    
     private void OnEnable()
     {
         InputManager.Player.PauseMenu.performed += onPauseMenu;

@@ -1,5 +1,4 @@
 using Cinemachine;
-using CodiceApp.EventTracking.Plastic;
 using System;
 using System.Collections;
 using UnityEngine;
